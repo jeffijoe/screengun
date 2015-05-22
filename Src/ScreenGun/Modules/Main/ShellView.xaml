@@ -1,0 +1,117 @@
+<controls:MetroWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:main="clr-namespace:ScreenGun.Modules.Main"
+    mc:Ignorable="d" x:Class="ScreenGun.Modules.Main.ShellView"
+    WindowTitleBrush="White" 
+    ShowIconOnTitleBar="true"
+    TitleCaps="False"
+    BorderThickness="1"
+    Width="500"
+    MinWidth="450"
+    ShowMaxRestoreButton="false"
+    Icon="/Resources/screengun_logo.png"
+    GlowBrush="{DynamicResource AccentColorBrush}"
+    d:DataContext="{Binding Source={StaticResource DesignViewModel}}"
+    Title="ScreenGun">
+
+
+    <controls:MetroWindow.Resources>
+
+        <main:ShellViewModel x:Key="DesignViewModel">
+            <main:ShellViewModel.Files>
+                <main:ScreenGunFile>
+                    <main:ScreenGunFile.FileName>
+                        Recording 22-05-2015 13-47.mp4
+                    </main:ScreenGunFile.FileName>
+                    <main:ScreenGunFile.FilePath>
+                        C:\Recordings\Recording 22-05-2015 13-47.mp4
+                    </main:ScreenGunFile.FilePath>
+                </main:ScreenGunFile>
+                <main:ScreenGunFile>
+                    <main:ScreenGunFile.FileName>
+                        Screenshot 21-05-2015 12-17.png
+                    </main:ScreenGunFile.FileName>
+                    <main:ScreenGunFile.FilePath>
+                        C:\Screenshots\Screenshot 21-05-2015 12-17.png
+                    </main:ScreenGunFile.FilePath>
+                </main:ScreenGunFile>
+            </main:ShellViewModel.Files>
+        </main:ShellViewModel>
+
+        <ResourceDictionary x:Key="Material">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.CheckBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.RadioButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </controls:MetroWindow.Resources>
+
+    <!-- Window commands -->
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button Cursor="Hand" >
+                <StackPanel Orientation="Horizontal" Height="16">
+                    <Image Source="/Resources/camera.png" SnapsToDevicePixels="true"></Image>
+
+                    <TextBlock Margin="4 0 0 0">
+                    New Screenshot
+                    </TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Cursor="Hand" >
+                <StackPanel Orientation="Horizontal">
+                    <Grid>
+                        <Ellipse VerticalAlignment="Center" Fill="Transparent" Stroke="DarkSlateGray" StrokeThickness="2" Width="16" Height="16">
+                        </Ellipse>
+                        <Ellipse VerticalAlignment="Center" Fill="Red" StrokeThickness="2" Width="8" Height="8">
+                        </Ellipse>
+                    </Grid>
+
+                    <TextBlock Margin="4 0 0 0">
+                    New Recording
+                    </TextBlock>
+                </StackPanel>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+
+    <StackPanel Background="White">
+        <ListBox ItemsSource="{Binding Path=Files}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="8*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel Orientation="Vertical" Grid.Column="0" Margin="0 5 0 5">
+                            <TextBlock 
+                                Text="{Binding Path=FileName}"
+                                FontSize="20"
+                                Margin="0 0 0 10">
+                            </TextBlock>
+
+                            <TextBlock 
+                                Text="{Binding Path=FilePath}"
+                                FontSize="12"
+                                Foreground="DarkSlateGray">
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0 5 0 5">
+                            <Button Style="{StaticResource MaterialDesignFloatingActionAccentButton}">
+                                Delete
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </StackPanel>
+
+</controls:MetroWindow>

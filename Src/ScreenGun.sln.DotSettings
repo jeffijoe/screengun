@@ -1,0 +1,14 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/CodeInspection/CodeAnnotations/NamespacesWithAnnotations/=SkyClip_002ECommon_002EProperties/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/CodeAnnotations/NamespacesWithAnnotations/=SkyClip_002EDomain_002EAnnotations/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/CodeAnnotations/NamespacesWithAnnotations/=SkyClip_002EDomain_002EProperties/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/CodeInspection/TestFileAnalysis/TestProjectToCodeProjectNameSpaceRegEx/@EntryValue">^(.*?)\.?Tests$</s:String>
+	<s:String x:Key="/Default/CodeInspection/TestFileAnalysis/TestProjectToCodeProjectNameSpaceRegExReplace/@EntryValue">$1</s:String>
+	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">ScreenGun&#xD;
+- $FILENAME$&#xD;
+--------------------------------------------------------------------&#xD;
+Authors: &#xD;
+- Jeff Hansen &lt;jeff@jeffijoe.com&gt;&#xD;
+- Bjarke Søgaard &lt;ekrajb123@gmail.com&gt;&#xD;
+Copyright (C) ScreenGun Authors $CURRENT_YEAR$. All rights reserved.</s:String>
+	<s:Int64 x:Key="/Default/Environment/UnitTesting/ParallelProcessesCount/@EntryValue">8</s:Int64></wpf:ResourceDictionary>
