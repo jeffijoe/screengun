@@ -84,7 +84,10 @@
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Modules\Main\IShell.cs" />
-    <Compile Include="Modules\Main\ScreenGunFile.cs" />
+    <Compile Include="Modules\Main\ScreenGunFile\ScreenGunFileView.xaml.cs">
+      <DependentUpon>ScreenGunFileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Main\ScreenGunFile\ScreenGunFileViewModel.cs" />
     <Compile Include="Modules\Main\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
@@ -94,12 +97,33 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Base\ViewModel.cs" />
+    <Compile Include="Icons\IconDelete.xaml.cs">
+      <DependentUpon>IconDelete.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Modules\Main\ScreenGunFile\ScreenGunFileView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\Main\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Icons\IconDelete.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\RegionSelector\RegionSelectorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\RegionSelector\RegionSelectorWindow.xaml.cs">
+      <DependentUpon>RegionSelectorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Screenshot\ScreenshotViewModel.cs" />
+    <Compile Include="Modules\Screenshot\ScreenshotView.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

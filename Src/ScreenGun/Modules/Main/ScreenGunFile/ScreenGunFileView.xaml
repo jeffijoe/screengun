@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="ScreenGun.Modules.Main.ScreenGunFile.ScreenGunFileView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:icons="clr-namespace:ScreenGun.Icons"
+             xmlns:screenGunFile="clr-namespace:ScreenGun.Modules.Main.ScreenGunFile"
+             mc:Ignorable="d" 
+             d:DataContext="{Binding Source={StaticResource DesignViewModel}}"
+             d:DesignHeight="300" d:DesignWidth="600">
+    <UserControl.Resources>
+        <screenGunFile:ScreenGunFileViewModel x:Key="DesignViewModel" FileName="Test.mp4" FilePath="C:\Recordings\Test.mp4" />
+    </UserControl.Resources>
+    <Grid PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="18*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Vertical" Grid.Column="0" Margin="20 16 0 16">
+            <TextBlock 
+                Text="{Binding Path=FileName}"
+                FontSize="16"
+                Name="FileName"
+                Foreground="{DynamicResource MaterialDesignBody}"
+                FontWeight="Normal"
+                Margin="0 0 0 4">
+            </TextBlock>
+
+            <TextBlock 
+                Text="{Binding Path=FilePath}"
+                Name="FilePath"
+                FontSize="14"
+                FontWeight="Normal"
+                Foreground="Gray">
+            </TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0 18 10 5">
+            <Button Background="Transparent" Name="Delete">
+                <icons:IconDelete IconColor="Gray" />
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

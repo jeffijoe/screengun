@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="ScreenGun.Icons.IconDelete"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="24" d:DesignWidth="24">
+    <Grid
+        x:Name="LayoutRoot"
+        VerticalAlignment="Stretch"
+        HorizontalAlignment="Stretch">
+        <Path Data="F1 M 0,0 C 0,1.29 0.96,2.25 2.09,2.25 L 10.57,2.25 C 11.86,2.25 12.82,1.29 12.82,0
+		L 12.82,-12.81 0,-12.81 0,0 z
+		M 13.78,-16.01 L 10.09,-16.01 8.97,-16.97 3.69,-16.97 2.57,-16.01 -1.12,-16.01 -1.12,-13.77
+		 13.78,-13.77 13.78,-16.01 z" RenderTransform="1,0,0,1,0,8" Fill="{Binding Path=IconColor, Mode=TwoWay}" />
+    </Grid>
+</UserControl>
