@@ -7,6 +7,7 @@
 // Copyright (C) ScreenGun Authors 2015. All rights reserved.
 
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -35,19 +36,19 @@ namespace ScreenGun.Modules.RegionSelector
         private Rect recordingArea;
 
         /// <summary>
-        ///     The start position.
-        /// </summary>
-        private Point startPosition;
-
-        /// <summary>
-        /// The virtual screen height.
+        ///     The virtual screen height.
         /// </summary>
         private double screenHeight = SystemParameters.VirtualScreenHeight;
 
         /// <summary>
-        /// The virtual screen width.
+        ///     The virtual screen width.
         /// </summary>
         private double screenWidth = SystemParameters.VirtualScreenWidth;
+
+        /// <summary>
+        ///     The start position.
+        /// </summary>
+        private Point startPosition;
 
         #endregion
 
@@ -82,6 +83,11 @@ namespace ScreenGun.Modules.RegionSelector
         /// </param>
         private void OverlayGridMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (this.isDragging)
+            {
+                return;
+            }
+
             this.isDragging = true;
             this.startPosition = this.endPosition = e.GetPosition((IInputElement)sender);
             this.UpdatePosition();
@@ -120,6 +126,46 @@ namespace ScreenGun.Modules.RegionSelector
         {
             this.isDragging = false;
             this.UpdatePosition();
+        }
+
+        /// <summary>
+        /// Handles the MouseDown event of ResizeGrips.
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
+        /// </param>
+        private void ResizeGripMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Point position = e.GetPosition(this.OverlayGrid);
+            this.isDragging = true;
+            this.endPosition = position;
+
+            var edges = new[]
+            {
+                this.recordingArea.TopLeft,
+                this.recordingArea.TopRight,
+                this.recordingArea.BottomLeft,
+                this.recordingArea.BottomRight
+            };
+
+            var furthestAway = new Point();
+            double lastTotal = 0;
+            foreach (var edge in edges)
+            {
+                double absX = Math.Abs(edge.X - position.X);
+                double absY = Math.Abs(edge.Y - position.Y);
+                var total = absX + absY;
+                if (total > lastTotal)
+                {
+                    lastTotal = total;
+                    furthestAway = edge;
+                }
+            }
+
+            this.startPosition = furthestAway;
         }
 
         /// <summary>
