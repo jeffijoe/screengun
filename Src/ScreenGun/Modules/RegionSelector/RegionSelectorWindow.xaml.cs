@@ -7,7 +7,6 @@
 // Copyright (C) ScreenGun Authors 2015. All rights reserved.
 
 using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -16,9 +15,19 @@ namespace ScreenGun.Modules.RegionSelector
     /// <summary>
     ///     Interaction logic for RegionSelectorView.xaml
     /// </summary>
-    public partial class RegionSelectorWindow : Window
+    public partial class RegionSelectorWindow
     {
         #region Fields
+
+        /// <summary>
+        ///     The virtual screen height.
+        /// </summary>
+        private readonly double screenHeight = SystemParameters.VirtualScreenHeight;
+
+        /// <summary>
+        ///     The virtual screen width.
+        /// </summary>
+        private readonly double screenWidth = SystemParameters.VirtualScreenWidth;
 
         /// <summary>
         ///     The end position.
@@ -26,24 +35,19 @@ namespace ScreenGun.Modules.RegionSelector
         private Point endPosition;
 
         /// <summary>
-        ///     The is dragging.
+        ///     Flag used to determine if the region is being moved.
         /// </summary>
-        private bool isDragging;
+        private bool isMoving;
+
+        /// <summary>
+        ///     Flag to determine if the region is being resized.
+        /// </summary>
+        private bool isResizing;
 
         /// <summary>
         ///     The recording area.
         /// </summary>
         private Rect recordingArea;
-
-        /// <summary>
-        ///     The virtual screen height.
-        /// </summary>
-        private double screenHeight = SystemParameters.VirtualScreenHeight;
-
-        /// <summary>
-        ///     The virtual screen width.
-        /// </summary>
-        private double screenWidth = SystemParameters.VirtualScreenWidth;
 
         /// <summary>
         ///     The start position.
@@ -83,12 +87,12 @@ namespace ScreenGun.Modules.RegionSelector
         /// </param>
         private void OverlayGridMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (this.isDragging)
+            if (this.isResizing)
             {
                 return;
             }
 
-            this.isDragging = true;
+            this.isResizing = true;
             this.startPosition = this.endPosition = e.GetPosition((IInputElement)sender);
             this.UpdatePosition();
         }
@@ -104,7 +108,7 @@ namespace ScreenGun.Modules.RegionSelector
         /// </param>
         private void OverlayGridOnMouseMove(object sender, MouseEventArgs e)
         {
-            if (this.isDragging == false)
+            if (this.isResizing == false)
             {
                 return;
             }
@@ -124,8 +128,53 @@ namespace ScreenGun.Modules.RegionSelector
         /// </param>
         private void OverlayGridOnMouseUp(object sender, MouseButtonEventArgs e)
         {
-            this.isDragging = false;
+            this.isResizing = false;
             this.UpdatePosition();
+        }
+
+        /// <summary>
+        /// Handles the MouseLeftDown event of the RecordingRegion control.
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
+        /// </param>
+        private void RecordingRegionMouseLeftDown(object sender, MouseButtonEventArgs e)
+        {
+            this.isMoving = true;
+        }
+
+        /// <summary>
+        /// Handles the MouseLeftUp event of the RecordingRegion control.
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="MouseButtonEventArgs"/> instance containing the event data.
+        /// </param>
+        private void RecordingRegionMouseLeftUp(object sender, MouseButtonEventArgs e)
+        {
+            this.isMoving = false;
+        }
+
+        /// <summary>
+        /// Handles the MouseMove event of the RecordingRegion control.
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="MouseEventArgs"/> instance containing the event data.
+        /// </param>
+        private void RecordingRegionMouseMove(object sender, MouseEventArgs e)
+        {
+            if (this.isMoving == false)
+            {
+                return;
+            }
         }
 
         /// <summary>
@@ -140,14 +189,14 @@ namespace ScreenGun.Modules.RegionSelector
         private void ResizeGripMouseDown(object sender, MouseButtonEventArgs e)
         {
             Point position = e.GetPosition(this.OverlayGrid);
-            this.isDragging = true;
+            this.isResizing = true;
             this.endPosition = position;
 
             var edges = new[]
             {
-                this.recordingArea.TopLeft,
-                this.recordingArea.TopRight,
-                this.recordingArea.BottomLeft,
+                this.recordingArea.TopLeft, 
+                this.recordingArea.TopRight, 
+                this.recordingArea.BottomLeft, 
                 this.recordingArea.BottomRight
             };
 
