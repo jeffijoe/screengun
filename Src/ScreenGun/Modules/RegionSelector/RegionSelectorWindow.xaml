@@ -28,14 +28,30 @@
             <RowDefinition x:Name="BottomRow" Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Border Style="{StaticResource CellStyle}" Grid.Column="0" Grid.Row="0" />
-        <Border Style="{StaticResource CellStyle}" Grid.Column="1" Grid.Row="0" BorderThickness="0 0 0 4" />
+        <Border Style="{StaticResource CellStyle}" Grid.Column="0" Grid.Row="0">
+            <Grid 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Bottom">
+                    <Rectangle 
+                    Fill="White" 
+                    Width="4" 
+                    Height="10" 
+                    Margin="0 0 0 0"/>
+                <Rectangle 
+                    Fill="White" 
+                    Width="10" 
+                    Height="4" 
+                    Margin="6 0 0 6"/>
+            </Grid>
+            
+        </Border>
+        <Border Style="{StaticResource CellStyle}" Grid.Column="1" Grid.Row="0" BorderThickness="0 0 0 2" />
         <Border Style="{StaticResource CellStyle}" Grid.Column="2" Grid.Row="0" />
-        <Border Style="{StaticResource CellStyle}" Grid.Column="0" Grid.Row="1" BorderThickness="0 0 4 0" />
+        <Border Style="{StaticResource CellStyle}" Grid.Column="0" Grid.Row="1" BorderThickness="0 0 2 0" />
 
-        <Border Style="{StaticResource CellStyle}" Grid.Column="2" Grid.Row="1" BorderThickness="4 0 0 0" />
+        <Border Style="{StaticResource CellStyle}" Grid.Column="2" Grid.Row="1" BorderThickness="2 0 0 0" />
         <Border Style="{StaticResource CellStyle}" Grid.Column="0" Grid.Row="2" />
-        <Border Style="{StaticResource CellStyle}" Grid.Column="1" Grid.Row="2" BorderThickness="0 4 0 0" />
+        <Border Style="{StaticResource CellStyle}" Grid.Column="1" Grid.Row="2" BorderThickness="0 2 0 0" />
         <Border Style="{StaticResource CellStyle}" Grid.Column="2" Grid.Row="2" />
         
         
