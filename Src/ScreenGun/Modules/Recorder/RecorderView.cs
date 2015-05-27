@@ -1,5 +1,5 @@
 ﻿// ScreenGun
-// - ScreenshotView.cs
+// - RecorderView.cs
 // --------------------------------------------------------------------
 // Authors: 
 // - Jeff Hansen <jeff@jeffijoe.com>
@@ -8,12 +8,12 @@
 
 using ScreenGun.Modules.RegionSelector;
 
-namespace ScreenGun.Modules.Screenshot
+namespace ScreenGun.Modules.Recorder
 {
     /// <summary>
-    /// The screenshot view.
+    ///     The screenshot view.
     /// </summary>
-    public class ScreenshotView : RegionSelectorWindow
+    public class RecorderView : RegionSelectorWindow
     {
     }
 }

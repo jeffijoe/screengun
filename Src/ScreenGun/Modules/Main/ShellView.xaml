@@ -19,31 +19,11 @@
     <!-- Window commands -->
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
-            <Button Cursor="Hand" x:Name="NewTooltip" cal:Message.Attach="NewTooltip">
-                <StackPanel Orientation="Horizontal" Height="16">
-                    <Image Source="/Resources/camera.png" SnapsToDevicePixels="true"></Image>
-
-                    <TextBlock Margin="4 0 0 0">
-                    New Screenshot
-                    </TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Cursor="Hand" x:Name="NewScreenshot" cal:Message.Attach="NewScreenshot">
-                <StackPanel Orientation="Horizontal" Height="16">
-                    <Image Source="/Resources/camera.png" SnapsToDevicePixels="true"></Image>
-
-                    <TextBlock Margin="4 0 0 0">
-                    New Screenshot
-                    </TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Cursor="Hand" Name="NewRecording">
+            <Button Cursor="Hand" Name="NewRecording" cal:Message.Attach="NewRecording">
                 <StackPanel Orientation="Horizontal">
                     <Grid>
-                        <Ellipse VerticalAlignment="Center" Fill="Transparent" Stroke="DarkSlateGray" StrokeThickness="2" Width="16" Height="16">
-                        </Ellipse>
-                        <Ellipse VerticalAlignment="Center" Fill="Red" StrokeThickness="2" Width="8" Height="8">
-                        </Ellipse>
+                        <Ellipse VerticalAlignment="Center" Fill="Transparent" Stroke="DarkSlateGray" StrokeThickness="2" Width="16" Height="16" />
+                        <Ellipse VerticalAlignment="Center" Fill="Red" StrokeThickness="2" Width="8" Height="8" />
                     </Grid>
 
                     <TextBlock Margin="4 0 0 0">
@@ -65,8 +45,8 @@
                 <ListBox.ItemContainerStyle>
                     <Style BasedOn="{StaticResource MetroListBoxItem}" TargetType="ListBoxItem">
                         <Setter Property="Padding" Value="0 0 0 0" />
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                        <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
                     </Style>
                 </ListBox.ItemContainerStyle>
             </ListBox>

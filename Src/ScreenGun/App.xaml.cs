@@ -18,7 +18,7 @@ namespace ScreenGun
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="App"/> class.
+        ///     Initializes a new instance of the <see cref="App" /> class.
         /// </summary>
         public App()
         {

@@ -5,16 +5,17 @@
 // - Jeff Hansen <jeff@jeffijoe.com>
 // - Bjarke Søgaard <ekrajb123@gmail.com>
 // Copyright (C) ScreenGun Authors 2015. All rights reserved.
+
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+using ScreenGun.Base;
+
 namespace ScreenGun.Modules.NotifyIcon
 {
-    using System;
-    using System.Drawing;
-    using System.Windows.Forms;
-
-    using ScreenGun.Base;
-
     /// <summary>
-    /// The notify icon view model.
+    ///     The notify icon view model.
     /// </summary>
     public class NotifyIconViewModel : ViewModel, IDisposable
     {
@@ -23,7 +24,7 @@ namespace ScreenGun.Modules.NotifyIcon
         /// <summary>
         ///     The actual icon
         /// </summary>
-        private NotifyIcon actualIcon;
+        private System.Windows.Forms.NotifyIcon actualIcon;
 
         #endregion
 
@@ -48,9 +49,8 @@ namespace ScreenGun.Modules.NotifyIcon
         /// </summary>
         private NotifyIconViewModel()
         {
-            this.actualIcon = new NotifyIcon();
-            this.actualIcon.MouseClick += (sender, args) =>
-            {
+            this.actualIcon = new System.Windows.Forms.NotifyIcon();
+            this.actualIcon.MouseClick += (sender, args) => {
                 switch (args.Button)
                 {
                     case MouseButtons.Left:
@@ -62,9 +62,8 @@ namespace ScreenGun.Modules.NotifyIcon
                 }
             };
             this.AddPropertyChangedEvent(
-                "Icon",
-                args =>
-                {
+                "Icon", 
+                args => {
                     if (this.actualIcon == null)
                     {
                         return;
@@ -75,37 +74,6 @@ namespace ScreenGun.Modules.NotifyIcon
         }
 
         #endregion
-
-        /// <summary>
-        /// Shows the balloon tip.
-        /// </summary>
-        /// <param name="durationMs">The duration ms.</param>
-        /// <param name="title">The title.</param>
-        /// <param name="text">The text.</param>
-        /// <param name="toolTipIcon">The tool tip icon.</param>
-        /// <param name="clicked">The click event to invoke when the tooltip is clicked.</param>
-        public void ShowBalloonTip(int durationMs, string title, string text, ToolTipIcon toolTipIcon, EventHandler clicked)
-        {
-            EventHandler onClicked = null;
-            EventHandler onClosed = null;
-
-            Action disposeTooltip = () => {
-                this.actualIcon.BalloonTipClosed -= onClosed;
-                this.actualIcon.BalloonTipClicked -= onClicked;
-            };
-
-            onClosed = (sender, args) => disposeTooltip();
-            onClicked = (sender, args) =>
-            {
-                clicked(sender, args);
-                disposeTooltip();
-            };
-
-            this.actualIcon.BalloonTipClicked += onClicked;
-            this.actualIcon.BalloonTipClosed += onClosed;
-
-            this.actualIcon.ShowBalloonTip(durationMs, title, text, toolTipIcon);
-        }
 
         #region Public Events
 
@@ -145,6 +113,51 @@ namespace ScreenGun.Modules.NotifyIcon
                 this.actualIcon.Dispose();
                 this.actualIcon = null;
             }
+        }
+
+        /// <summary>
+        /// Shows the balloon tip.
+        /// </summary>
+        /// <param name="durationMs">
+        /// The duration ms.
+        /// </param>
+        /// <param name="title">
+        /// The title.
+        /// </param>
+        /// <param name="text">
+        /// The text.
+        /// </param>
+        /// <param name="toolTipIcon">
+        /// The tool tip icon.
+        /// </param>
+        /// <param name="clicked">
+        /// The click event to invoke when the tooltip is clicked.
+        /// </param>
+        public void ShowBalloonTip(
+            int durationMs, 
+            string title, 
+            string text, 
+            ToolTipIcon toolTipIcon, 
+            EventHandler clicked)
+        {
+            EventHandler onClicked = null;
+            EventHandler onClosed = null;
+
+            Action disposeTooltip = () => {
+                this.actualIcon.BalloonTipClosed -= onClosed;
+                this.actualIcon.BalloonTipClicked -= onClicked;
+            };
+
+            onClosed = (sender, args) => disposeTooltip();
+            onClicked = (sender, args) => {
+                clicked(sender, args);
+                disposeTooltip();
+            };
+
+            this.actualIcon.BalloonTipClicked += onClicked;
+            this.actualIcon.BalloonTipClosed += onClosed;
+
+            this.actualIcon.ShowBalloonTip(durationMs, title, text, toolTipIcon);
         }
 
         #endregion

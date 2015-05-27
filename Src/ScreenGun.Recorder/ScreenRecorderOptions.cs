@@ -21,9 +21,11 @@ namespace ScreenGun.Recorder
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScreenRecorderOptions" /> class.
+        /// Initializes a new instance of the <see cref="ScreenRecorderOptions"/> class.
         /// </summary>
-        /// <param name="recordingRegion">The recording Region.</param>
+        /// <param name="recordingRegion">
+        /// The recording Region.
+        /// </param>
         public ScreenRecorderOptions(Rectangle recordingRegion)
         {
             this.FrameRate = 30;

@@ -124,8 +124,8 @@
     <Compile Include="Modules\RegionSelector\RegionSelectorWindow.xaml.cs">
       <DependentUpon>RegionSelectorWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Screenshot\ScreenshotViewModel.cs" />
-    <Compile Include="Modules\Screenshot\ScreenshotView.cs" />
+    <Compile Include="Modules\Recorder\RecorderView.cs" />
+    <Compile Include="Modules\Recorder\RecorderViewModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -161,7 +161,6 @@
     <Content Include="ffmpeg.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\camera.png" />
     <Resource Include="Resources\screengun_logo.ico" />
     <Resource Include="Resources\screengun_logo.png" />
   </ItemGroup>

@@ -8,7 +8,7 @@
 namespace ScreenGun.Modules.Main
 {
     /// <summary>
-    /// The Shell interface.
+    ///     The Shell interface.
     /// </summary>
     public interface IShell
     {

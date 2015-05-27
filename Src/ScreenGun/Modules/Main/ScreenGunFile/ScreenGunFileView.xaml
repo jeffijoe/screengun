@@ -14,8 +14,8 @@
     </UserControl.Resources>
     <Grid PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="18*"></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="18*" />
+            <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
 
         <StackPanel Orientation="Vertical" Grid.Column="0" Margin="20 16 0 16">
@@ -25,16 +25,14 @@
                 Name="FileName"
                 Foreground="{DynamicResource MaterialDesignBody}"
                 FontWeight="Normal"
-                Margin="0 0 0 4">
-            </TextBlock>
+                Margin="0 0 0 4" />
 
             <TextBlock 
                 Text="{Binding Path=FilePath}"
                 Name="FilePath"
                 FontSize="14"
                 FontWeight="Normal"
-                Foreground="Gray">
-            </TextBlock>
+                Foreground="Gray" />
         </StackPanel>
         <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0 18 10 5">
             <Button Background="Transparent" Name="Delete">

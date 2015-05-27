@@ -12,14 +12,14 @@ using System.Runtime.InteropServices;
 namespace ScreenGun.Recorder.Capturers.GDIPlus
 {
     /// <summary>
-    /// The gdi stuff.
+    ///     The gdi stuff.
     /// </summary>
     internal class GDIStuff
     {
         #region Constants
 
         /// <summary>
-        /// The srccopy.
+        ///     The srccopy.
         /// </summary>
         public const int SRCCOPY = 13369376;
 

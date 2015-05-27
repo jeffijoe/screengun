@@ -6,31 +6,24 @@
 // - Bjarke Søgaard <ekrajb123@gmail.com>
 // Copyright (C) ScreenGun Authors 2015. All rights reserved.
 
+using System;
 using System.Collections.ObjectModel;
+using System.Drawing;
+using System.Windows;
+using System.Windows.Forms;
 
 using Caliburn.Micro;
 
 using ScreenGun.Base;
 using ScreenGun.Modules.Main.ScreenGunFile;
-using ScreenGun.Modules.RegionSelector;
-using ScreenGun.Modules.Screenshot;
+using ScreenGun.Modules.NotifyIcon;
+using ScreenGun.Modules.Recorder;
+
+using Application = System.Windows.Application;
+using MessageBox = System.Windows.MessageBox;
 
 namespace ScreenGun.Modules.Main
 {
-    using System;
-    using System.Drawing;
-    using System.IO;
-    using System.Reflection;
-    using System.Windows;
-    using System.Windows.Forms;
-    using System.Windows.Navigation;
-    using System.Windows.Resources;
-
-    using ScreenGun.Modules.NotifyIcon;
-
-    using Application = System.Windows.Application;
-    using MessageBox = System.Windows.MessageBox;
-
     /// <summary>
     ///     The shell view model.
     /// </summary>
@@ -43,6 +36,9 @@ namespace ScreenGun.Modules.Main
         /// </summary>
         private readonly IWindowManager windowManager;
 
+        /// <summary>
+        /// The notify icon view model.
+        /// </summary>
         private NotifyIconViewModel notifyIconViewModel;
 
         #endregion
@@ -62,7 +58,6 @@ namespace ScreenGun.Modules.Main
             this.Files.Add(new ScreenGunFileViewModel("Recording 1.mp4", "C:\\Recordings\\Recording 1.mp4"));
             this.Files.Add(new ScreenGunFileViewModel("Recording 2.mp4", "C:\\Recordings\\Recording 2.mp4"));
             this.Files.Add(new ScreenGunFileViewModel("Screenshot 1.png", "C:\\Screenshots\\Screenshot 1.png"));
-
         }
 
         #endregion
@@ -82,11 +77,25 @@ namespace ScreenGun.Modules.Main
         #region Public Methods and Operators
 
         /// <summary>
+        /// The initialize.
+        /// </summary>
+        /// <param name="frameworkElement">
+        /// The framework element.
+        /// </param>
+        public void Initialize(FrameworkElement frameworkElement)
+        {
+            var stream = Application.GetResourceStream(new Uri("Resources/screengun_logo.ico", UriKind.Relative)).Stream;
+            this.notifyIconViewModel = new NotifyIconViewModel(new Icon(stream));
+            this.notifyIconViewModel.RightClicked += (sender, args) => Console.WriteLine("Rightclick");
+            this.notifyIconViewModel.LeftClicked += (sender, args) => Console.WriteLine("Leftclick");
+        }
+
+        /// <summary>
         ///     The new screenshot.
         /// </summary>
-        public void NewScreenshot()
+        public void NewRecording()
         {
-            this.windowManager.ShowWindow(new ScreenshotViewModel());
+            this.windowManager.ShowWindow(new RecorderViewModel());
         }
 
         /// <summary>
@@ -95,23 +104,13 @@ namespace ScreenGun.Modules.Main
         public void NewTooltip()
         {
             this.notifyIconViewModel.ShowBalloonTip(
-                2500,
-                "Huehuehue",
-                "Well fak u ya little cunt!",
-                ToolTipIcon.Info,
+                2500, 
+                "Huehuehue", 
+                "Well fak u ya little cunt!", 
+                ToolTipIcon.Info, 
                 (sender, args) => MessageBox.Show("Huehuehue", "caption", MessageBoxButton.OK));
         }
 
         #endregion
-
-        public void Initialize(FrameworkElement frameworkElement)
-        {
-            var stream = Application.GetResourceStream(new Uri("Resources/screengun_logo.ico", UriKind.Relative)).Stream;
-            this.notifyIconViewModel = new NotifyIconViewModel(new Icon(stream));
-            this.notifyIconViewModel.RightClicked += (sender, args) => Console.WriteLine("Rightclick");
-            this.notifyIconViewModel.LeftClicked += (sender, args) => Console.WriteLine("Leftclick");
-
-            this.notifyIconViewModel.
-        }
     }
 }

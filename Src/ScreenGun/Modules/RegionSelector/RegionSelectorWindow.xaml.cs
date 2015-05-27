@@ -20,14 +20,14 @@ namespace ScreenGun.Modules.RegionSelector
         #region Fields
 
         /// <summary>
-        /// The virtual screen.
+        ///     The virtual screen.
         /// </summary>
         private readonly Rect virtualScreen = new Rect(
             new Point(
-                SystemParameters.VirtualScreenLeft,
-                SystemParameters.VirtualScreenTop),
+                SystemParameters.VirtualScreenLeft, 
+                SystemParameters.VirtualScreenTop), 
             new Size(
-                SystemParameters.VirtualScreenWidth,
+                SystemParameters.VirtualScreenWidth, 
                 SystemParameters.VirtualScreenHeight));
 
         /// <summary>
@@ -46,6 +46,11 @@ namespace ScreenGun.Modules.RegionSelector
         private bool isResizing;
 
         /// <summary>
+        ///     The mouse position that was determined in the previous event. Used for calculating point deltas.
+        /// </summary>
+        private Point lastMousePosition;
+
+        /// <summary>
         ///     The recording area.
         /// </summary>
         private Rect relativeRecordingArea;
@@ -54,11 +59,6 @@ namespace ScreenGun.Modules.RegionSelector
         ///     The start position.
         /// </summary>
         private Point startPosition;
-
-        /// <summary>
-        /// The mouse position that was determined in the previous event. Used for calculating point deltas.
-        /// </summary>
-        private Point lastMousePosition;
 
         #endregion
 
@@ -80,11 +80,13 @@ namespace ScreenGun.Modules.RegionSelector
 
         #endregion
 
+        #region Public Properties
+
         /// <summary>
-        /// Gets the recording area.
+        ///     Gets the recording area.
         /// </summary>
         /// <value>
-        /// The recording area.
+        ///     The recording area.
         /// </value>
         public Rect RecordingArea
         {
@@ -94,9 +96,11 @@ namespace ScreenGun.Modules.RegionSelector
                     this.relativeRecordingArea.X + this.virtualScreen.X, 
                     this.relativeRecordingArea.Y + this.virtualScreen.Y, 
                     this.relativeRecordingArea.Width, 
-                    this.relativeRecordingArea.Height);                
+                    this.relativeRecordingArea.Height);
             }
         }
+
+        #endregion
 
         #region Methods
 
@@ -272,9 +276,9 @@ namespace ScreenGun.Modules.RegionSelector
 
             // This makes sure that the recording area is never out of bounds.
             var relativeVirtualScreen = new Rect(
-                this.virtualScreen.X,
-                this.virtualScreen.Y,
-                this.virtualScreen.Width,
+                this.virtualScreen.X, 
+                this.virtualScreen.Y, 
+                this.virtualScreen.Width, 
                 this.virtualScreen.Height);
 
             relativeVirtualScreen.Offset(Math.Abs(this.virtualScreen.X), Math.Abs(this.virtualScreen.Y));

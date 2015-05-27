@@ -20,7 +20,7 @@ namespace ScreenGun.Modules.Main.ScreenGunFile
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScreenGunFileView"/> class.
+        ///     Initializes a new instance of the <see cref="ScreenGunFileView" /> class.
         /// </summary>
         public ScreenGunFileView()
         {
@@ -32,7 +32,7 @@ namespace ScreenGun.Modules.Main.ScreenGunFile
         #region Public Properties
 
         /// <summary>
-        /// Gets the view model.
+        ///     Gets the view model.
         /// </summary>
         public ScreenGunFileViewModel ViewModel
         {
@@ -57,7 +57,10 @@ namespace ScreenGun.Modules.Main.ScreenGunFile
         /// </param>
         private void UIElement_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            DragDrop.DoDragDrop((DependencyObject)sender, new DataObject(DataFormats.FileDrop, this.ViewModel.FilePath), DragDropEffects.Copy);
+            DragDrop.DoDragDrop(
+                (DependencyObject)sender, 
+                new DataObject(DataFormats.FileDrop, this.ViewModel.FilePath), 
+                DragDropEffects.Copy);
         }
 
         #endregion

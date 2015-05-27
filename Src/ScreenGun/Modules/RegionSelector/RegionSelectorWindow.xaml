@@ -11,20 +11,20 @@
         Background="#01ffffff">
     <Window.Resources>
         <Style x:Key="CellStyle" TargetType="Border">
-            <Setter Property="Background" Value="#A000"></Setter>
+            <Setter Property="Background" Value="#A000" />
         </Style>
     </Window.Resources>
 
     <Grid Name="OverlayGrid" MouseLeftButtonDown="OverlayGridMouseDown" MouseMove="OverlayGridOnMouseMove" MouseUp="OverlayGridOnMouseUp">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="LeftColumn" Width="*"></ColumnDefinition>
-            <ColumnDefinition x:Name="CenterColumn" Width="*"></ColumnDefinition>
-            <ColumnDefinition x:Name="RightColumn" Width="*"></ColumnDefinition>
+            <ColumnDefinition x:Name="LeftColumn" Width="*" />
+            <ColumnDefinition x:Name="CenterColumn" Width="*" />
+            <ColumnDefinition x:Name="RightColumn" Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition x:Name="TopRow" Height="*"></RowDefinition>
-            <RowDefinition x:Name="CenterRow" Height="*"></RowDefinition>
-            <RowDefinition x:Name="BottomRow" Height="*"></RowDefinition>
+            <RowDefinition x:Name="TopRow" Height="*" />
+            <RowDefinition x:Name="CenterRow" Height="*" />
+            <RowDefinition x:Name="BottomRow" Height="*" />
         </Grid.RowDefinitions>
     
         <!-- Top Left -->
@@ -52,9 +52,9 @@
         <Border Style="{StaticResource CellStyle}" Grid.Column="1" Grid.Row="0">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                    <ColumnDefinition Width="20*"></ColumnDefinition>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
                 <Rectangle 
                     Cursor="SizeAll"
@@ -104,9 +104,9 @@
         <Border Style="{StaticResource CellStyle}" Grid.Column="0" Grid.Row="1">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"></RowDefinition>
-                    <RowDefinition Height="20*"></RowDefinition>
-                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="20*" />
+                    <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
                 <Rectangle 
                     Cursor="SizeAll"
@@ -156,6 +156,7 @@
                 <StackPanel Orientation="Horizontal" Margin="20 6">
                     <Button Style="{StaticResource MaterialDesignFlatButton}">Start</Button>
                     <Button Style="{StaticResource MaterialDesignFlatButton}">Fullscreen</Button>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}">Cancel</Button>
                 </StackPanel>
             </Border>
             
@@ -165,9 +166,9 @@
         <Border Style="{StaticResource CellStyle}" Grid.Column="2" Grid.Row="1">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"></RowDefinition>
-                    <RowDefinition Height="20*"></RowDefinition>
-                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="20*" />
+                    <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
                 <Rectangle 
                     Cursor="SizeAll"
@@ -217,9 +218,9 @@
         <Border Style="{StaticResource CellStyle}" Grid.Column="1" Grid.Row="2">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                    <ColumnDefinition Width="20*"></ColumnDefinition>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
                 <Rectangle 
                     Cursor="SizeAll"

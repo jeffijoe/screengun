@@ -60,7 +60,7 @@ namespace ScreenGun.Modules.Main.ScreenGunFile
         #region Public Methods and Operators
 
         /// <summary>
-        /// The delete.
+        ///     The delete.
         /// </summary>
         public void Delete()
         {

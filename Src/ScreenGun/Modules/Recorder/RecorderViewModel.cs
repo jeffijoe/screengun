@@ -1,5 +1,5 @@
 ﻿// ScreenGun
-// - RegionSelectorViewModel.cs
+// - RecorderViewModel.cs
 // --------------------------------------------------------------------
 // Authors: 
 // - Jeff Hansen <jeff@jeffijoe.com>
@@ -8,12 +8,12 @@
 
 using ScreenGun.Base;
 
-namespace ScreenGun.Modules.Screenshot
+namespace ScreenGun.Modules.Recorder
 {
     /// <summary>
-    /// View Model for the Region Selector.
+    ///     View Model for the Recorder.
     /// </summary>
-    public class ScreenshotViewModel : ViewModel
+    public class RecorderViewModel : ViewModel
     {
     }
 }
