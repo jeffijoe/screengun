@@ -19,6 +19,15 @@
     <!-- Window commands -->
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
+            <Button Cursor="Hand" x:Name="NewTooltip" cal:Message.Attach="NewTooltip">
+                <StackPanel Orientation="Horizontal" Height="16">
+                    <Image Source="/Resources/camera.png" SnapsToDevicePixels="true"></Image>
+
+                    <TextBlock Margin="4 0 0 0">
+                    New Screenshot
+                    </TextBlock>
+                </StackPanel>
+            </Button>
             <Button Cursor="Hand" x:Name="NewScreenshot" cal:Message.Attach="NewScreenshot">
                 <StackPanel Orientation="Horizontal" Height="16">
                     <Image Source="/Resources/camera.png" SnapsToDevicePixels="true"></Image>
