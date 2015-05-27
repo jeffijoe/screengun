@@ -20,14 +20,15 @@ namespace ScreenGun.Modules.RegionSelector
         #region Fields
 
         /// <summary>
-        ///     The virtual screen height.
+        /// The virtual screen.
         /// </summary>
-        private readonly double screenHeight = SystemParameters.VirtualScreenHeight;
-
-        /// <summary>
-        ///     The virtual screen width.
-        /// </summary>
-        private readonly double screenWidth = SystemParameters.VirtualScreenWidth;
+        private readonly Rect virtualScreen = new Rect(
+            new Point(
+                SystemParameters.VirtualScreenLeft,
+                SystemParameters.VirtualScreenTop),
+            new Size(
+                SystemParameters.VirtualScreenWidth,
+                SystemParameters.VirtualScreenHeight));
 
         /// <summary>
         ///     The end position.
@@ -47,12 +48,17 @@ namespace ScreenGun.Modules.RegionSelector
         /// <summary>
         ///     The recording area.
         /// </summary>
-        private Rect recordingArea;
+        private Rect relativeRecordingArea;
 
         /// <summary>
         ///     The start position.
         /// </summary>
         private Point startPosition;
+
+        /// <summary>
+        /// The mouse position that was determined in the previous event. Used for calculating point deltas.
+        /// </summary>
+        private Point lastMousePosition;
 
         #endregion
 
@@ -64,15 +70,33 @@ namespace ScreenGun.Modules.RegionSelector
         public RegionSelectorWindow()
         {
             this.InitializeComponent();
-            this.Top = SystemParameters.VirtualScreenTop;
-            this.Left = SystemParameters.VirtualScreenLeft;
-            this.Width = this.screenWidth;
-            this.Height = this.screenHeight;
-            this.recordingArea = new Rect();
+            this.Top = this.virtualScreen.Top;
+            this.Left = this.virtualScreen.Left;
+            this.Width = this.virtualScreen.Width;
+            this.Height = this.virtualScreen.Height;
+            this.relativeRecordingArea = new Rect();
             this.UpdateUI();
         }
 
         #endregion
+
+        /// <summary>
+        /// Gets the recording area.
+        /// </summary>
+        /// <value>
+        /// The recording area.
+        /// </value>
+        public Rect RecordingArea
+        {
+            get
+            {
+                return new Rect(
+                    this.relativeRecordingArea.X + this.virtualScreen.X, 
+                    this.relativeRecordingArea.Y + this.virtualScreen.Y, 
+                    this.relativeRecordingArea.Width, 
+                    this.relativeRecordingArea.Height);                
+            }
+        }
 
         #region Methods
 
@@ -87,7 +111,7 @@ namespace ScreenGun.Modules.RegionSelector
         /// </param>
         private void OverlayGridMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (this.isResizing)
+            if (this.isResizing || this.isMoving)
             {
                 return;
             }
@@ -143,6 +167,7 @@ namespace ScreenGun.Modules.RegionSelector
         /// </param>
         private void RecordingRegionMouseLeftDown(object sender, MouseButtonEventArgs e)
         {
+            this.lastMousePosition = e.GetPosition(this.OverlayGrid);
             this.isMoving = true;
         }
 
@@ -175,6 +200,18 @@ namespace ScreenGun.Modules.RegionSelector
             {
                 return;
             }
+
+            var position = e.GetPosition(this.OverlayGrid);
+            if (this.lastMousePosition == default(Point))
+            {
+                this.lastMousePosition = position;
+            }
+
+            var delta = position - this.lastMousePosition;
+            this.lastMousePosition = position;
+            this.startPosition += delta;
+            this.endPosition += delta;
+            this.UpdatePosition();
         }
 
         /// <summary>
@@ -188,16 +225,21 @@ namespace ScreenGun.Modules.RegionSelector
         /// </param>
         private void ResizeGripMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (this.isResizing)
+            {
+                return;
+            }
+
             Point position = e.GetPosition(this.OverlayGrid);
             this.isResizing = true;
             this.endPosition = position;
 
             var edges = new[]
             {
-                this.recordingArea.TopLeft, 
-                this.recordingArea.TopRight, 
-                this.recordingArea.BottomLeft, 
-                this.recordingArea.BottomRight
+                this.relativeRecordingArea.TopLeft, 
+                this.relativeRecordingArea.TopRight, 
+                this.relativeRecordingArea.BottomLeft, 
+                this.relativeRecordingArea.BottomRight
             };
 
             var furthestAway = new Point();
@@ -226,7 +268,17 @@ namespace ScreenGun.Modules.RegionSelector
             var y = Math.Min(this.startPosition.Y, this.endPosition.Y);
             var width = Math.Abs(this.startPosition.X - this.endPosition.X);
             var height = Math.Abs(this.startPosition.Y - this.endPosition.Y);
-            this.recordingArea = new Rect(x, y, width, height);
+            this.relativeRecordingArea = new Rect(x, y, width, height);
+
+            // This makes sure that the recording area is never out of bounds.
+            var relativeVirtualScreen = new Rect(
+                this.virtualScreen.X,
+                this.virtualScreen.Y,
+                this.virtualScreen.Width,
+                this.virtualScreen.Height);
+
+            relativeVirtualScreen.Offset(Math.Abs(this.virtualScreen.X), Math.Abs(this.virtualScreen.Y));
+            this.relativeRecordingArea.Intersect(relativeVirtualScreen);
             this.UpdateUI();
         }
 
@@ -235,10 +287,10 @@ namespace ScreenGun.Modules.RegionSelector
         /// </summary>
         private void UpdateUI()
         {
-            this.LeftColumn.Width = new GridLength(this.recordingArea.Left);
-            this.RightColumn.Width = new GridLength(this.screenWidth - this.recordingArea.Right);
-            this.TopRow.Height = new GridLength(this.recordingArea.Top);
-            this.BottomRow.Height = new GridLength(this.screenHeight - this.recordingArea.Bottom);
+            this.LeftColumn.Width = new GridLength(this.relativeRecordingArea.Left);
+            this.RightColumn.Width = new GridLength(this.virtualScreen.Width - this.relativeRecordingArea.Right);
+            this.TopRow.Height = new GridLength(this.relativeRecordingArea.Top);
+            this.BottomRow.Height = new GridLength(this.virtualScreen.Height - this.relativeRecordingArea.Bottom);
         }
 
         #endregion
