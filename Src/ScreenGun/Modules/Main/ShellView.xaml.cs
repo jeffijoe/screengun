@@ -10,6 +10,9 @@ using MahApps.Metro.Controls;
 
 namespace ScreenGun.Modules.Main
 {
+    using System;
+    using System.Windows;
+
     /// <summary>
     /// Shell view.
     /// </summary>
@@ -21,6 +24,20 @@ namespace ScreenGun.Modules.Main
         public ShellView()
         {
             this.InitializeComponent();
+            this.Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            this.ViewModel.Initialize(this);
+        }
+
+        public ShellViewModel ViewModel
+        {
+            get
+            {
+                return this.DataContext as ShellViewModel;
+            }
         }
     }
 }
