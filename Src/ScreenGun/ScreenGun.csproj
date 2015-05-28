@@ -88,6 +88,21 @@
     <Compile Include="Icons\IconRecord.xaml.cs">
       <DependentUpon>IconRecord.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Icons\IconClose.xaml.cs">
+      <DependentUpon>IconClose.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\IconFullscreen.xaml.cs">
+      <DependentUpon>IconFullscreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\IconFullscreenExit.xaml.cs">
+      <DependentUpon>IconFullscreenExit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\IconMic.xaml.cs">
+      <DependentUpon>IconMic.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\IconMicOff.xaml.cs">
+      <DependentUpon>IconMicOff.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Main\IShell.cs" />
     <Compile Include="Modules\Main\ScreenGunFile\ScreenGunFileView.xaml.cs">
       <DependentUpon>ScreenGunFileView.xaml</DependentUpon>
@@ -108,6 +123,26 @@
     <Page Include="Icons\IconRecord.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\IconClose.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Icons\IconFullscreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Icons\IconFullscreenExit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Icons\IconMic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Icons\IconMicOff.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Modules\Main\ScreenGunFile\ScreenGunFileView.xaml">
       <SubType>Designer</SubType>

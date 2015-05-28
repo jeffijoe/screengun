@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="ScreenGun.Icons.IconFullscreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Path Data="F 1 M 7,14 L 5,14 5,19 10,19 10,17 7,17 7,14 Z M 5,10 L 7,10 7,7 10,7 10,5 5,5 5,10 Z 
+              M 17,17 L 14,17 14,19 19,19 19,14 17,14 17,17 Z M 14,5 L 14,7 17,7 17,10 19,10 19,5 14,5 Z"
+              Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=IconBackground}"/>
+    </Grid>
+</UserControl>
