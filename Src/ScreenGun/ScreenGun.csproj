@@ -128,6 +128,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Modules\NotifyIcon\NotifyIconViewModel.cs" />
+    <Compile Include="Modules\RegionSelector\RegionChange.cs" />
+    <Compile Include="Modules\RegionSelector\RegionChangeArgs.cs" />
     <Compile Include="Modules\RegionSelector\RegionSelectorWindow.xaml.cs">
       <DependentUpon>RegionSelectorWindow.xaml</DependentUpon>
     </Compile>

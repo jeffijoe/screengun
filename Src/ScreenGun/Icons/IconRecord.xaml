@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="32" d:DesignWidth="32">
     <Grid>
         <Ellipse VerticalAlignment="Center" Fill="Transparent" Stroke="{Binding OuterColor}" StrokeThickness="{Binding SizeEighth}" Width="{Binding Size}" Height="{Binding Size}" />
         <Ellipse VerticalAlignment="Center" Fill="{Binding InnerColor}" StrokeThickness="{Binding SizeEighth}" Width="{Binding SizeHalf}" Height="{Binding SizeHalf}" />

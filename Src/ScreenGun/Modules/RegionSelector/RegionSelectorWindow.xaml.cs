@@ -7,8 +7,12 @@
 // Copyright (C) ScreenGun Authors 2015. All rights reserved.
 
 using System;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Input;
+
+using Point = System.Windows.Point;
+using Size = System.Windows.Size;
 
 namespace ScreenGun.Modules.RegionSelector
 {
@@ -70,17 +74,34 @@ namespace ScreenGun.Modules.RegionSelector
         public RegionSelectorWindow()
         {
             this.InitializeComponent();
+            this.Closed += (sender, args) => this.RegionChange = null;
             this.Top = this.virtualScreen.Top;
             this.Left = this.virtualScreen.Left;
             this.Width = this.virtualScreen.Width;
             this.Height = this.virtualScreen.Height;
-            this.relativeRecordingArea = new Rect();
             this.UpdateUI();
         }
 
         #endregion
 
+        #region Public Events
+
+        /// <summary>
+        ///     Occurs when the region changes.
+        /// </summary>
+        public event RegionChange RegionChange;
+
+        #endregion
+
         #region Public Properties
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether this <see cref="RegionSelectorWindow" /> is locked.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if locked; otherwise, <c>false</c>.
+        /// </value>
+        public bool Locked { get; set; }
 
         /// <summary>
         ///     Gets the recording area.
@@ -115,7 +136,7 @@ namespace ScreenGun.Modules.RegionSelector
         /// </param>
         private void OverlayGridMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (this.isResizing || this.isMoving)
+            if (this.isResizing || this.isMoving || this.Locked)
             {
                 return;
             }
@@ -132,11 +153,11 @@ namespace ScreenGun.Modules.RegionSelector
         /// The source of the event.
         /// </param>
         /// <param name="e">
-        /// The <see cref="MouseEventArgs"/> instance containing the event data.
+        /// The <see cref="System.Windows.Input.MouseEventArgs"/> instance containing the event data.
         /// </param>
         private void OverlayGridOnMouseMove(object sender, MouseEventArgs e)
         {
-            if (this.isResizing == false)
+            if (this.isResizing == false || this.Locked)
             {
                 return;
             }
@@ -200,7 +221,7 @@ namespace ScreenGun.Modules.RegionSelector
         /// </param>
         private void RecordingRegionMouseMove(object sender, MouseEventArgs e)
         {
-            if (this.isMoving == false)
+            if (this.isMoving == false || this.Locked)
             {
                 return;
             }
@@ -229,7 +250,7 @@ namespace ScreenGun.Modules.RegionSelector
         /// </param>
         private void ResizeGripMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (this.isResizing)
+            if (this.isResizing || this.Locked)
             {
                 return;
             }
@@ -284,6 +305,14 @@ namespace ScreenGun.Modules.RegionSelector
             relativeVirtualScreen.Offset(Math.Abs(this.virtualScreen.X), Math.Abs(this.virtualScreen.Y));
             this.relativeRecordingArea.Intersect(relativeVirtualScreen);
             this.UpdateUI();
+
+            var handler = this.RegionChange;
+            if (handler != null)
+            {
+                var area = this.RecordingArea;
+                handler.Invoke(
+                    new RegionChangeArgs(new Rectangle((int)area.X, (int)area.Y, (int)area.Width, (int)area.Height)));
+            }
         }
 
         /// <summary>
