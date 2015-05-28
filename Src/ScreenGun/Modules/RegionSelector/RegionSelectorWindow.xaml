@@ -156,6 +156,7 @@
                 <StackPanel Orientation="Horizontal" Margin="20 6">
                     <Button Style="{StaticResource MaterialDesignFlatButton}">Start</Button>
                     <Button Style="{StaticResource MaterialDesignFlatButton}">Fullscreen</Button>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}">Microphone</Button>
                     <Button Style="{StaticResource MaterialDesignFlatButton}">Cancel</Button>
                 </StackPanel>
             </Border>
