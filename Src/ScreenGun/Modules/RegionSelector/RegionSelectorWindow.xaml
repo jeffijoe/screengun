@@ -27,7 +27,7 @@
             <RowDefinition x:Name="CenterRow" Height="*" />
             <RowDefinition x:Name="BottomRow" Height="*" />
         </Grid.RowDefinitions>
-    
+
         <!-- Top Left -->
         <Border Style="{StaticResource CellStyle}" Grid.Column="0" Grid.Row="0">
             <Grid 
@@ -35,7 +35,7 @@
                 HorizontalAlignment="Right" 
                 VerticalAlignment="Bottom"
                 Cursor="SizeAll">
-                
+
                 <Rectangle 
                     Fill="White" 
                     Width="5" 
@@ -48,7 +48,7 @@
                     VerticalAlignment="Top"/>
             </Grid>
         </Border>
-        
+
         <!-- Top Center -->
         <Border Style="{StaticResource CellStyle}" Grid.Column="1" Grid.Row="0">
             <Grid>
@@ -102,7 +102,7 @@
         </Border>
 
         <!-- Center Left -->
-        <Border Style="{StaticResource CellStyle}" Grid.Column="0" Grid.Row="1">
+        <Border Style="{StaticResource CellStyle}" Grid.Column="0" Grid.Row="1" Margin="-5,0,5,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*" />
@@ -144,7 +144,7 @@
             PreviewMouseLeftButtonDown="RecordingRegionMouseLeftDown"
             PreviewMouseMove="RecordingRegionMouseMove"
             PreviewMouseLeftButtonUp="RecordingRegionMouseLeftUp">
-                
+
             <Border 
                 Cursor="Arrow"
                 VerticalAlignment="Center" 
@@ -153,28 +153,57 @@
                 Background="#AF000000" 
                 BorderBrush="#AFFFFFFF" 
                 BorderThickness="2">
-                <StackPanel Orientation="Horizontal" Margin="20 6">
+                <Grid Margin="20 6" MinWidth="160">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
                     <Button Name="StartRecording" 
                             Style="{StaticResource MaterialDesignFlatButton}" 
-                            Padding="4"
-                            ToolTip="Start recording">
-                        <icons:IconRecord Size="24" OuterColor="{DynamicResource PrimaryHueMidBrush}" InnerColor="{DynamicResource PrimaryHueMidBrush}"></icons:IconRecord>
+                            Padding="0"
+                            ToolTip="Start recording"
+                            Grid.Column="0">
+                        <icons:IconRecord Size="24" OuterColor="{DynamicResource PrimaryHueMidBrush}" 
+                                          InnerColor="{DynamicResource PrimaryHueMidBrush}"></icons:IconRecord>
                     </Button>
                     <Button Name="ToggleFullscreen" 
                             Style="{StaticResource MaterialDesignFlatButton}" 
-                            Padding="4"
-                            ToolTip="Toggle Fullscreen">
-                        <icons:IconFullscreen IconBackground="{DynamicResource PrimaryHueMidBrush}"></icons:IconFullscreen>
+                            Padding="0"
+                            ToolTip="Toggle Fullscreen"
+                            Grid.Column="1">
+                        <icons:IconFullscreen IconBackground="{DynamicResource PrimaryHueMidBrush}">
+                            <!--<icons:IconFullscreen.RenderTransform>
+                                <ScaleTransform ScaleX="1.5" ScaleY="1.5" CenterX="0" CenterY="12" />
+                            </icons:IconFullscreen.RenderTransform>-->
+                        </icons:IconFullscreen>
                     </Button>
-                    <Button Name="ToggleMicrophone" Style="{StaticResource MaterialDesignFlatButton}">Microphone</Button>
-                    <Button Name="Cancel" Style="{StaticResource MaterialDesignFlatButton}">Cancel</Button>
-                </StackPanel>
+                    <Button Name="ToggleMicrophone" Style="{StaticResource MaterialDesignFlatButton}"
+                            Padding="0"
+                            Grid.Column="2">
+                        <icons:IconMic IconBackground="{DynamicResource PrimaryHueMidBrush}">
+                            <!--<icons:IconMic.RenderTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="1.25" CenterX="0" CenterY="12" />
+                            </icons:IconMic.RenderTransform>-->
+                        </icons:IconMic>
+                    </Button>
+                    <Button Name="Cancel" Style="{StaticResource MaterialDesignFlatButton}"
+                            Grid.Column="3" 
+                            Padding="0">
+                        <icons:IconClose IconBackground="{DynamicResource PrimaryHueMidBrush}" RenderTransformOrigin="0.5, 0.5">
+                            <icons:IconClose.RenderTransform>
+                                <ScaleTransform ScaleY="1" ScaleX="1"></ScaleTransform>
+                            </icons:IconClose.RenderTransform>
+                        </icons:IconClose>
+                    </Button>
+                </Grid>
             </Border>
-            
+
         </Border>
 
         <!-- Center Right -->
-        <Border Style="{StaticResource CellStyle}" Grid.Column="2" Grid.Row="1">
+        <Border Style="{StaticResource CellStyle}" Grid.Column="2" Margin="0,173,0,5" Grid.RowSpan="2">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*" />

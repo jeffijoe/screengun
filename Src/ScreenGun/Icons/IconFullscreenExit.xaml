@@ -4,10 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             Width="24" Height="24">
     <Grid>
         <Path Data="F 1 M 5,16 L 8,16 8,19 10,19 10,14 5,14 5,16 Z M 8,8 L 5,8 5,10 10,10 10,5 8,5 8,8 Z M 14,19 
               L 16,19 16,16 19,16 19,14 14,14 14,19 Z M 16,8 L 16,5 14,5 14,10 19,10 19,8 16,8 Z"
-              Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=IconBackground}"/>
+              Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=IconBackground}"
+              RenderTransformOrigin="0.5,0.5" Width="24" Height="24"/>
     </Grid>
 </UserControl>
