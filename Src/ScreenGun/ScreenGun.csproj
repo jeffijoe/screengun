@@ -105,6 +105,7 @@
     <Compile Include="Icons\IconMicOff.xaml.cs">
       <DependentUpon>IconMicOff.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Misc\Command.cs" />
     <Compile Include="Modules\Main\IShell.cs" />
     <Compile Include="Modules\Main\ScreenGunFile\ScreenGunFileView.xaml.cs">
       <DependentUpon>ScreenGunFileView.xaml</DependentUpon>

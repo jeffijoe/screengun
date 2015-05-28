@@ -20,8 +20,8 @@
         </Style>
         <converters:BooleanToColorConverter TrueColor="{DynamicResource PrimaryHueMidBrush}" FalseColor="White" x:Key="IconColorConverter" />
         <converters:BetterBooleanToVisibilityConverter 
-            TrueVisibility="Collapsed" 
-            FalseVisibility="Hidden"
+            TrueVisibility="Visible" 
+            FalseVisibility="Collapsed"
             x:Key="VisibilityConverter"/>
         <converters:BetterBooleanToVisibilityConverter 
             TrueVisibility="Collapsed" 
@@ -167,6 +167,7 @@
                 BorderBrush="#AFFFFFFF" 
                 BorderThickness="2">
                 <StackPanel Orientation="Horizontal" Margin="20 6">
+                    
                     <Button Name="StartRecording" 
                             Style="{StaticResource MaterialDesignFlatButton}" 
                             Padding="4"
@@ -192,6 +193,7 @@
                     <Button 
                         Name="ToggleMicrophone" 
                         Style="{StaticResource MaterialDesignFlatButton}"
+                        Padding="4"
                         ToolTip="Toggle Microphone">
                         <StackPanel>
                             <icons:IconMic 
@@ -204,6 +206,7 @@
                     </Button>
                     <Button 
                         Name="Cancel" 
+                        Padding="4"
                         Style="{StaticResource MaterialDesignFlatButton}">
                         <icons:IconClose 
                             IconBackground="White" />

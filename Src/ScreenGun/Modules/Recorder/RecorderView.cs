@@ -8,7 +8,9 @@
 
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 
+using ScreenGun.Misc;
 using ScreenGun.Modules.RegionSelector;
 
 namespace ScreenGun.Modules.Recorder
@@ -27,6 +29,9 @@ namespace ScreenGun.Modules.Recorder
         {
             this.RegionChange += this.OnRegionChange;
             this.DataContextChanged += this.OnDataContextChanged;
+
+            var command = new Command(() => this.ViewModel.Close());
+            this.InputBindings.Add(new KeyBinding(command, Key.Escape, ModifierKeys.None));
         }
 
         #endregion
