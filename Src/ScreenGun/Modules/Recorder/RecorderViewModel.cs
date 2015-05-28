@@ -62,7 +62,6 @@ namespace ScreenGun.Modules.Recorder
         public void Cancel()
         {
             this.TryClose();
-            Console.WriteLine("Cancel");
         }
 
         /// <summary>
@@ -70,7 +69,7 @@ namespace ScreenGun.Modules.Recorder
         /// </summary>
         public void StartRecording()
         {
-            Console.WriteLine("Start recording");
+            this.IsRecording = true;
         }
 
         /// <summary>
@@ -78,7 +77,7 @@ namespace ScreenGun.Modules.Recorder
         /// </summary>
         public void ToggleFullScreen()
         {
-            Console.WriteLine("Toggle Fullscreen");
+            this.IsFullScreen = !this.IsFullScreen;
         }
 
         /// <summary>
@@ -86,7 +85,7 @@ namespace ScreenGun.Modules.Recorder
         /// </summary>
         public void ToggleMicrophone()
         {
-            Console.WriteLine("Toggle microphone");
+            this.UseMicrophone = !this.UseMicrophone;
         }
 
         /// <summary>

@@ -1,8 +1,12 @@
 ﻿<Window x:Class="ScreenGun.Modules.RegionSelector.RegionSelectorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:icons="clr-namespace:ScreenGun.Icons"
-        Title="RegionSelectorView"
+        xmlns:converters="clr-namespace:ScreenGun.Converters"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Record Screen"
         WindowStyle="None"
         WindowStartupLocation="Manual"
         Left="0"
@@ -14,6 +18,15 @@
         <Style x:Key="CellStyle" TargetType="Border">
             <Setter Property="Background" Value="#A000" />
         </Style>
+        <converters:BooleanToColorConverter TrueColor="{DynamicResource PrimaryHueMidBrush}" FalseColor="White" x:Key="IconColorConverter" />
+        <converters:BetterBooleanToVisibilityConverter 
+            TrueVisibility="Collapsed" 
+            FalseVisibility="Hidden"
+            x:Key="VisibilityConverter"/>
+        <converters:BetterBooleanToVisibilityConverter 
+            TrueVisibility="Collapsed" 
+            FalseVisibility="Visible"
+            x:Key="InvertedVisibilityConverter"/>
     </Window.Resources>
 
     <Grid Name="OverlayGrid" MouseLeftButtonDown="OverlayGridMouseDown" MouseMove="OverlayGridOnMouseMove" MouseUp="OverlayGridOnMouseUp">
@@ -158,16 +171,43 @@
                             Style="{StaticResource MaterialDesignFlatButton}" 
                             Padding="4"
                             ToolTip="Start recording">
-                        <icons:IconRecord Size="24" OuterColor="{DynamicResource PrimaryHueMidBrush}" InnerColor="{DynamicResource PrimaryHueMidBrush}"></icons:IconRecord>
+                        <icons:IconRecord 
+                            Size="24" 
+                            OuterColor="White" 
+                            InnerColor="White"></icons:IconRecord>
                     </Button>
                     <Button Name="ToggleFullscreen" 
                             Style="{StaticResource MaterialDesignFlatButton}" 
                             Padding="4"
                             ToolTip="Toggle Fullscreen">
-                        <icons:IconFullscreen IconBackground="{DynamicResource PrimaryHueMidBrush}"></icons:IconFullscreen>
+                        <StackPanel>
+                            <icons:IconFullscreen 
+                                IconBackground="White"
+                                Visibility="{Binding Path=IsFullScreen, Converter={StaticResource InvertedVisibilityConverter}}" />
+                            <icons:IconFullscreenExit
+                                IconBackground="{DynamicResource PrimaryHueMidBrush}"
+                                Visibility="{Binding Path=IsFullScreen, Converter={StaticResource VisibilityConverter}}" />
+                        </StackPanel>                    
                     </Button>
-                    <Button Name="ToggleMicrophone" Style="{StaticResource MaterialDesignFlatButton}">Microphone</Button>
-                    <Button Name="Cancel" Style="{StaticResource MaterialDesignFlatButton}">Cancel</Button>
+                    <Button 
+                        Name="ToggleMicrophone" 
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        ToolTip="Toggle Microphone">
+                        <StackPanel>
+                            <icons:IconMic 
+                                IconBackground="White"
+                                Visibility="{Binding Path=UseMicrophone, Converter={StaticResource InvertedVisibilityConverter}}" />
+                            <icons:IconMicOff
+                                IconBackground="{DynamicResource PrimaryHueMidBrush}"
+                                Visibility="{Binding Path=UseMicrophone, Converter={StaticResource VisibilityConverter}}" />
+                        </StackPanel>
+                    </Button>
+                    <Button 
+                        Name="Cancel" 
+                        Style="{StaticResource MaterialDesignFlatButton}">
+                        <icons:IconClose 
+                            IconBackground="White" />
+                    </Button>
                 </StackPanel>
             </Border>
             

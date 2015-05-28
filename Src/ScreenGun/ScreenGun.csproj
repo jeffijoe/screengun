@@ -85,6 +85,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Converters\BetterBooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\BooleanToColorConverter.cs" />
     <Compile Include="Icons\IconRecord.xaml.cs">
       <DependentUpon>IconRecord.xaml</DependentUpon>
     </Compile>
