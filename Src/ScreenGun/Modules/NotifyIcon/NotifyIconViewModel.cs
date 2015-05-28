@@ -113,6 +113,9 @@ namespace ScreenGun.Modules.NotifyIcon
                 this.actualIcon.Dispose();
                 this.actualIcon = null;
             }
+
+            this.LeftClicked = null;
+            this.RightClicked = null;
         }
 
         /// <summary>
@@ -138,7 +141,7 @@ namespace ScreenGun.Modules.NotifyIcon
             string title, 
             string text, 
             ToolTipIcon toolTipIcon, 
-            EventHandler clicked)
+            EventHandler clicked = null)
         {
             EventHandler onClicked = null;
             EventHandler onClosed = null;
@@ -150,14 +153,21 @@ namespace ScreenGun.Modules.NotifyIcon
 
             onClosed = (sender, args) => disposeTooltip();
             onClicked = (sender, args) => {
-                clicked(sender, args);
+                if (clicked != null)
+                {
+                    clicked(sender, args);
+                }
+
                 disposeTooltip();
             };
 
             this.actualIcon.BalloonTipClicked += onClicked;
             this.actualIcon.BalloonTipClosed += onClosed;
-
-            this.actualIcon.ShowBalloonTip(durationMs, title, text, toolTipIcon);
+            this.actualIcon.Visible = true;
+            this.actualIcon.BalloonTipIcon = toolTipIcon;
+            this.actualIcon.BalloonTipText = text;
+            this.actualIcon.BalloonTipTitle = title;
+            this.actualIcon.ShowBalloonTip(durationMs);
         }
 
         #endregion

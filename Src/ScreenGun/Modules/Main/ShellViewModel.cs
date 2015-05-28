@@ -84,10 +84,10 @@ namespace ScreenGun.Modules.Main
         /// </param>
         public void Initialize(FrameworkElement frameworkElement)
         {
-            var stream = Application.GetResourceStream(new Uri("Resources/screengun_logo.ico", UriKind.Relative)).Stream;
-            this.notifyIconViewModel = new NotifyIconViewModel(new Icon(stream));
-            this.notifyIconViewModel.RightClicked += (sender, args) => Console.WriteLine("Rightclick");
-            this.notifyIconViewModel.LeftClicked += (sender, args) => Console.WriteLine("Leftclick");
+            //var stream = Application.GetResourceStream(new Uri("Resources/screengun_logo.ico", UriKind.Relative)).Stream;
+            //this.notifyIconViewModel = new NotifyIconViewModel(new Icon(stream));
+            //this.notifyIconViewModel.RightClicked += (sender, args) => Console.WriteLine("Rightclick");
+            //this.notifyIconViewModel.LeftClicked += (sender, args) => Console.WriteLine("Leftclick");
         }
 
         /// <summary>
