@@ -1,6 +1,7 @@
 ﻿<Window x:Class="ScreenGun.Modules.RegionSelector.RegionSelectorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:icons="clr-namespace:ScreenGun.Icons"
         Title="RegionSelectorView"
         WindowStyle="None"
         WindowStartupLocation="Manual"
@@ -144,7 +145,6 @@
             PreviewMouseMove="RecordingRegionMouseMove"
             PreviewMouseLeftButtonUp="RecordingRegionMouseLeftUp">
                 
-            
             <Border 
                 Cursor="Arrow"
                 VerticalAlignment="Center" 
@@ -154,7 +154,9 @@
                 BorderBrush="#AFFFFFFF" 
                 BorderThickness="2">
                 <StackPanel Orientation="Horizontal" Margin="20 6">
-                    <Button Style="{StaticResource MaterialDesignFlatButton}">Start</Button>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" Padding="4" ToolTip="Start recording">
+                        <icons:IconRecord Size="24" OuterColor="{DynamicResource PrimaryHueMidBrush}" InnerColor="{DynamicResource PrimaryHueMidBrush}"></icons:IconRecord>
+                    </Button>
                     <Button Style="{StaticResource MaterialDesignFlatButton}">Fullscreen</Button>
                     <Button Style="{StaticResource MaterialDesignFlatButton}">Microphone</Button>
                     <Button Style="{StaticResource MaterialDesignFlatButton}">Cancel</Button>

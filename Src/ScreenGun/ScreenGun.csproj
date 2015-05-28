@@ -85,6 +85,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Icons\IconRecord.xaml.cs">
+      <DependentUpon>IconRecord.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Main\IShell.cs" />
     <Compile Include="Modules\Main\ScreenGunFile\ScreenGunFileView.xaml.cs">
       <DependentUpon>ScreenGunFileView.xaml</DependentUpon>
@@ -102,6 +105,10 @@
     <Compile Include="Icons\IconDelete.xaml.cs">
       <DependentUpon>IconDelete.xaml</DependentUpon>
     </Compile>
+    <Page Include="Icons\IconRecord.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\Main\ScreenGunFile\ScreenGunFileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:cal="http://www.caliburnproject.org"
+    xmlns:icons="clr-namespace:ScreenGun.Icons"
     mc:Ignorable="d" x:Class="ScreenGun.Modules.Main.ShellView"
     WindowTitleBrush="White" 
     ShowIconOnTitleBar="true"
@@ -21,10 +22,7 @@
         <controls:WindowCommands>
             <Button Cursor="Hand" Name="NewRecording" cal:Message.Attach="NewRecording">
                 <StackPanel Orientation="Horizontal">
-                    <Grid>
-                        <Ellipse VerticalAlignment="Center" Fill="Transparent" Stroke="DarkSlateGray" StrokeThickness="2" Width="16" Height="16" />
-                        <Ellipse VerticalAlignment="Center" Fill="Red" StrokeThickness="2" Width="8" Height="8" />
-                    </Grid>
+                    <icons:IconRecord InnerColor="Red" OuterColor="DarkSlateGray"></icons:IconRecord>
 
                     <TextBlock Margin="4 0 0 0">
                     New Recording
