@@ -9,19 +9,30 @@
 using System;
 using System.Drawing;
 
-using ScreenGun.Base;
+using Caliburn.Micro;
+
+using PropertyChanged;
 
 namespace ScreenGun.Modules.Recorder
 {
     /// <summary>
     ///     View Model for the Recorder.
     /// </summary>
-    public class RecorderViewModel : ViewModel
+    [ImplementPropertyChanged]
+    public class RecorderViewModel : Screen
     {
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets a value indicating whether we are recording.
+        ///     Gets or sets a value indicating whether this instance is full screen.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if this instance is full screen; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsFullScreen { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether we are recording.
         /// </summary>
         public bool IsRecording { get; set; }
 
@@ -33,26 +44,62 @@ namespace ScreenGun.Modules.Recorder
         /// </value>
         public Rectangle RecordingRegion { get; set; }
 
+        /// <summary>
+        ///     Gets or sets a value indicating whether to use microphone or not.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if [use microphone]; otherwise, <c>false</c>.
+        /// </value>
+        public bool UseMicrophone { get; set; }
+
         #endregion
 
+        #region Public Methods and Operators
+
+        /// <summary>
+        ///     Cancels this instance.
+        /// </summary>
+        public void Cancel()
+        {
+            this.TryClose();
+            Console.WriteLine("Cancel");
+        }
+
+        /// <summary>
+        ///     Starts the recording.
+        /// </summary>
         public void StartRecording()
         {
             Console.WriteLine("Start recording");
         }
 
+        /// <summary>
+        ///     Toggles the full screen.
+        /// </summary>
         public void ToggleFullScreen()
         {
             Console.WriteLine("Toggle Fullscreen");
         }
 
+        /// <summary>
+        ///     Toggles the microphone.
+        /// </summary>
         public void ToggleMicrophone()
         {
             Console.WriteLine("Toggle microphone");
         }
 
-        public void Cancel()
+        /// <summary>
+        /// Closes the recorder - can only be done when not recording.
+        /// </summary>
+        public void Close()
         {
-            Console.WriteLine("Cancel");
+            if (this.IsRecording == false)
+            {
+                this.Cancel();
+            }
         }
+
+        #endregion
     }
 }

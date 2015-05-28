@@ -154,11 +154,18 @@
                 BorderBrush="#AFFFFFFF" 
                 BorderThickness="2">
                 <StackPanel Orientation="Horizontal" Margin="20 6">
-                    <Button Name="StartRecording" Style="{StaticResource MaterialDesignFlatButton}" Padding="4"
+                    <Button Name="StartRecording" 
+                            Style="{StaticResource MaterialDesignFlatButton}" 
+                            Padding="4"
                             ToolTip="Start recording">
                         <icons:IconRecord Size="24" OuterColor="{DynamicResource PrimaryHueMidBrush}" InnerColor="{DynamicResource PrimaryHueMidBrush}"></icons:IconRecord>
                     </Button>
-                    <Button Name="ToggleFullscreen" Style="{StaticResource MaterialDesignFlatButton}">Fullscreen</Button>
+                    <Button Name="ToggleFullscreen" 
+                            Style="{StaticResource MaterialDesignFlatButton}" 
+                            Padding="4"
+                            ToolTip="Toggle Fullscreen">
+                        <icons:IconFullscreen IconBackground="{DynamicResource PrimaryHueMidBrush}"></icons:IconFullscreen>
+                    </Button>
                     <Button Name="ToggleMicrophone" Style="{StaticResource MaterialDesignFlatButton}">Microphone</Button>
                     <Button Name="Cancel" Style="{StaticResource MaterialDesignFlatButton}">Cancel</Button>
                 </StackPanel>
