@@ -8,11 +8,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 
 using Caliburn.Micro;
 
 using ScreenGun.Modules.Main;
+using ScreenGun.Modules.Recorder;
+using ScreenGun.Recorder;
+using ScreenGun.Recorder.Capturers.GDIPlus;
 
 namespace ScreenGun
 {
@@ -62,9 +66,23 @@ namespace ScreenGun
         {
             this.container = new SimpleContainer();
 
+            this.container.Instance(this.CreateRecorder());
             this.container.Singleton<IWindowManager, WindowManager>();
             this.container.Singleton<IEventAggregator, EventAggregator>();
+            this.container.PerRequest<RecorderViewModel>();
             this.container.PerRequest<IShell, ShellViewModel>();
+        }
+
+        /// <summary>
+        /// Creates the recorder.
+        /// </summary>
+        /// <returns></returns>
+        private IScreenRecorder CreateRecorder()
+        {
+            string ffmpegPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ffmpeg.exe");
+            var capturer = new GDIPlusFrameCaptureBackend();
+            var opts = new FFMPEGScreenRecorderOptions(ffmpegPath, capturer);
+            return new FFMPEGScreenRecorder(opts);
         }
 
         /// <summary>

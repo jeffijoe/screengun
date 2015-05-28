@@ -95,7 +95,7 @@ namespace ScreenGun.Modules.Main
         /// </summary>
         public void NewRecording()
         {
-            this.windowManager.ShowWindow(new RecorderViewModel());
+            this.windowManager.ShowWindow(IoC.Get<RecorderViewModel>());
         }
 
         /// <summary>

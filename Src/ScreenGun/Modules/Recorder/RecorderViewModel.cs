@@ -8,10 +8,13 @@
 
 using System;
 using System.Drawing;
+using System.IO;
 
 using Caliburn.Micro;
 
 using PropertyChanged;
+
+using ScreenGun.Recorder;
 
 namespace ScreenGun.Modules.Recorder
 {
@@ -21,6 +24,30 @@ namespace ScreenGun.Modules.Recorder
     [ImplementPropertyChanged]
     public class RecorderViewModel : Screen
     {
+        #region Fields
+
+        /// <summary>
+        /// The recorder.
+        /// </summary>
+        private readonly IScreenRecorder recorder;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecorderViewModel"/> class.
+        /// </summary>
+        /// <param name="recorder">
+        /// The recorder.
+        /// </param>
+        public RecorderViewModel(IScreenRecorder recorder)
+        {
+            this.recorder = recorder;
+        }
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -65,11 +92,39 @@ namespace ScreenGun.Modules.Recorder
         }
 
         /// <summary>
+        ///     Closes the recorder - can only be done when not recording.
+        /// </summary>
+        public void Close()
+        {
+            if (this.IsRecording == false)
+            {
+                this.Cancel();
+            }
+        }
+
+        /// <summary>
         ///     Starts the recording.
         /// </summary>
-        public void StartRecording()
+        public async void StartRecording()
         {
-            this.IsRecording = true;
+            this.IsRecording = !this.IsRecording;
+            if (!this.IsRecording)
+            {
+                Console.WriteLine("Stopping");
+                await this.recorder.StopAsync();
+                return;
+            }
+
+            Console.WriteLine("Starting");
+            var opts = new ScreenRecorderOptions(this.RecordingRegion)
+            {
+                DeleteMaterialWhenDone = true,
+                FrameRate = 20,
+                MaterialTempFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MaterialTemp"),
+                OutputFilePath = "Recording.mp4",
+                RecordMicrophone = this.UseMicrophone
+            };
+            this.recorder.Start(opts);
         }
 
         /// <summary>
@@ -86,17 +141,6 @@ namespace ScreenGun.Modules.Recorder
         public void ToggleMicrophone()
         {
             this.UseMicrophone = !this.UseMicrophone;
-        }
-
-        /// <summary>
-        /// Closes the recorder - can only be done when not recording.
-        /// </summary>
-        public void Close()
-        {
-            if (this.IsRecording == false)
-            {
-                this.Cancel();
-            }
         }
 
         #endregion

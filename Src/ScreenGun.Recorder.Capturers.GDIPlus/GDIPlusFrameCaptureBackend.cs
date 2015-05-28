@@ -47,11 +47,17 @@ namespace ScreenGun.Recorder.Capturers.GDIPlus
                     0, 
                     region.Size, 
                     CopyPixelOperation.SourceCopy);
-
+                
                 Point position = Cursor.Position;
                 var x = position.X;
                 var y = position.Y;
                 var cursorBmp = CursorHelper.CaptureCursor(ref x, ref y);
+
+                // We need to offset the cursor position by the region, to position it correctly
+                // in the image.
+                position = new Point(
+                    x - region.X, 
+                    y - region.Y);
                 if (cursorBmp != null)
                 {
                     gfxScreenshot.DrawImage(cursorBmp, position);

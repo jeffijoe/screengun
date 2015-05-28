@@ -22,7 +22,7 @@ namespace ScreenGun.Recorder
     /// <summary>
     ///     An implementation of a screen recorder using FFMPEG.
     /// </summary>
-    public class FFMPEGScreenRecorder
+    public class FFMPEGScreenRecorder : IScreenRecorder
     {
         #region Fields
 
