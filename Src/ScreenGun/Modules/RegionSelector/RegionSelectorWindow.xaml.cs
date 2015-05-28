@@ -16,6 +16,13 @@ using Size = System.Windows.Size;
 
 namespace ScreenGun.Modules.RegionSelector
 {
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+
+    using ScreenGun.Modules.Recorder;
+
+    using MouseEventArgs = System.Windows.Input.MouseEventArgs;
+
     /// <summary>
     ///     Interaction logic for RegionSelectorView.xaml
     /// </summary>
@@ -28,10 +35,10 @@ namespace ScreenGun.Modules.RegionSelector
         /// </summary>
         private readonly Rect virtualScreen = new Rect(
             new Point(
-                SystemParameters.VirtualScreenLeft, 
-                SystemParameters.VirtualScreenTop), 
+                SystemParameters.VirtualScreenLeft,
+                SystemParameters.VirtualScreenTop),
             new Size(
-                SystemParameters.VirtualScreenWidth, 
+                SystemParameters.VirtualScreenWidth,
                 SystemParameters.VirtualScreenHeight));
 
         /// <summary>
@@ -80,6 +87,41 @@ namespace ScreenGun.Modules.RegionSelector
             this.Width = this.virtualScreen.Width;
             this.Height = this.virtualScreen.Height;
             this.UpdateUI();
+
+            this.Loaded += (sender, args) =>
+            {
+                this.ViewModel.PropertyChanged += (o, eventArgs) =>
+                {
+                    if (eventArgs.PropertyName != "IsFullScreen")
+                    {
+                        return;
+                    }
+                    if (this.ViewModel.IsFullScreen)
+                    {
+                        var position = System.Windows.Forms.Cursor.Position;
+                        foreach (var screen in Screen.AllScreens)
+                        {
+                            var bounds = screen.Bounds;
+                            if (!bounds.Contains(position))
+                            {
+                                continue;
+                            }
+
+                            relativeRecordingArea = new Rect(
+                                bounds.X + virtualScreen.X,
+                                bounds.Y + virtualScreen.Y,
+                                bounds.Width,
+                                bounds.Height);
+                            break;
+                        }
+                        this.UpdateUI();
+                    }
+                    else
+                    {
+                        this.UpdatePosition();
+                    }
+                };
+            };
         }
 
         #endregion
@@ -114,9 +156,9 @@ namespace ScreenGun.Modules.RegionSelector
             get
             {
                 return new Rect(
-                    this.relativeRecordingArea.X + this.virtualScreen.X, 
-                    this.relativeRecordingArea.Y + this.virtualScreen.Y, 
-                    this.relativeRecordingArea.Width, 
+                    this.relativeRecordingArea.X + this.virtualScreen.X,
+                    this.relativeRecordingArea.Y + this.virtualScreen.Y,
+                    this.relativeRecordingArea.Width,
                     this.relativeRecordingArea.Height);
             }
         }
@@ -232,6 +274,17 @@ namespace ScreenGun.Modules.RegionSelector
                 this.lastMousePosition = position;
             }
 
+            if (this.ViewModel.IsFullScreen)
+            {
+                var width = Math.Abs(this.startPosition.X - this.endPosition.X);
+                var height = Math.Abs(this.startPosition.Y - this.endPosition.Y);
+
+                this.startPosition = new Point(position.X - (width / 2), position.Y - (height / 2));
+                this.endPosition = new Point(position.X + (width / 2), position.Y + (height / 2));
+
+                this.ViewModel.IsFullScreen = false;
+            }
+
             var delta = position - this.lastMousePosition;
             this.lastMousePosition = position;
             this.startPosition += delta;
@@ -297,9 +350,9 @@ namespace ScreenGun.Modules.RegionSelector
 
             // This makes sure that the recording area is never out of bounds.
             var relativeVirtualScreen = new Rect(
-                this.virtualScreen.X, 
-                this.virtualScreen.Y, 
-                this.virtualScreen.Width, 
+                this.virtualScreen.X,
+                this.virtualScreen.Y,
+                this.virtualScreen.Width,
                 this.virtualScreen.Height);
 
             relativeVirtualScreen.Offset(Math.Abs(this.virtualScreen.X), Math.Abs(this.virtualScreen.Y));
@@ -327,5 +380,13 @@ namespace ScreenGun.Modules.RegionSelector
         }
 
         #endregion
+
+        public RecorderViewModel ViewModel
+        {
+            get
+            {
+                return this.DataContext as RecorderViewModel;
+            }
+        }
     }
 }

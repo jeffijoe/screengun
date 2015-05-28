@@ -145,7 +145,7 @@ namespace ScreenGun.Modules.Recorder
         /// <summary>
         ///     Toggles the full screen.
         /// </summary>
-        public void ToggleFullScreen()
+        public void ToggleFullscreen()
         {
             this.IsFullScreen = !this.IsFullScreen;
         }

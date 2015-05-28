@@ -154,8 +154,8 @@
             VerticalAlignment="Stretch"
             Background="#01000000" 
             Name="RecordingRegion" 
-            PreviewMouseLeftButtonDown="RecordingRegionMouseLeftDown"
-            PreviewMouseMove="RecordingRegionMouseMove"
+            MouseLeftButtonDown="RecordingRegionMouseLeftDown"
+            MouseMove="RecordingRegionMouseMove"
             PreviewMouseLeftButtonUp="RecordingRegionMouseLeftUp">
                 
             <Border 
