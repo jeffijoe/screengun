@@ -191,6 +191,7 @@
     </Compile>
     <Compile Include="Modules\Recorder\RecorderView.cs" />
     <Compile Include="Modules\Recorder\RecorderViewModel.cs" />
+    <Compile Include="Modules\Settings\IScreenGunSettings.cs" />
     <Compile Include="Modules\Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>

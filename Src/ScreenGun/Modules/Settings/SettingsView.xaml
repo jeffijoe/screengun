@@ -18,24 +18,12 @@
     GlowBrush="{DynamicResource AccentColorBrush}" Title="Settings"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     Height="275" Width="300" d:DataContext="{Binding Source={StaticResource DesignViewModel}}">
-    <controls:MetroWindow.RightWindowCommands>
-        <controls:WindowCommands>
-            <Button Cursor="Hand" Name="Save" cal:Message.Attach="Save">
-                <StackPanel Orientation="Horizontal">
-                    <icons:IconSave IconBackground="#FF444444" />
-                    <TextBlock Margin="4 4 0 0">
-                        Save
-                    </TextBlock>
-                </StackPanel>
-            </Button>
-        </controls:WindowCommands>
-    </controls:MetroWindow.RightWindowCommands>
     <Window.Resources>
         <ResourceDictionary>
             <settings:SettingsViewModel 
                 x:Key="DesignViewModel" 
                 FramerateText="20"
-                MicDefaultEnabled="True" />
+                DefaultMicEnabled="True" />
             <Style x:Key="BorderSplitterStyle" TargetType="Border">
                 <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="Height" Value="1" />
@@ -43,12 +31,13 @@
                 <Setter Property="Margin" Value="4,10,4,6" />
             </Style>
             <Style x:Key="LabelStyle" TargetType="Label">
-                <Setter Property="FontFamily" Value="Raleway" />
+                <Setter Property="FontFamily" Value="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" />
                 <Setter Property="FontSize" Value="12px" />
                 <Setter Property="FontWeight" Value="Regular" />
             </Style>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.CheckBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ComboBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Slider.xaml" />
@@ -96,7 +85,8 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Content="Framerate" Style="{StaticResource LabelStyle}" />
-                <ComboBox Grid.Column="1" wpf:TextField.Hint="FPS" IsEditable="True" Margin="8,1" Text="{Binding Path=FramerateText}" SelectedItem="20">
+                <ComboBox Grid.Column="1" wpf:TextField.Hint="FPS" IsEditable="True" Margin="8,1" 
+                          Text="{Binding Path=FramerateText}" SelectedItem="20">
                     <ComboBoxItem>30</ComboBoxItem>
                     <ComboBoxItem>24</ComboBoxItem>
                     <ComboBoxItem>20</ComboBoxItem>
@@ -104,14 +94,15 @@
                 </ComboBox>
             </Grid>
             <Border Style="{StaticResource BorderSplitterStyle}" />
-            <Grid>
+            <Grid Margin="0, 4, 0, 0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Content="Default Microphone Enabled" VerticalAlignment="Center" Style="{StaticResource LabelStyle}" />
-                <controls:ToggleSwitch Grid.Column="1" IsChecked="{Binding Path=MicDefaultEnabled}" HorizontalAlignment="Right" />
+                <ToggleButton Grid.Column="1" IsChecked="{Binding Path=DefaultMicEnabled}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="8,0"/>
             </Grid>
+            <Border Style="{StaticResource BorderSplitterStyle}" />
         </StackPanel>
         <Button
             Grid.Row="1"

@@ -6,6 +6,7 @@
 // - Bjarke Søgaard <ekrajb123@gmail.com>
 // Copyright (C) ScreenGun Authors 2015. All rights reserved.
 
+using System;
 using System.Globalization;
 
 using ScreenGun.Base;
@@ -15,7 +16,7 @@ namespace ScreenGun.Modules.Settings
     /// <summary>
     ///     The settings view model.
     /// </summary>
-    public class SettingsViewModel : ViewModel
+    public class SettingsViewModel : ViewModel, IScreenGunSettings
     {
         #region Fields
 
@@ -37,7 +38,24 @@ namespace ScreenGun.Modules.Settings
 
         #endregion
 
+        #region Public Events
+
+        /// <summary>
+        ///     Occurs when the dialog is reset.
+        /// </summary>
+        public event EventHandler DialogReset;
+
+        #endregion
+
         #region Public Properties
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the mic is enabled by default.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if the mic is enabled by default; otherwise, <c>false</c>.
+        /// </value>
+        public bool DefaultMicEnabled { get; set; }
 
         /// <summary>
         ///     Gets or sets the framerate.
@@ -79,14 +97,6 @@ namespace ScreenGun.Modules.Settings
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether [mic default enabled].
-        /// </summary>
-        /// <value>
-        ///     <c>true</c> if [mic default enabled]; otherwise, <c>false</c>.
-        /// </value>
-        public bool MicDefaultEnabled { get; set; }
-
-        /// <summary>
         ///     Gets or sets the storage path.
         /// </summary>
         public string StoragePath { get; set; }
@@ -108,20 +118,24 @@ namespace ScreenGun.Modules.Settings
         /// </summary>
         public void ResetDialogues()
         {
-            // TODO: Perform resetting of dialogues here.
-        }
-
-        /// <summary>
-        ///     Saves this instance.
-        /// </summary>
-        public void Save()
-        {
-            // TODO: Perform saving of settings here.
+            this.OnDialogReset();
         }
 
         #endregion
 
         #region Methods
+
+        /// <summary>
+        ///     Called when [dialog reset].
+        /// </summary>
+        protected virtual void OnDialogReset()
+        {
+            EventHandler handler = this.DialogReset;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
+        }
 
         /// <summary>
         ///     Updates the framerate.
