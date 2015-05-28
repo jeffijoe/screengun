@@ -105,6 +105,12 @@
     <Compile Include="Icons\IconMicOff.xaml.cs">
       <DependentUpon>IconMicOff.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Icons\IconCogwheel.xaml.cs">
+      <DependentUpon>IconCogwheel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\IconSave.xaml.cs">
+      <DependentUpon>IconSave.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Misc\Command.cs" />
     <Compile Include="Modules\Main\IShell.cs" />
     <Compile Include="Modules\Main\ScreenGunFile\ScreenGunFileView.xaml.cs">
@@ -147,6 +153,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Icons\IconCogwheel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\IconSave.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\Main\ScreenGunFile\ScreenGunFileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -163,6 +177,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Modules\Settings\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Modules\NotifyIcon\NotifyIconViewModel.cs" />
@@ -173,6 +191,10 @@
     </Compile>
     <Compile Include="Modules\Recorder\RecorderView.cs" />
     <Compile Include="Modules\Recorder\RecorderViewModel.cs" />
+    <Compile Include="Modules\Settings\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Settings\SettingsViewModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

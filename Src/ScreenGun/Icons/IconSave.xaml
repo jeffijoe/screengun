@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="ScreenGun.Icons.IconSave"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="24" d:DesignWidth="24">
+    <Grid>
+        <Path Data="F1 M 0,0 L -12.82,0 C -13.94,0 -14.9,0.96 -14.9,2.08 L -14.9,16.97 C -14.9,18.26 -13.94,19.22 -12.82,19.22
+                    L 2.08,19.22 C 3.36,19.22 4.32,18.26 4.32,16.97 L 4.32,4.16 0,0 z
+                    M -5.29,16.97 C -7.05,16.97 -8.49,15.69 -8.49,13.77 -8.49,12.01 -7.05,10.57 -5.29,10.57
+                    -3.53,10.57 -2.08,12.01 -2.08,13.77 -2.08,15.69 -3.53,16.97 -5.29,16.97 z
+                    M -2.08,6.4 L -12.82,6.4 -12.82,2.08 -2.08,2.08 -2.08,6.4 z" 
+              Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=IconBackground}"
+              RenderTransformOrigin="0.5,0.5" Width="24" Height="24" Margin="16.625,2.25,-16.625,-2.25"/>
+    </Grid>
+</UserControl>

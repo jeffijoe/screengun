@@ -1,0 +1,123 @@
+﻿<controls:MetroWindow 
+    x:Class="ScreenGun.Modules.Settings.SettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:cal="http://www.caliburnproject.org"
+    xmlns:icons="clr-namespace:ScreenGun.Icons" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:settings="clr-namespace:ScreenGun.Modules.Settings"
+    xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+    mc:Ignorable="d"
+    WindowTitleBrush="White" 
+    ShowIconOnTitleBar="true"
+    TitleCaps="False"
+    BorderThickness="1"
+    ShowMaxRestoreButton="false"
+    Icon="/Resources/screengun_logo.png"
+    GlowBrush="{DynamicResource AccentColorBrush}" Title="Settings"
+    FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+    Height="275" Width="300" d:DataContext="{Binding Source={StaticResource DesignViewModel}}">
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button Cursor="Hand" Name="Save" cal:Message.Attach="Save">
+                <StackPanel Orientation="Horizontal">
+                    <icons:IconSave IconBackground="#FF444444" />
+                    <TextBlock Margin="4 4 0 0">
+                        Save
+                    </TextBlock>
+                </StackPanel>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+    <Window.Resources>
+        <ResourceDictionary>
+            <settings:SettingsViewModel 
+                x:Key="DesignViewModel" 
+                FramerateText="20"
+                MicDefaultEnabled="True" />
+            <Style x:Key="BorderSplitterStyle" TargetType="Border">
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Height" Value="1" />
+                <Setter Property="BorderBrush" Value="LightGray" />
+                <Setter Property="Margin" Value="4,10,4,6" />
+            </Style>
+            <Style x:Key="LabelStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="Raleway" />
+                <Setter Property="FontSize" Value="12px" />
+                <Setter Property="FontWeight" Value="Regular" />
+            </Style>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ComboBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Slider.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="2">
+            <Label Content="Video Save Destination" Margin="4,4,4,0" Style="{StaticResource LabelStyle}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox Name="TxtStoragePath" Text="{Binding Path=StoragePath, UpdateSourceTrigger=PropertyChanged}" 
+                     Grid.Column="0" wpf:TextField.Hint="Folder Path"
+                     LostFocus="TxtStoragePath_OnLostFocus"
+                     KeyDown="TxtStoragePath_OnKeyDown">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                            <Setter Property="VerticalAlignment" Value="Top" />
+                            <Setter Property="Margin" Value="4" />
+                            <Setter Property="TextWrapping" Value="Wrap" />
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.Setters>
+                                        <Setter Property="Background" Value="#08000000" />
+                                    </Trigger.Setters>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+                <Button Name="BtnBrowse" Content="Browse" Grid.Column="1" Padding="12 4" Click="BtnBrowse_OnClick" Margin="8,2,4,2" />
+            </Grid>
+            <Border Style="{StaticResource BorderSplitterStyle}" />
+            <Grid Margin="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="Framerate" Style="{StaticResource LabelStyle}" />
+                <ComboBox Grid.Column="1" wpf:TextField.Hint="FPS" IsEditable="True" Margin="8,1" Text="{Binding Path=FramerateText}" SelectedItem="20">
+                    <ComboBoxItem>30</ComboBoxItem>
+                    <ComboBoxItem>24</ComboBoxItem>
+                    <ComboBoxItem>20</ComboBoxItem>
+                    <ComboBoxItem>10</ComboBoxItem>
+                </ComboBox>
+            </Grid>
+            <Border Style="{StaticResource BorderSplitterStyle}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="Default Microphone Enabled" VerticalAlignment="Center" Style="{StaticResource LabelStyle}" />
+                <controls:ToggleSwitch Grid.Column="1" IsChecked="{Binding Path=MicDefaultEnabled}" HorizontalAlignment="Right" />
+            </Grid>
+        </StackPanel>
+        <Button
+            Grid.Row="1"
+            Style="{StaticResource MaterialDesignRaisedButton}" 
+            Content="Reset Dialog Boxes"
+            cal:Message.Attach="ResetDialogues"
+            Margin="8"/>
+    </Grid>
+</controls:MetroWindow>

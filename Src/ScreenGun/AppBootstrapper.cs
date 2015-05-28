@@ -15,6 +15,7 @@ using Caliburn.Micro;
 
 using ScreenGun.Modules.Main;
 using ScreenGun.Modules.Recorder;
+using ScreenGun.Modules.Settings;
 using ScreenGun.Recorder;
 using ScreenGun.Recorder.Capturers.GDIPlus;
 
@@ -70,6 +71,7 @@ namespace ScreenGun
             this.container.Singleton<IWindowManager, WindowManager>();
             this.container.Singleton<IEventAggregator, EventAggregator>();
             this.container.PerRequest<RecorderViewModel>();
+            this.container.PerRequest<SettingsViewModel>();
             this.container.PerRequest<IShell, ShellViewModel>();
         }
 

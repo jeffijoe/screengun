@@ -18,6 +18,7 @@ using ScreenGun.Base;
 using ScreenGun.Modules.Main.ScreenGunFile;
 using ScreenGun.Modules.NotifyIcon;
 using ScreenGun.Modules.Recorder;
+using ScreenGun.Modules.Settings;
 
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
@@ -91,11 +92,19 @@ namespace ScreenGun.Modules.Main
         }
 
         /// <summary>
-        ///     The new screenshot.
+        ///     Shows the Recorder view.
         /// </summary>
         public void NewRecording()
         {
             this.windowManager.ShowWindow(IoC.Get<RecorderViewModel>());
+        }
+
+        /// <summary>
+        ///     Shows the settings view.
+        /// </summary>
+        public void Settings()
+        {
+            this.windowManager.ShowWindow(IoC.Get<SettingsViewModel>());
         }
 
         /// <summary>

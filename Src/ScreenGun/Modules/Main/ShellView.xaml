@@ -29,6 +29,12 @@
                     </TextBlock>
                 </StackPanel>
             </Button>
+            <Button Cursor="Hand" Name="Settings" cal:Message.Attach="Settings">
+                <StackPanel Orientation="Horizontal">
+                    <icons:IconCogwheel IconBackground="#FF444444" />
+                    <TextBlock Margin="4 4 0 0" Text="Settings" />
+                </StackPanel>
+            </Button>
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
     <DockPanel>
@@ -37,7 +43,7 @@
                 <TextBlock FontWeight="DemiBold">There are 2 screencaptures, and one screenshot.</TextBlock>
             </StatusBarItem>
         </StatusBar>
-        
+
         <Grid Background="White">
             <ListBox Name="Files" VerticalAlignment="Stretch" Margin="0 8 0 0">
                 <ListBox.ItemContainerStyle>
