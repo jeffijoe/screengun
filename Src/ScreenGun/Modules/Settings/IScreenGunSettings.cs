@@ -32,5 +32,10 @@ namespace ScreenGun.Modules.Settings
         /// Occurs when the dialog is reset.
         /// </summary>
         event EventHandler DialogReset;
+
+        /// <summary>
+        /// Saves the settings.
+        /// </summary>
+        void SaveSettings();
     }
 }

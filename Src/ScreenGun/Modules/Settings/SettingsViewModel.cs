@@ -13,6 +13,11 @@ using ScreenGun.Base;
 
 namespace ScreenGun.Modules.Settings
 {
+    using System.Data;
+    using System.IO;
+
+    using Newtonsoft.Json;
+
     /// <summary>
     ///     The settings view model.
     /// </summary>
@@ -25,15 +30,43 @@ namespace ScreenGun.Modules.Settings
         /// </summary>
         private string framerateText;
 
+        /// <summary>
+        /// The default mic enabled
+        /// </summary>
+        private bool defaultMicEnabled;
+
+        /// <summary>
+        /// The framerate
+        /// </summary>
+        private int framerate;
+
+        /// <summary>
+        /// The storage path
+        /// </summary>
+        private string storagePath;
+
+        /// <summary>
+        /// The file path
+        /// </summary>
+        private string filePath;
+
         #endregion
 
         #region Constructors and Destructors
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="SettingsViewModel" /> class.
+        /// Initializes a new instance of the <see cref="SettingsViewModel" /> class.
         /// </summary>
+        /// <param name="rootDirectory">The root directory.</param>
+        public SettingsViewModel(string rootDirectory)
+        {
+            this.filePath = Path.Combine(rootDirectory, "settings.conf");
+            this.Load();
+        }
+
         public SettingsViewModel()
         {
+            
         }
 
         #endregion
@@ -45,17 +78,66 @@ namespace ScreenGun.Modules.Settings
         /// </summary>
         public event EventHandler DialogReset;
 
+        /// <summary>
+        /// Saves the settings.
+        /// </summary>
+        public void SaveSettings()
+        {
+            var serializeObject = JsonConvert.SerializeObject(this);
+            File.WriteAllText(filePath, serializeObject);
+        }
+
+        /// <summary>
+        /// Loads this instance.
+        /// </summary>
+        private void Load()
+        {
+            if (!File.Exists(this.filePath))
+            {
+                this.DefaultMicEnabled = true;
+                this.Framerate = 20;
+                this.StoragePath = "C:\\ScreenGun\\Clips";
+                return;
+            }
+            try
+            {
+                var readAllText = File.ReadAllText(this.filePath);
+                var settingsViewModel = JsonConvert.DeserializeObject<SettingsViewModel>(readAllText);
+                this.StoragePath = settingsViewModel.StoragePath;
+                this.Framerate = settingsViewModel.Framerate;
+                this.DefaultMicEnabled = settingsViewModel.DefaultMicEnabled;
+            }
+            catch (Exception) { }
+            // If any error occurs, don't do anything
+        }
+
         #endregion
 
         #region Public Properties
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the mic is enabled by default.
+        /// Gets or sets a value indicating whether the mic is enabled by default.
         /// </summary>
         /// <value>
-        ///     <c>true</c> if the mic is enabled by default; otherwise, <c>false</c>.
+        /// <c>true</c> if the mic is enabled by default; otherwise, <c>false</c>.
         /// </value>
-        public bool DefaultMicEnabled { get; set; }
+        public bool DefaultMicEnabled
+        {
+            get
+            {
+                return this.defaultMicEnabled;
+            }
+            set
+            {
+                if (this.defaultMicEnabled == value)
+                {
+                    return;
+                }
+                this.defaultMicEnabled = value;
+                this.NotifyOfPropertyChange(() => DefaultMicEnabled);
+                this.SaveSettings();
+            }
+        }
 
         /// <summary>
         ///     Gets or sets the framerate.
@@ -63,7 +145,23 @@ namespace ScreenGun.Modules.Settings
         /// <value>
         ///     The framerate.
         /// </value>
-        public int Framerate { get; set; }
+        public int Framerate
+        {
+            get
+            {
+                return this.framerate;
+            }
+            set
+            {
+                if (this.framerate == value)
+                {
+                    return;
+                }
+                this.framerate = value;
+                this.NotifyOfPropertyChange(() => Framerate);
+                this.SaveSettings();
+            }
+        }
 
         /// <summary>
         ///     Gets or sets the framerate text.
@@ -99,7 +197,23 @@ namespace ScreenGun.Modules.Settings
         /// <summary>
         ///     Gets or sets the storage path.
         /// </summary>
-        public string StoragePath { get; set; }
+        public string StoragePath
+        {
+            get
+            {
+                return this.storagePath;
+            }
+            set
+            {
+                if (this.storagePath == value)
+                {
+                    return;
+                }
+                this.storagePath = value;
+                this.NotifyOfPropertyChange(() => StoragePath);
+                this.SaveSettings();
+            }
+        }
 
         /// <summary>
         ///     Gets a value indicating whether [valid FPS].

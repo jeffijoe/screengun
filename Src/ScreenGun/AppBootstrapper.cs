@@ -71,7 +71,10 @@ namespace ScreenGun
             this.container.Singleton<IWindowManager, WindowManager>();
             this.container.Singleton<IEventAggregator, EventAggregator>();
             this.container.PerRequest<RecorderViewModel>();
-            this.container.PerRequest<SettingsViewModel>();
+
+            SettingsViewModel settingsVm = new SettingsViewModel(string.Empty);
+            this.container.Instance(settingsVm);
+            this.container.Singleton<IScreenGunSettings, SettingsViewModel>();
             this.container.PerRequest<IShell, ShellViewModel>();
         }
 
