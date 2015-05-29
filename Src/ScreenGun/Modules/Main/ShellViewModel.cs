@@ -34,11 +34,6 @@ namespace ScreenGun.Modules.Main
         /// </summary>
         private readonly IWindowManager windowManager;
 
-        /// <summary>
-        ///     The notify icon view model.
-        /// </summary>
-        private NotifyIconViewModel notifyIconViewModel;
-
         #endregion
 
         #region Constructors and Destructors
