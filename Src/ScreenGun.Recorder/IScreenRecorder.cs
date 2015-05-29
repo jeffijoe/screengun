@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace ScreenGun.Recorder
 {
     /// <summary>
-    /// The ScreenRecorder interface.
+    ///     The ScreenRecorder interface.
     /// </summary>
     public interface IScreenRecorder
     {

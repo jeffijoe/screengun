@@ -177,7 +177,9 @@ namespace ScreenGun.Modules.Recorder
         /// <summary>
         /// Called the first time the page's LayoutUpdated event fires after it is navigated to.
         /// </summary>
-        /// <param name="view">The view.</param>
+        /// <param name="view">
+        /// The view.
+        /// </param>
         protected override void OnViewReady(object view)
         {
             base.OnViewReady(view);

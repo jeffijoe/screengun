@@ -33,7 +33,7 @@ namespace ScreenGun.Modules.Main
         #region Public Properties
 
         /// <summary>
-        /// Gets the view model.
+        ///     Gets the view model.
         /// </summary>
         public ShellViewModel ViewModel
         {

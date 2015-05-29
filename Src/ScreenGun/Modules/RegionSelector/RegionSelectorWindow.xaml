@@ -175,7 +175,7 @@
                         <icons:IconRecord 
                             Size="24" 
                             OuterColor="White" 
-                            InnerColor="White"></icons:IconRecord>
+                            InnerColor="White" />
                     </Button>
                     <Button Name="ToggleFullscreen" 
                             Style="{StaticResource MaterialDesignFlatButton}" 

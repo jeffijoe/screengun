@@ -47,7 +47,7 @@ namespace ScreenGun.Recorder.Capturers.GDIPlus
                     0, 
                     region.Size, 
                     CopyPixelOperation.SourceCopy);
-                
+
                 Point position = Cursor.Position;
                 var x = position.X;
                 var y = position.Y;

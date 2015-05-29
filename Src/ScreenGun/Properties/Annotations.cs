@@ -79,8 +79,8 @@ namespace ScreenGun.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StringFormatMethodAttribute"/> class. 
-        /// The string format method attribute.
+        /// Initializes a new instance of the <see cref="StringFormatMethodAttribute"/> class.
+        ///     The string format method attribute.
         /// </summary>
         /// <param name="formatParameterName">
         /// Specifies which parameter of an annotated method should be treated as format-string
@@ -95,7 +95,7 @@ namespace ScreenGun.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the format parameter name.
+        ///     Gets the format parameter name.
         /// </summary>
         public string FormatParameterName { get; private set; }
 
@@ -181,7 +181,7 @@ namespace ScreenGun.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NotifyPropertyChangedInvocatorAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="NotifyPropertyChangedInvocatorAttribute" /> class.
         /// </summary>
         public NotifyPropertyChangedInvocatorAttribute()
         {
@@ -203,7 +203,7 @@ namespace ScreenGun.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the parameter name.
+        ///     Gets the parameter name.
         /// </summary>
         public string ParameterName { get; private set; }
 
@@ -300,12 +300,12 @@ namespace ScreenGun.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the contract.
+        ///     Gets the contract.
         /// </summary>
         public string Contract { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether force full states.
+        ///     Gets a value indicating whether force full states.
         /// </summary>
         public bool ForceFullStates { get; private set; }
 
@@ -329,7 +329,7 @@ namespace ScreenGun.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LocalizationRequiredAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="LocalizationRequiredAttribute" /> class.
         /// </summary>
         public LocalizationRequiredAttribute()
             : this(true)
@@ -352,7 +352,7 @@ namespace ScreenGun.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets a value indicating whether required.
+        ///     Gets a value indicating whether required.
         /// </summary>
         public bool Required { get; private set; }
 
@@ -421,7 +421,7 @@ namespace ScreenGun.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the base type.
+        ///     Gets the base type.
         /// </summary>
         [NotNull]
         public Type BaseType { get; private set; }
@@ -440,7 +440,7 @@ namespace ScreenGun.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UsedImplicitlyAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="UsedImplicitlyAttribute" /> class.
         /// </summary>
         public UsedImplicitlyAttribute()
             : this(ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.Default)
@@ -491,12 +491,12 @@ namespace ScreenGun.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the target flags.
+        ///     Gets the target flags.
         /// </summary>
         public ImplicitUseTargetFlags TargetFlags { get; private set; }
 
         /// <summary>
-        /// Gets the use kind flags.
+        ///     Gets the use kind flags.
         /// </summary>
         public ImplicitUseKindFlags UseKindFlags { get; private set; }
 
@@ -514,7 +514,7 @@ namespace ScreenGun.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MeansImplicitUseAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="MeansImplicitUseAttribute" /> class.
         /// </summary>
         public MeansImplicitUseAttribute()
             : this(ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.Default)
@@ -565,13 +565,13 @@ namespace ScreenGun.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the target flags.
+        ///     Gets the target flags.
         /// </summary>
         [UsedImplicitly]
         public ImplicitUseTargetFlags TargetFlags { get; private set; }
 
         /// <summary>
-        /// Gets the use kind flags.
+        ///     Gets the use kind flags.
         /// </summary>
         [UsedImplicitly]
         public ImplicitUseKindFlags UseKindFlags { get; private set; }
@@ -580,13 +580,13 @@ namespace ScreenGun.Annotations
     }
 
     /// <summary>
-    /// The implicit use kind flags.
+    ///     The implicit use kind flags.
     /// </summary>
     [Flags]
     public enum ImplicitUseKindFlags
     {
         /// <summary>
-        /// The default.
+        ///     The default.
         /// </summary>
         Default = Access | Assign | InstantiatedWithFixedConstructorSignature, 
 
@@ -615,12 +615,12 @@ namespace ScreenGun.Annotations
     public enum ImplicitUseTargetFlags
     {
         /// <summary>
-        /// The default.
+        ///     The default.
         /// </summary>
         Default = Itself, 
 
         /// <summary>
-        /// The itself.
+        ///     The itself.
         /// </summary>
         Itself = 1, 
 
@@ -641,7 +641,7 @@ namespace ScreenGun.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PublicAPIAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="PublicAPIAttribute" /> class.
         /// </summary>
         public PublicAPIAttribute()
         {
@@ -663,7 +663,7 @@ namespace ScreenGun.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the comment.
+        ///     Gets the comment.
         /// </summary>
         [NotNull]
         public string Comment { get; private set; }
@@ -712,7 +712,7 @@ namespace ScreenGun.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PathReferenceAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="PathReferenceAttribute" /> class.
         /// </summary>
         public PathReferenceAttribute()
         {
@@ -734,7 +734,7 @@ namespace ScreenGun.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the base path.
+        ///     Gets the base path.
         /// </summary>
         [NotNull]
         public string BasePath { get; private set; }
@@ -745,7 +745,7 @@ namespace ScreenGun.Annotations
     // ASP.NET MVC attributes
 
     /// <summary>
-    /// The asp mvc area master location format attribute.
+    ///     The asp mvc area master location format attribute.
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class AspMvcAreaMasterLocationFormatAttribute : Attribute
@@ -766,7 +766,7 @@ namespace ScreenGun.Annotations
     }
 
     /// <summary>
-    /// The asp mvc area partial view location format attribute.
+    ///     The asp mvc area partial view location format attribute.
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class AspMvcAreaPartialViewLocationFormatAttribute : Attribute
@@ -787,7 +787,7 @@ namespace ScreenGun.Annotations
     }
 
     /// <summary>
-    /// The asp mvc area view location format attribute.
+    ///     The asp mvc area view location format attribute.
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class AspMvcAreaViewLocationFormatAttribute : Attribute
@@ -808,7 +808,7 @@ namespace ScreenGun.Annotations
     }
 
     /// <summary>
-    /// The asp mvc master location format attribute.
+    ///     The asp mvc master location format attribute.
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class AspMvcMasterLocationFormatAttribute : Attribute
@@ -829,7 +829,7 @@ namespace ScreenGun.Annotations
     }
 
     /// <summary>
-    /// The asp mvc partial view location format attribute.
+    ///     The asp mvc partial view location format attribute.
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class AspMvcPartialViewLocationFormatAttribute : Attribute
@@ -850,7 +850,7 @@ namespace ScreenGun.Annotations
     }
 
     /// <summary>
-    /// The asp mvc view location format attribute.
+    ///     The asp mvc view location format attribute.
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class AspMvcViewLocationFormatAttribute : Attribute
@@ -882,7 +882,7 @@ namespace ScreenGun.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AspMvcActionAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="AspMvcActionAttribute" /> class.
         /// </summary>
         public AspMvcActionAttribute()
         {
@@ -904,7 +904,7 @@ namespace ScreenGun.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the anonymous property.
+        ///     Gets the anonymous property.
         /// </summary>
         [NotNull]
         public string AnonymousProperty { get; private set; }
@@ -923,7 +923,7 @@ namespace ScreenGun.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AspMvcAreaAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="AspMvcAreaAttribute" /> class.
         /// </summary>
         public AspMvcAreaAttribute()
         {
@@ -945,7 +945,7 @@ namespace ScreenGun.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the anonymous property.
+        ///     Gets the anonymous property.
         /// </summary>
         [NotNull]
         public string AnonymousProperty { get; private set; }
@@ -966,7 +966,7 @@ namespace ScreenGun.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AspMvcControllerAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="AspMvcControllerAttribute" /> class.
         /// </summary>
         public AspMvcControllerAttribute()
         {
@@ -988,7 +988,7 @@ namespace ScreenGun.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the anonymous property.
+        ///     Gets the anonymous property.
         /// </summary>
         [NotNull]
         public string AnonymousProperty { get; private set; }
@@ -1097,7 +1097,7 @@ namespace ScreenGun.Annotations
     }
 
     /// <summary>
-    /// The html element attributes attribute.
+    ///     The html element attributes attribute.
     /// </summary>
     [AttributeUsage(
         AttributeTargets.Parameter | AttributeTargets.Property |
@@ -1107,7 +1107,7 @@ namespace ScreenGun.Annotations
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HtmlElementAttributesAttribute"/> class.
+        ///     Initializes a new instance of the <see cref="HtmlElementAttributesAttribute" /> class.
         /// </summary>
         public HtmlElementAttributesAttribute()
         {
@@ -1129,7 +1129,7 @@ namespace ScreenGun.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the name.
+        ///     Gets the name.
         /// </summary>
         [NotNull]
         public string Name { get; private set; }
@@ -1138,7 +1138,7 @@ namespace ScreenGun.Annotations
     }
 
     /// <summary>
-    /// The html attribute value attribute.
+    ///     The html attribute value attribute.
     /// </summary>
     [AttributeUsage(
         AttributeTargets.Parameter | AttributeTargets.Field |
@@ -1163,7 +1163,7 @@ namespace ScreenGun.Annotations
         #region Public Properties
 
         /// <summary>
-        /// Gets the name.
+        ///     Gets the name.
         /// </summary>
         [NotNull]
         public string Name { get; private set; }

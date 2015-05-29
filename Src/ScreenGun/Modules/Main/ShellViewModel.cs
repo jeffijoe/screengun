@@ -6,9 +6,7 @@
 // - Bjarke Søgaard <ekrajb123@gmail.com>
 // Copyright (C) ScreenGun Authors 2015. All rights reserved.
 
-using System;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
 
@@ -20,7 +18,6 @@ using ScreenGun.Modules.NotifyIcon;
 using ScreenGun.Modules.Recorder;
 using ScreenGun.Modules.Settings;
 
-using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
 
 namespace ScreenGun.Modules.Main
@@ -38,7 +35,7 @@ namespace ScreenGun.Modules.Main
         private readonly IWindowManager windowManager;
 
         /// <summary>
-        /// The notify icon view model.
+        ///     The notify icon view model.
         /// </summary>
         private NotifyIconViewModel notifyIconViewModel;
 
@@ -85,10 +82,10 @@ namespace ScreenGun.Modules.Main
         /// </param>
         public void Initialize(FrameworkElement frameworkElement)
         {
-            //var stream = Application.GetResourceStream(new Uri("Resources/screengun_logo.ico", UriKind.Relative)).Stream;
-            //this.notifyIconViewModel = new NotifyIconViewModel(new Icon(stream));
-            //this.notifyIconViewModel.RightClicked += (sender, args) => Console.WriteLine("Rightclick");
-            //this.notifyIconViewModel.LeftClicked += (sender, args) => Console.WriteLine("Leftclick");
+            // var stream = Application.GetResourceStream(new Uri("Resources/screengun_logo.ico", UriKind.Relative)).Stream;
+            // this.notifyIconViewModel = new NotifyIconViewModel(new Icon(stream));
+            // this.notifyIconViewModel.RightClicked += (sender, args) => Console.WriteLine("Rightclick");
+            // this.notifyIconViewModel.LeftClicked += (sender, args) => Console.WriteLine("Leftclick");
         }
 
         /// <summary>
@@ -97,14 +94,6 @@ namespace ScreenGun.Modules.Main
         public void NewRecording()
         {
             this.windowManager.ShowWindow(IoC.Get<RecorderViewModel>());
-        }
-
-        /// <summary>
-        ///     Shows the settings view.
-        /// </summary>
-        public void Settings()
-        {
-            this.windowManager.ShowWindow(IoC.Get<SettingsViewModel>());
         }
 
         /// <summary>
@@ -118,6 +107,14 @@ namespace ScreenGun.Modules.Main
                 "Well fak u ya little cunt!", 
                 ToolTipIcon.Info, 
                 (sender, args) => MessageBox.Show("Huehuehue", "caption", MessageBoxButton.OK));
+        }
+
+        /// <summary>
+        ///     Shows the settings view.
+        /// </summary>
+        public void Settings()
+        {
+            this.windowManager.ShowWindow(IoC.Get<SettingsViewModel>());
         }
 
         #endregion

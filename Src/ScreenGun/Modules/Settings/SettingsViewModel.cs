@@ -8,16 +8,14 @@
 
 using System;
 using System.Globalization;
+using System.IO;
+
+using Newtonsoft.Json;
 
 using ScreenGun.Base;
 
 namespace ScreenGun.Modules.Settings
 {
-    using System.Data;
-    using System.IO;
-
-    using Newtonsoft.Json;
-
     /// <summary>
     ///     The settings view model.
     /// </summary>
@@ -26,47 +24,51 @@ namespace ScreenGun.Modules.Settings
         #region Fields
 
         /// <summary>
+        ///     The default mic enabled
+        /// </summary>
+        private bool defaultMicEnabled;
+
+        /// <summary>
+        ///     The file path
+        /// </summary>
+        private string filePath;
+
+        /// <summary>
+        ///     The framerate
+        /// </summary>
+        private int framerate;
+
+        /// <summary>
         ///     The framerate text
         /// </summary>
         private string framerateText;
 
         /// <summary>
-        /// The default mic enabled
-        /// </summary>
-        private bool defaultMicEnabled;
-
-        /// <summary>
-        /// The framerate
-        /// </summary>
-        private int framerate;
-
-        /// <summary>
-        /// The storage path
+        ///     The storage path
         /// </summary>
         private string storagePath;
-
-        /// <summary>
-        /// The file path
-        /// </summary>
-        private string filePath;
 
         #endregion
 
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SettingsViewModel" /> class.
+        /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
         /// </summary>
-        /// <param name="rootDirectory">The root directory.</param>
+        /// <param name="rootDirectory">
+        /// The root directory.
+        /// </param>
         public SettingsViewModel(string rootDirectory)
         {
             this.filePath = Path.Combine(rootDirectory, "settings.conf");
             this.Load();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
+        /// </summary>
         public SettingsViewModel()
         {
-            
         }
 
         #endregion
@@ -78,48 +80,15 @@ namespace ScreenGun.Modules.Settings
         /// </summary>
         public event EventHandler DialogReset;
 
-        /// <summary>
-        /// Saves the settings.
-        /// </summary>
-        public void SaveSettings()
-        {
-            var serializeObject = JsonConvert.SerializeObject(this);
-            File.WriteAllText(filePath, serializeObject);
-        }
-
-        /// <summary>
-        /// Loads this instance.
-        /// </summary>
-        private void Load()
-        {
-            if (!File.Exists(this.filePath))
-            {
-                this.DefaultMicEnabled = true;
-                this.Framerate = 20;
-                this.StoragePath = "C:\\ScreenGun\\Clips";
-                return;
-            }
-            try
-            {
-                var readAllText = File.ReadAllText(this.filePath);
-                var settingsViewModel = JsonConvert.DeserializeObject<SettingsViewModel>(readAllText);
-                this.StoragePath = settingsViewModel.StoragePath;
-                this.Framerate = settingsViewModel.Framerate;
-                this.DefaultMicEnabled = settingsViewModel.DefaultMicEnabled;
-            }
-            catch (Exception) { }
-            // If any error occurs, don't do anything
-        }
-
         #endregion
 
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets a value indicating whether the mic is enabled by default.
+        ///     Gets or sets a value indicating whether the mic is enabled by default.
         /// </summary>
         /// <value>
-        /// <c>true</c> if the mic is enabled by default; otherwise, <c>false</c>.
+        ///     <c>true</c> if the mic is enabled by default; otherwise, <c>false</c>.
         /// </value>
         public bool DefaultMicEnabled
         {
@@ -127,14 +96,16 @@ namespace ScreenGun.Modules.Settings
             {
                 return this.defaultMicEnabled;
             }
+
             set
             {
                 if (this.defaultMicEnabled == value)
                 {
                     return;
                 }
+
                 this.defaultMicEnabled = value;
-                this.NotifyOfPropertyChange(() => DefaultMicEnabled);
+                this.NotifyOfPropertyChange(() => this.DefaultMicEnabled);
                 this.SaveSettings();
             }
         }
@@ -151,14 +122,16 @@ namespace ScreenGun.Modules.Settings
             {
                 return this.framerate;
             }
+
             set
             {
                 if (this.framerate == value)
                 {
                     return;
                 }
+
                 this.framerate = value;
-                this.NotifyOfPropertyChange(() => Framerate);
+                this.NotifyOfPropertyChange(() => this.Framerate);
                 this.SaveSettings();
             }
         }
@@ -203,14 +176,16 @@ namespace ScreenGun.Modules.Settings
             {
                 return this.storagePath;
             }
+
             set
             {
                 if (this.storagePath == value)
                 {
                     return;
                 }
+
                 this.storagePath = value;
-                this.NotifyOfPropertyChange(() => StoragePath);
+                this.NotifyOfPropertyChange(() => this.StoragePath);
                 this.SaveSettings();
             }
         }
@@ -235,6 +210,15 @@ namespace ScreenGun.Modules.Settings
             this.OnDialogReset();
         }
 
+        /// <summary>
+        ///     Saves the settings.
+        /// </summary>
+        public void SaveSettings()
+        {
+            var serializeObject = JsonConvert.SerializeObject(this);
+            File.WriteAllText(this.filePath, serializeObject);
+        }
+
         #endregion
 
         #region Methods
@@ -249,6 +233,34 @@ namespace ScreenGun.Modules.Settings
             {
                 handler(this, EventArgs.Empty);
             }
+        }
+
+        /// <summary>
+        ///     Loads this instance.
+        /// </summary>
+        private void Load()
+        {
+            if (!File.Exists(this.filePath))
+            {
+                this.DefaultMicEnabled = true;
+                this.Framerate = 20;
+                this.StoragePath = "C:\\ScreenGun\\Clips";
+                return;
+            }
+
+            try
+            {
+                var readAllText = File.ReadAllText(this.filePath);
+                var settingsViewModel = JsonConvert.DeserializeObject<SettingsViewModel>(readAllText);
+                this.StoragePath = settingsViewModel.StoragePath;
+                this.Framerate = settingsViewModel.Framerate;
+                this.DefaultMicEnabled = settingsViewModel.DefaultMicEnabled;
+            }
+            catch (Exception)
+            {
+            }
+
+            // If any error occurs, don't do anything
         }
 
         /// <summary>

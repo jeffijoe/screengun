@@ -36,8 +36,8 @@
                 <Setter Property="FontFamily" Value="Roboto" />
                 <Setter Property="FontSize" Value="14" />
                 <Setter Property="FontWeight" Value="Regular" />
-                <Setter Property="Foreground" Value="DarkGray"></Setter>
-                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                <Setter Property="Foreground" Value="DarkGray" />
+                <Setter Property="VerticalAlignment" Value="Center" />
             </Style>
             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
                 <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -68,9 +68,9 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="60"></RowDefinition>
-                <RowDefinition Height="60"></RowDefinition>
-                <RowDefinition Height="60"></RowDefinition>    
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Content="Recording output path" Margin="4,6,4,0" Style="{StaticResource LabelStyle}" />
             <TextBox 
@@ -80,9 +80,7 @@
                     Grid.Row="0"
                     Grid.Column="1" wpf:TextField.Hint="Folder Path"
                     LostFocus="TxtStoragePath_OnLostFocus"
-                    KeyDown="TxtStoragePath_OnKeyDown">
-
-            </TextBox>
+                    KeyDown="TxtStoragePath_OnKeyDown" />
             <Button Name="BtnBrowse" 
                     Content="Browse" 
                     Grid.Row="0"

@@ -12,14 +12,14 @@ using System.Windows.Input;
 namespace ScreenGun.Misc
 {
     /// <summary>
-    /// The command.
+    ///     The command.
     /// </summary>
     public class Command : ICommand
     {
         #region Fields
 
         /// <summary>
-        /// The action.
+        ///     The action.
         /// </summary>
         private readonly Action action;
 
@@ -43,7 +43,7 @@ namespace ScreenGun.Misc
         #region Public Events
 
         /// <summary>
-        /// The can execute changed.
+        ///     The can execute changed.
         /// </summary>
         public event EventHandler CanExecuteChanged;
 

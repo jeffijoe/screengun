@@ -22,7 +22,7 @@ namespace ScreenGun.Converters
         #region Static Fields
 
         /// <summary>
-        /// The false color property.
+        ///     The false color property.
         /// </summary>
         public static readonly DependencyProperty FalseColorProperty = DependencyProperty.Register(
             "FalseColor", 
@@ -31,7 +31,7 @@ namespace ScreenGun.Converters
             new PropertyMetadata(default(Brush)));
 
         /// <summary>
-        /// The true color property.
+        ///     The true color property.
         /// </summary>
         public static readonly DependencyProperty TrueColorProperty = DependencyProperty.Register(
             "TrueColor", 
@@ -44,7 +44,7 @@ namespace ScreenGun.Converters
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets the false color.
+        ///     Gets or sets the false color.
         /// </summary>
         public Brush FalseColor
         {
@@ -60,7 +60,7 @@ namespace ScreenGun.Converters
         }
 
         /// <summary>
-        /// Gets or sets the true color.
+        ///     Gets or sets the true color.
         /// </summary>
         public Brush TrueColor
         {

@@ -79,18 +79,6 @@ namespace ScreenGun
         }
 
         /// <summary>
-        /// Creates the recorder.
-        /// </summary>
-        /// <returns></returns>
-        private IScreenRecorder CreateRecorder()
-        {
-            string ffmpegPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ffmpeg.exe");
-            var capturer = new GDIPlusFrameCaptureBackend();
-            var opts = new FFMPEGScreenRecorderOptions(ffmpegPath, capturer);
-            return new FFMPEGScreenRecorder(opts);
-        }
-
-        /// <summary>
         /// The get all instances.
         /// </summary>
         /// <param name="service">
@@ -141,6 +129,20 @@ namespace ScreenGun
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
             this.DisplayRootViewFor<IShell>();
+        }
+
+        /// <summary>
+        /// Creates the recorder.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="IScreenRecorder"/>.
+        /// </returns>
+        private IScreenRecorder CreateRecorder()
+        {
+            string ffmpegPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ffmpeg.exe");
+            var capturer = new GDIPlusFrameCaptureBackend();
+            var opts = new FFMPEGScreenRecorderOptions(ffmpegPath, capturer);
+            return new FFMPEGScreenRecorder(opts);
         }
 
         #endregion

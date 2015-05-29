@@ -9,7 +9,6 @@
         <Path Data="F 1 M 7,14 L 5,14 5,19 10,19 10,17 7,17 7,14 Z M 5,10 L 7,10 7,7 10,7 10,5 5,5 5,10 Z 
               M 17,17 L 14,17 14,19 19,19 19,14 17,14 17,17 Z M 14,5 L 14,7 17,7 17,10 19,10 19,5 14,5 Z"
               Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=IconBackground}" 
-              RenderTransformOrigin="0.5,0.5"  Width="24" Height="24">
-        </Path>
+              RenderTransformOrigin="0.5,0.5"  Width="24" Height="24" />
     </Grid>
 </UserControl>

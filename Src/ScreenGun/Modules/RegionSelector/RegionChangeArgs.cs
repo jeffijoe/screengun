@@ -42,10 +42,10 @@ namespace ScreenGun.Modules.RegionSelector
         #region Public Methods and Operators
 
         /// <summary>
-        /// The to string.
+        ///     The to string.
         /// </summary>
         /// <returns>
-        /// The <see cref="string"/>.
+        ///     The <see cref="string" />.
         /// </returns>
         public override string ToString()
         {

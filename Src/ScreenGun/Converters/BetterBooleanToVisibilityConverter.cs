@@ -21,7 +21,7 @@ namespace ScreenGun.Converters
         #region Static Fields
 
         /// <summary>
-        /// The false visibility property.
+        ///     The false visibility property.
         /// </summary>
         public static readonly DependencyProperty FalseVisibilityProperty = DependencyProperty.Register(
             "FalseVisibility", 
@@ -30,7 +30,7 @@ namespace ScreenGun.Converters
             new PropertyMetadata(Visibility.Hidden));
 
         /// <summary>
-        /// The true visibility property.
+        ///     The true visibility property.
         /// </summary>
         public static readonly DependencyProperty TrueVisibilityProperty = DependencyProperty.Register(
             "TrueVisibility", 
@@ -43,7 +43,7 @@ namespace ScreenGun.Converters
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets the false visibility.
+        ///     Gets or sets the false visibility.
         /// </summary>
         public Visibility FalseVisibility
         {
@@ -59,7 +59,7 @@ namespace ScreenGun.Converters
         }
 
         /// <summary>
-        /// Gets or sets the true visibility.
+        ///     Gets or sets the true visibility.
         /// </summary>
         public Visibility TrueVisibility
         {

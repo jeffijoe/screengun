@@ -42,7 +42,7 @@ namespace ScreenGun.Modules.RegionSelector
         private Point endPosition;
 
         /// <summary>
-        /// The is full screen.
+        ///     The is full screen.
         /// </summary>
         private bool isFullScreen;
 
@@ -160,7 +160,7 @@ namespace ScreenGun.Modules.RegionSelector
         #region Public Methods and Operators
 
         /// <summary>
-        /// The enable full screen.
+        ///     The enable full screen.
         /// </summary>
         public void EnableFullScreen()
         {

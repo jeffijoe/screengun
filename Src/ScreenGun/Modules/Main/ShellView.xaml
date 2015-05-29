@@ -22,7 +22,7 @@
         <controls:WindowCommands>
             <Button Cursor="Hand" Name="NewRecording" cal:Message.Attach="NewRecording">
                 <StackPanel Orientation="Horizontal">
-                    <icons:IconRecord InnerColor="Red" OuterColor="DarkSlateGray"></icons:IconRecord>
+                    <icons:IconRecord InnerColor="Red" OuterColor="DarkSlateGray" />
 
                     <TextBlock Margin="4 0 0 0">
                     New Recording

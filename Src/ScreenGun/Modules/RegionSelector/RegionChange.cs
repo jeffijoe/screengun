@@ -8,10 +8,10 @@
 namespace ScreenGun.Modules.RegionSelector
 {
     /// <summary>
-    /// The region change delegate handler.
+    ///     The region change delegate handler.
     /// </summary>
     /// <param name="args">
-    /// The args.
+    ///     The args.
     /// </param>
     public delegate void RegionChange(RegionChangeArgs args);
 }

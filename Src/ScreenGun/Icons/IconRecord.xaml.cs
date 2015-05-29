@@ -110,7 +110,7 @@ namespace ScreenGun.Icons
         }
 
         /// <summary>
-        /// Gets the size fourth.
+        ///     Gets the size fourth.
         /// </summary>
         public double SizeEighth
         {
@@ -121,7 +121,7 @@ namespace ScreenGun.Icons
         }
 
         /// <summary>
-        /// Gets the size half.
+        ///     Gets the size half.
         /// </summary>
         public double SizeHalf
         {
