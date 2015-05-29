@@ -7,18 +7,13 @@
 // Copyright (C) ScreenGun Authors 2015. All rights reserved.
 
 using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Forms;
 
 using Caliburn.Micro;
 
 using ScreenGun.Base;
 using ScreenGun.Modules.Main.ScreenGunFile;
-using ScreenGun.Modules.NotifyIcon;
 using ScreenGun.Modules.Recorder;
 using ScreenGun.Modules.Settings;
-
-using MessageBox = System.Windows.MessageBox;
 
 namespace ScreenGun.Modules.Main
 {
@@ -58,7 +53,7 @@ namespace ScreenGun.Modules.Main
         #region Public Properties
 
         /// <summary>
-        ///     Gets or sets the files.
+        ///     Gets the files.
         /// </summary>
         /// <value>
         ///     The files.
@@ -70,38 +65,11 @@ namespace ScreenGun.Modules.Main
         #region Public Methods and Operators
 
         /// <summary>
-        /// The initialize.
-        /// </summary>
-        /// <param name="frameworkElement">
-        /// The framework element.
-        /// </param>
-        public void Initialize(FrameworkElement frameworkElement)
-        {
-            // var stream = Application.GetResourceStream(new Uri("Resources/screengun_logo.ico", UriKind.Relative)).Stream;
-            // this.notifyIconViewModel = new NotifyIconViewModel(new Icon(stream));
-            // this.notifyIconViewModel.RightClicked += (sender, args) => Console.WriteLine("Rightclick");
-            // this.notifyIconViewModel.LeftClicked += (sender, args) => Console.WriteLine("Leftclick");
-        }
-
-        /// <summary>
         ///     Shows the Recorder view.
         /// </summary>
         public void NewRecording()
         {
             this.windowManager.ShowWindow(IoC.Get<RecorderViewModel>());
-        }
-
-        /// <summary>
-        ///     The new screenshot.
-        /// </summary>
-        public void NewTooltip()
-        {
-            this.notifyIconViewModel.ShowBalloonTip(
-                2500, 
-                "Huehuehue", 
-                "Well fak u ya little cunt!", 
-                ToolTipIcon.Info, 
-                (sender, args) => MessageBox.Show("Huehuehue", "caption", MessageBoxButton.OK));
         }
 
         /// <summary>

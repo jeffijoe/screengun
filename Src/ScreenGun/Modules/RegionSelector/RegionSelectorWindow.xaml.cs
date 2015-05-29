@@ -94,6 +94,11 @@ namespace ScreenGun.Modules.RegionSelector
         #region Public Events
 
         /// <summary>
+        ///     Occurs when full screen changed.
+        /// </summary>
+        public event FullScreenChanged FullScreenChanged;
+
+        /// <summary>
         ///     Occurs when the region changes.
         /// </summary>
         public event RegionChange RegionChange;
@@ -126,6 +131,12 @@ namespace ScreenGun.Modules.RegionSelector
                 {
                     this.UpdatePosition();
                 }
+
+                var handler = this.FullScreenChanged;
+                if (handler != null)
+                {
+                    handler.Invoke(new FullScreenChangedArgs(this.isFullScreen));
+                }
             }
         }
 
@@ -157,12 +168,12 @@ namespace ScreenGun.Modules.RegionSelector
 
         #endregion
 
-        #region Public Methods and Operators
+        #region Methods
 
         /// <summary>
         ///     The enable full screen.
         /// </summary>
-        public void EnableFullScreen()
+        private void EnableFullScreen()
         {
             var position = System.Windows.Forms.Cursor.Position;
             foreach (var screen in Screen.AllScreens)
@@ -173,9 +184,11 @@ namespace ScreenGun.Modules.RegionSelector
                     continue;
                 }
 
+                var x = bounds.X - this.virtualScreen.X;
+                var y = bounds.Y - this.virtualScreen.Y;
                 this.relativeRecordingArea = new Rect(
-                    bounds.X + this.virtualScreen.X, 
-                    bounds.Y + this.virtualScreen.Y, 
+                    x, 
+                    y, 
                     bounds.Width, 
                     bounds.Height);
                 break;
@@ -183,10 +196,6 @@ namespace ScreenGun.Modules.RegionSelector
 
             this.UpdateUI();
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Handles the MouseDown event of the OverlayGrid control.
@@ -205,6 +214,12 @@ namespace ScreenGun.Modules.RegionSelector
             }
 
             this.isResizing = true;
+            
+            if (this.IsFullScreen)
+            {
+                this.IsFullScreen = false;
+            }
+            
             this.startPosition = this.endPosition = e.GetPosition((IInputElement)sender);
             this.UpdatePosition();
         }
@@ -327,6 +342,11 @@ namespace ScreenGun.Modules.RegionSelector
             if (this.isResizing || this.Locked)
             {
                 return;
+            }
+
+            if (this.IsFullScreen)
+            {
+                this.IsFullScreen = false;
             }
 
             Point position = e.GetPosition(this.OverlayGrid);

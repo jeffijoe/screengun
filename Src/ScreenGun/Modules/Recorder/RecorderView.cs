@@ -28,8 +28,9 @@ namespace ScreenGun.Modules.Recorder
         public RecorderView()
         {
             this.RegionChange += this.OnRegionChange;
+            this.FullScreenChanged += this.OnFullScreenChange;
             this.DataContextChanged += this.OnDataContextChanged;
-
+            this.Title = "New Recording";
             var command = new Command(() => this.ViewModel.Close());
             this.InputBindings.Add(new KeyBinding(command, Key.Escape, ModifierKeys.None));
         }
@@ -74,6 +75,21 @@ namespace ScreenGun.Modules.Recorder
         }
 
         /// <summary>
+        /// Called when full screen changes.
+        /// </summary>
+        /// <param name="args">
+        /// The arguments.
+        /// </param>
+        private void OnFullScreenChange(FullScreenChangedArgs args)
+        {
+            // ReSharper disable once RedundantCheckBeforeAssignment
+            if (this.ViewModel.IsFullScreen != args.IsFullScreen)
+            {
+                this.ViewModel.IsFullScreen = args.IsFullScreen;
+            }
+        }
+
+        /// <summary>
         /// Called when the region changes.
         /// </summary>
         /// <param name="args">
@@ -98,6 +114,11 @@ namespace ScreenGun.Modules.Recorder
             if (propertyChangedEventArgs.PropertyName == "IsRecording")
             {
                 this.Locked = this.ViewModel.IsRecording;
+            }
+
+            if (propertyChangedEventArgs.PropertyName == "IsFullScreen")
+            {
+                this.IsFullScreen = this.ViewModel.IsFullScreen;
             }
         }
 

@@ -115,6 +115,7 @@ namespace ScreenGun.Modules.Recorder
         /// </summary>
         public void StartRecording()
         {
+            this.notifyIcon.HideBalloonTip();
             this.IsRecording = true;
 
             Console.WriteLine("Starting");
@@ -136,9 +137,9 @@ namespace ScreenGun.Modules.Recorder
         {
             if (this.IsRecording)
             {
-                Console.WriteLine("Stopping");
                 await this.recorder.StopAsync();
                 this.IsRecording = false;
+                this.notifyIcon.Dispose();
             }
         }
 
@@ -188,7 +189,7 @@ namespace ScreenGun.Modules.Recorder
                     Application.GetResourceStream(new Uri("Resources/screengun_logo.ico", UriKind.Relative)).Stream);
             this.notifyIcon = new NotifyIconViewModel(icon);
             this.notifyIcon.ShowBalloonTip(
-                3000, 
+                5000, 
                 "ScreenGun", 
                 "When recording, click this icon to stop.", 
                 ToolTipIcon.Info);

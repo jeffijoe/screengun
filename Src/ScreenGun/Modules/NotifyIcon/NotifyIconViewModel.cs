@@ -119,6 +119,15 @@ namespace ScreenGun.Modules.NotifyIcon
         }
 
         /// <summary>
+        ///     Hides the balloon tip.
+        /// </summary>
+        public void HideBalloonTip()
+        {
+            this.actualIcon.Visible = false;
+            this.actualIcon.Visible = true;
+        }
+
+        /// <summary>
         /// Shows the balloon tip.
         /// </summary>
         /// <param name="durationMs">

@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -188,6 +189,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Modules\NotifyIcon\NotifyIconViewModel.cs" />
+    <Compile Include="Modules\RegionSelector\FullScreenChanged.cs" />
+    <Compile Include="Modules\RegionSelector\FullScreenChangedArgs.cs" />
     <Compile Include="Modules\RegionSelector\RegionChange.cs" />
     <Compile Include="Modules\RegionSelector\RegionChangeArgs.cs" />
     <Compile Include="Modules\RegionSelector\RegionSelectorWindow.xaml.cs">

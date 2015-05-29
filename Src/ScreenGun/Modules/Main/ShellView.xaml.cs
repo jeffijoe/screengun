@@ -25,7 +25,6 @@ namespace ScreenGun.Modules.Main
         public ShellView()
         {
             this.InitializeComponent();
-            this.Loaded += this.OnLoaded;
         }
 
         #endregion
@@ -41,24 +40,6 @@ namespace ScreenGun.Modules.Main
             {
                 return this.DataContext as ShellViewModel;
             }
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// The on loaded.
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="routedEventArgs">
-        /// The routed event args.
-        /// </param>
-        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
-        {
-            this.ViewModel.Initialize(this);
         }
 
         #endregion
