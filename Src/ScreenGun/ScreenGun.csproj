@@ -235,6 +235,8 @@
     <Content Include="ffmpeg.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\record_icon.ico" />
+    <Resource Include="Resources\record_icon.png" />
     <Resource Include="Resources\screengun_logo.ico" />
     <Resource Include="Resources\screengun_logo.png" />
   </ItemGroup>

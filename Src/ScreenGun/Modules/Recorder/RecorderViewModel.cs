@@ -185,7 +185,7 @@ namespace ScreenGun.Modules.Recorder
             base.OnViewReady(view);
             var icon =
                 new Icon(
-                    Application.GetResourceStream(new Uri("Resources/screengun_logo.ico", UriKind.Relative)).Stream);
+                    Application.GetResourceStream(new Uri("Resources/record_icon.ico", UriKind.Relative)).Stream);
             this.notifyIcon = new NotifyIconViewModel(icon);
             this.notifyIcon.ShowBalloonTip(
                 3000, 
