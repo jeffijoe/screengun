@@ -40,7 +40,7 @@
     <DockPanel>
         <StatusBar DockPanel.Dock="Bottom" Height="25" Background="Transparent">
             <StatusBarItem>
-                <TextBlock FontWeight="DemiBold">There are 2 screencaptures, and one screenshot.</TextBlock>
+                <TextBlock FontFamily="Roboto" FontWeight="Normal">There are 2 screencaptures, and one screenshot.</TextBlock>
             </StatusBarItem>
         </StatusBar>
 
