@@ -107,6 +107,20 @@ namespace ScreenGun.Modules.Main.ScreenGunFile
             this.RecordingDeleted = null;
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this instance can delete.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance can delete; otherwise, <c>false</c>.
+        /// </value>
+        public bool CanDelete
+        {
+            get
+            {
+                return this.RecordingStage == RecordingStage.Done;
+            }
+        }
+
         #endregion
     }
 

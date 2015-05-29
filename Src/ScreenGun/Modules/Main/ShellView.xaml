@@ -12,7 +12,6 @@
     Width="500"
     MinWidth="450"
     ShowMaxRestoreButton="false"
-    Icon="/Resources/screengun_logo.png"
     GlowBrush="{DynamicResource AccentColorBrush}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     Title="ScreenGun">

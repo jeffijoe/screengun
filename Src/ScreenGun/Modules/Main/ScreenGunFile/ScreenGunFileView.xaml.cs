@@ -58,8 +58,8 @@ namespace ScreenGun.Modules.Main.ScreenGunFile
         private void UIElement_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragDrop.DoDragDrop(
-                (DependencyObject)sender, 
-                new DataObject(DataFormats.FileDrop, this.ViewModel.FilePath), 
+                this,
+                new DataObject(DataFormats.FileDrop, new[] { this.ViewModel.FilePath }), 
                 DragDropEffects.Copy);
         }
 

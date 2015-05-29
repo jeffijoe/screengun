@@ -191,10 +191,25 @@ namespace ScreenGun.Modules.RegionSelector
                     y, 
                     bounds.Width, 
                     bounds.Height);
+                this.OnRegionChanged();
                 break;
             }
 
             this.UpdateUI();
+        }
+
+        /// <summary>
+        ///     Called when region changed.
+        /// </summary>
+        private void OnRegionChanged()
+        {
+            var handler = this.RegionChange;
+            if (handler != null)
+            {
+                var area = this.RecordingArea;
+                handler.Invoke(
+                    new RegionChangeArgs(new Rectangle((int)area.X, (int)area.Y, (int)area.Width, (int)area.Height)));
+            }
         }
 
         /// <summary>
@@ -235,6 +250,7 @@ namespace ScreenGun.Modules.RegionSelector
         /// </param>
         private void OverlayGridOnMouseMove(object sender, MouseEventArgs e)
         {
+            this.TryMoveRegion(e);
             if (this.isResizing == false || this.Locked)
             {
                 return;
@@ -256,6 +272,7 @@ namespace ScreenGun.Modules.RegionSelector
         private void OverlayGridOnMouseUp(object sender, MouseButtonEventArgs e)
         {
             this.isResizing = false;
+            this.isMoving = false;
             this.UpdatePosition();
         }
 
@@ -286,6 +303,7 @@ namespace ScreenGun.Modules.RegionSelector
         private void RecordingRegionMouseLeftUp(object sender, MouseButtonEventArgs e)
         {
             this.isMoving = false;
+            this.isResizing = false;
         }
 
         /// <summary>
@@ -298,6 +316,11 @@ namespace ScreenGun.Modules.RegionSelector
         /// The <see cref="MouseEventArgs"/> instance containing the event data.
         /// </param>
         private void RecordingRegionMouseMove(object sender, MouseEventArgs e)
+        {
+            this.TryMoveRegion(e);
+        }
+
+        private void TryMoveRegion(MouseEventArgs e)
         {
             if (this.isMoving == false || this.Locked)
             {
@@ -400,13 +423,7 @@ namespace ScreenGun.Modules.RegionSelector
             this.relativeRecordingArea.Intersect(relativeVirtualScreen);
             this.UpdateUI();
 
-            var handler = this.RegionChange;
-            if (handler != null)
-            {
-                var area = this.RecordingArea;
-                handler.Invoke(
-                    new RegionChangeArgs(new Rectangle((int)area.X, (int)area.Y, (int)area.Width, (int)area.Height)));
-            }
+            this.OnRegionChanged();
         }
 
         /// <summary>
