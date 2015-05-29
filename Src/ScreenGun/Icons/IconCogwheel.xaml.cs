@@ -20,7 +20,7 @@ namespace ScreenGun.Icons
         #region Static Fields
 
         /// <summary>
-        /// The icon background property.
+        ///     The icon background property.
         /// </summary>
         public static readonly DependencyProperty IconBackgroundProperty = DependencyProperty.Register(
             "IconBackground", 
@@ -33,7 +33,7 @@ namespace ScreenGun.Icons
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IconCogwheel"/> class.
+        ///     Initializes a new instance of the <see cref="IconCogwheel" /> class.
         /// </summary>
         public IconCogwheel()
         {
@@ -45,7 +45,7 @@ namespace ScreenGun.Icons
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets the icon background.
+        ///     Gets or sets the icon background.
         /// </summary>
         public Brush IconBackground
         {

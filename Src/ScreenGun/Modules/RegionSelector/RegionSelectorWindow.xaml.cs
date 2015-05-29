@@ -214,12 +214,12 @@ namespace ScreenGun.Modules.RegionSelector
             }
 
             this.isResizing = true;
-            
+
             if (this.IsFullScreen)
             {
                 this.IsFullScreen = false;
             }
-            
+
             this.startPosition = this.endPosition = e.GetPosition((IInputElement)sender);
             this.UpdatePosition();
         }

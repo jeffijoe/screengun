@@ -246,7 +246,7 @@ namespace ScreenGun.Recorder
             var startInfo = new ProcessStartInfo("cmd.exe", cmdArgs)
             {
                 UseShellExecute = true, 
-                // WindowStyle = ProcessWindowStyle.Hidden
+                WindowStyle = ProcessWindowStyle.Hidden
             };
 
             var process = Process.Start(startInfo);

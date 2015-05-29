@@ -16,7 +16,15 @@
     GlowBrush="{DynamicResource AccentColorBrush}"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
     Title="ScreenGun">
-
+    
+    <controls:MetroWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/VisibilityConverters.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </controls:MetroWindow.Resources>
+    
     <!-- Window commands -->
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
@@ -40,12 +48,22 @@
     <DockPanel>
         <StatusBar DockPanel.Dock="Bottom" Height="25" Background="Transparent">
             <StatusBarItem>
-                <TextBlock FontFamily="Roboto" FontWeight="Normal">There are 2 screencaptures, and one screenshot.</TextBlock>
+                <TextBlock FontFamily="Roboto" 
+                           FontWeight="Normal"
+                           Text="{Binding Path=Status}"/>
             </StatusBarItem>
         </StatusBar>
 
         <Grid Background="White">
-            <ListBox Name="Files" VerticalAlignment="Stretch" Margin="0 8 0 0">
+            <TextBlock Visibility="{Binding Path=HasAnyRecordings, Converter={StaticResource InvertedVisibilityConverter}}"
+                       FontSize="24"
+                       Margin="40 80 40 40"
+                       TextAlignment="Center"
+                       Foreground="DarkSlateGray"
+                       TextWrapping="Wrap">
+                Press the New Recording button to get started!
+            </TextBlock>
+            <ListBox Name="Files" VerticalAlignment="Stretch" Margin="0 8 0 0" Visibility="{Binding Path=HasAnyRecordings, Converter={StaticResource VisibilityConverter}}">
                 <ListBox.ItemContainerStyle>
                     <Style BasedOn="{StaticResource MetroListBoxItem}" TargetType="ListBoxItem">
                         <Setter Property="Padding" Value="0 0 0 0" />

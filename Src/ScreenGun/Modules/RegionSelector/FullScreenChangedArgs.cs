@@ -8,7 +8,7 @@
 namespace ScreenGun.Modules.RegionSelector
 {
     /// <summary>
-    /// The full screen changed args.
+    ///     The full screen changed args.
     /// </summary>
     public class FullScreenChangedArgs
     {
@@ -30,7 +30,7 @@ namespace ScreenGun.Modules.RegionSelector
         #region Public Properties
 
         /// <summary>
-        /// Gets a value indicating whether is full screen.
+        ///     Gets a value indicating whether is full screen.
         /// </summary>
         public bool IsFullScreen { get; private set; }
 

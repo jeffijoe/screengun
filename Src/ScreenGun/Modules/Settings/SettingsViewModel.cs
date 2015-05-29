@@ -10,8 +10,6 @@ using System;
 using System.Globalization;
 using System.IO;
 
-using Newtonsoft.Json;
-
 using ScreenGun.Base;
 
 namespace ScreenGun.Modules.Settings
@@ -24,19 +22,19 @@ namespace ScreenGun.Modules.Settings
         #region Fields
 
         /// <summary>
+        ///     The file path
+        /// </summary>
+        private readonly string filePath;
+
+        /// <summary>
         ///     The default mic enabled
         /// </summary>
         private bool defaultMicEnabled;
 
         /// <summary>
-        ///     The file path
-        /// </summary>
-        private string filePath;
-
-        /// <summary>
         ///     The framerate
         /// </summary>
-        private int framerate;
+        private int frameRate;
 
         /// <summary>
         ///     The framerate text
@@ -55,20 +53,33 @@ namespace ScreenGun.Modules.Settings
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
         /// </summary>
-        /// <param name="rootDirectory">
-        /// The root directory.
+        /// <param name="folderName">
+        /// The folder name.
         /// </param>
-        public SettingsViewModel(string rootDirectory)
+        public SettingsViewModel(string folderName)
+            : this()
         {
+            var rootDirectory = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
+                folderName);
+            if (Directory.Exists(rootDirectory) == false)
+            {
+                Directory.CreateDirectory(rootDirectory);
+            }
+
             this.filePath = Path.Combine(rootDirectory, "settings.conf");
             this.Load();
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
+        ///     Initializes a new instance of the <see cref="SettingsViewModel" /> class.
         /// </summary>
         public SettingsViewModel()
         {
+            // Default settings
+            this.defaultMicEnabled = false;
+            this.frameRate = 20;
+            this.storagePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         }
 
         #endregion
@@ -116,22 +127,22 @@ namespace ScreenGun.Modules.Settings
         /// <value>
         ///     The framerate.
         /// </value>
-        public int Framerate
+        public int FrameRate
         {
             get
             {
-                return this.framerate;
+                return this.frameRate;
             }
 
             set
             {
-                if (this.framerate == value)
+                if (this.frameRate == value)
                 {
                     return;
                 }
 
-                this.framerate = value;
-                this.NotifyOfPropertyChange(() => this.Framerate);
+                this.frameRate = value;
+                this.NotifyOfPropertyChange(() => this.FrameRate);
                 this.SaveSettings();
             }
         }
@@ -148,7 +159,7 @@ namespace ScreenGun.Modules.Settings
             {
                 if (string.IsNullOrEmpty(this.framerateText))
                 {
-                    this.FramerateText = this.Framerate.ToString(CultureInfo.InvariantCulture);
+                    this.FramerateText = this.FrameRate.ToString(CultureInfo.InvariantCulture);
                 }
 
                 return this.framerateText;
@@ -203,37 +214,16 @@ namespace ScreenGun.Modules.Settings
         #region Public Methods and Operators
 
         /// <summary>
-        ///     Resets the dialogues.
-        /// </summary>
-        public void ResetDialogues()
-        {
-            this.OnDialogReset();
-        }
-
-        /// <summary>
         ///     Saves the settings.
         /// </summary>
         public void SaveSettings()
         {
-            var serializeObject = JsonConvert.SerializeObject(this);
-            File.WriteAllText(this.filePath, serializeObject);
+            SettingsFile.SaveSettings(this.filePath, this);
         }
 
         #endregion
 
         #region Methods
-
-        /// <summary>
-        ///     Called when [dialog reset].
-        /// </summary>
-        protected virtual void OnDialogReset()
-        {
-            EventHandler handler = this.DialogReset;
-            if (handler != null)
-            {
-                handler(this, EventArgs.Empty);
-            }
-        }
 
         /// <summary>
         ///     Loads this instance.
@@ -242,25 +232,22 @@ namespace ScreenGun.Modules.Settings
         {
             if (!File.Exists(this.filePath))
             {
-                this.DefaultMicEnabled = true;
-                this.Framerate = 20;
-                this.StoragePath = "C:\\ScreenGun\\Clips";
+                this.SaveSettings();
                 return;
             }
 
-            try
+            var settingsFile = SettingsFile.FromFile(this.filePath);
+            if (string.IsNullOrEmpty(settingsFile.StoragePath) == false)
             {
-                var readAllText = File.ReadAllText(this.filePath);
-                var settingsViewModel = JsonConvert.DeserializeObject<SettingsViewModel>(readAllText);
-                this.StoragePath = settingsViewModel.StoragePath;
-                this.Framerate = settingsViewModel.Framerate;
-                this.DefaultMicEnabled = settingsViewModel.DefaultMicEnabled;
-            }
-            catch (Exception)
-            {
+                this.storagePath = settingsFile.StoragePath;
             }
 
-            // If any error occurs, don't do anything
+            if (settingsFile.FrameRate != 0)
+            {
+                this.frameRate = settingsFile.FrameRate;
+            }
+
+            this.defaultMicEnabled = settingsFile.DefaultMicEnabled;
         }
 
         /// <summary>
@@ -268,20 +255,20 @@ namespace ScreenGun.Modules.Settings
         /// </summary>
         private void UpdateFramerate()
         {
-            int framerate;
-            if (!int.TryParse(this.FramerateText, out framerate))
+            int fps;
+            if (!int.TryParse(this.FramerateText, out fps))
             {
                 this.ValidFps = false;
                 return;
             }
 
-            if (framerate <= 0 || framerate > 30)
+            if (fps <= 0 || fps > 30)
             {
                 this.ValidFps = false;
             }
 
             this.ValidFps = true;
-            this.Framerate = framerate;
+            this.FrameRate = fps;
         }
 
         #endregion

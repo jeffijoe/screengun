@@ -44,6 +44,10 @@
       <HintPath>..\packages\Caliburn.Micro.2.0.2\lib\net45\Caliburn.Micro.Platform.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Jeffijoe.MessageFormat, Version=0.1.5.38085, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MessageFormat.0.1.5\lib\portable-net45+sl5+wp8+win8+wpa81+MonoTouch1+MonoAndroid1\Jeffijoe.MessageFormat.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.1.2.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
@@ -92,6 +96,7 @@
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Converters\BetterBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanToColorConverter.cs" />
+    <Compile Include="Events\RecordingCreated.cs" />
     <Compile Include="Icons\IconRecord.xaml.cs">
       <DependentUpon>IconRecord.xaml</DependentUpon>
     </Compile>
@@ -117,6 +122,7 @@
       <DependentUpon>IconSave.xaml</DependentUpon>
     </Compile>
     <Compile Include="Misc\Command.cs" />
+    <Compile Include="Misc\NativeWindowHelper.cs" />
     <Compile Include="Modules\Main\IShell.cs" />
     <Compile Include="Modules\Main\ScreenGunFile\ScreenGunFileView.xaml.cs">
       <DependentUpon>ScreenGunFileView.xaml</DependentUpon>
@@ -186,6 +192,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Resources\VisibilityConverters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Modules\NotifyIcon\NotifyIconViewModel.cs" />
@@ -199,6 +209,7 @@
     <Compile Include="Modules\Recorder\RecorderView.cs" />
     <Compile Include="Modules\Recorder\RecorderViewModel.cs" />
     <Compile Include="Modules\Settings\IScreenGunSettings.cs" />
+    <Compile Include="Modules\Settings\SettingsFile.cs" />
     <Compile Include="Modules\Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>

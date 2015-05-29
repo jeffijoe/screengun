@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:ScreenGun.Converters">
+    <converters:BetterBooleanToVisibilityConverter 
+            TrueVisibility="Visible" 
+            FalseVisibility="Collapsed"
+            x:Key="VisibilityConverter"/>
+    <converters:BetterBooleanToVisibilityConverter 
+            TrueVisibility="Collapsed" 
+            FalseVisibility="Visible"
+            x:Key="InvertedVisibilityConverter"/>
+</ResourceDictionary>

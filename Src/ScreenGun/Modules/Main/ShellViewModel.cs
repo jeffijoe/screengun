@@ -7,10 +7,15 @@
 // Copyright (C) ScreenGun Authors 2015. All rights reserved.
 
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 
 using Caliburn.Micro;
 
+using Jeffijoe.MessageFormat;
+
 using ScreenGun.Base;
+using ScreenGun.Events;
 using ScreenGun.Modules.Main.ScreenGunFile;
 using ScreenGun.Modules.Recorder;
 using ScreenGun.Modules.Settings;
@@ -20,9 +25,14 @@ namespace ScreenGun.Modules.Main
     /// <summary>
     ///     The shell view model.
     /// </summary>
-    public class ShellViewModel : ViewModel, IShell
+    public class ShellViewModel : ViewModel, IShell, IHandle<RecordingCreated>
     {
         #region Fields
+
+        /// <summary>
+        ///     The settings.
+        /// </summary>
+        private readonly IScreenGunSettings settings;
 
         /// <summary>
         ///     The window manager.
@@ -39,13 +49,22 @@ namespace ScreenGun.Modules.Main
         /// <param name="windowManager">
         /// The window Manager.
         /// </param>
-        public ShellViewModel(IWindowManager windowManager)
+        /// <param name="settings">
+        /// The settings.
+        /// </param>
+        /// <param name="eventAggregator">
+        /// The event Aggregator.
+        /// </param>
+        public ShellViewModel(
+            IWindowManager windowManager, 
+            IScreenGunSettings settings, 
+            IEventAggregator eventAggregator)
         {
             this.windowManager = windowManager;
-            this.Files = new ObservableCollection<ScreenGunFileViewModel>();
-            this.Files.Add(new ScreenGunFileViewModel("Recording 1.mp4", "C:\\Recordings\\Recording 1.mp4"));
-            this.Files.Add(new ScreenGunFileViewModel("Recording 2.mp4", "C:\\Recordings\\Recording 2.mp4"));
-            this.Files.Add(new ScreenGunFileViewModel("Screenshot 1.png", "C:\\Screenshots\\Screenshot 1.png"));
+            this.settings = settings;
+            this.Files = new BindableCollection<ScreenGunFileViewModel>();
+            this.SearchForFiles();
+            eventAggregator.Subscribe(this);
         }
 
         #endregion
@@ -60,9 +79,61 @@ namespace ScreenGun.Modules.Main
         /// </value>
         public ObservableCollection<ScreenGunFileViewModel> Files { get; private set; }
 
+        /// <summary>
+        ///     Gets a value indicating whether this instance has any recordings.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if this instance has any recordings; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasAnyRecordings
+        {
+            get
+            {
+                return this.Files.Any();
+            }
+        }
+
+        /// <summary>
+        ///     Gets the status.
+        /// </summary>
+        /// <value>
+        ///     The status.
+        /// </value>
+        public string Status
+        {
+            get
+            {
+                var count = this.Files.Count;
+                return MessageFormatter.Format(
+                    @"There {fileCount, plural,
+                            zero {are no recordings}
+                            one {is just one recording}
+                            =3 {are 3 recordings, and as we all know, 3 is a magic number}
+                            other {are # recordings}
+                            }.", 
+                    new
+                    {
+                        fileCount = count
+                    });
+            }
+        }
+
         #endregion
 
         #region Public Methods and Operators
+
+        /// <summary>
+        /// Handles the specified message.
+        /// </summary>
+        /// <param name="message">
+        /// The message.
+        /// </param>
+        public void Handle(RecordingCreated message)
+        {
+            var file = message.File;
+            file.RecordingDeleted += this.RemoveFile;
+            this.AddFile(file);
+        }
 
         /// <summary>
         ///     Shows the Recorder view.
@@ -78,6 +149,53 @@ namespace ScreenGun.Modules.Main
         public void Settings()
         {
             this.windowManager.ShowWindow(IoC.Get<SettingsViewModel>());
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Adds the file.
+        /// </summary>
+        /// <param name="file">
+        /// The file.
+        /// </param>
+        private void AddFile(ScreenGunFileViewModel file)
+        {
+            this.Files.Insert(0, file);
+            this.NotifyOfPropertyChange(() => this.Status);
+            this.NotifyOfPropertyChange(() => this.HasAnyRecordings);
+        }
+
+        /// <summary>
+        /// Removes the file.
+        /// </summary>
+        /// <param name="model">
+        /// The model.
+        /// </param>
+        private void RemoveFile(ScreenGunFileViewModel model)
+        {
+            this.Files.Remove(model);
+            this.NotifyOfPropertyChange(() => this.Status);
+            this.NotifyOfPropertyChange(() => this.HasAnyRecordings);
+        }
+
+        /// <summary>
+        ///     Searches for files.
+        /// </summary>
+        private void SearchForFiles()
+        {
+            var files = Directory.EnumerateFiles(this.settings.StoragePath, "*.mp4").OrderByDescending(x => x);
+            foreach (var file in files)
+            {
+                var item = new ScreenGunFileViewModel(file);
+                item.RecordingDeleted += this.RemoveFile;
+                this.Files.Add(item);
+            }
+
+            this.NotifyOfPropertyChange(() => this.Status);
+            this.NotifyOfPropertyChange(() => this.HasAnyRecordings);
         }
 
         #endregion

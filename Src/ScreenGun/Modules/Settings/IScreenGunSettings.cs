@@ -11,7 +11,7 @@ using System;
 namespace ScreenGun.Modules.Settings
 {
     /// <summary>
-    /// The ScreenGunSettings interface.
+    ///     The ScreenGunSettings interface.
     /// </summary>
     public interface IScreenGunSettings
     {
@@ -40,7 +40,7 @@ namespace ScreenGun.Modules.Settings
         /// <value>
         ///     The framerate.
         /// </value>
-        int Framerate { get; set; }
+        int FrameRate { get; set; }
 
         /// <summary>
         ///     Gets or sets the storage path.

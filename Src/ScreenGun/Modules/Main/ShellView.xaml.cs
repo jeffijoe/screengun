@@ -6,8 +6,6 @@
 // - Bjarke Søgaard <ekrajb123@gmail.com>
 // Copyright (C) ScreenGun Authors 2015. All rights reserved.
 
-using System.Windows;
-
 using MahApps.Metro.Controls;
 
 namespace ScreenGun.Modules.Main

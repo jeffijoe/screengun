@@ -11,9 +11,14 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
+using Caliburn.Micro;
+
 using PropertyChanged;
 
+using ScreenGun.Events;
+using ScreenGun.Modules.Main.ScreenGunFile;
 using ScreenGun.Modules.NotifyIcon;
+using ScreenGun.Modules.Settings;
 using ScreenGun.Recorder;
 
 using Application = System.Windows.Application;
@@ -30,9 +35,24 @@ namespace ScreenGun.Modules.Recorder
         #region Fields
 
         /// <summary>
+        ///     The event aggregator.
+        /// </summary>
+        private readonly IEventAggregator eventAggregator;
+
+        /// <summary>
         ///     The recorder.
         /// </summary>
         private readonly IScreenRecorder recorder;
+
+        /// <summary>
+        ///     The settings.
+        /// </summary>
+        private readonly IScreenGunSettings settings;
+
+        /// <summary>
+        ///     The file view model.
+        /// </summary>
+        private ScreenGunFileViewModel fileViewModel;
 
         /// <summary>
         ///     The notify icon.
@@ -49,9 +69,21 @@ namespace ScreenGun.Modules.Recorder
         /// <param name="recorder">
         /// The recorder.
         /// </param>
-        public RecorderViewModel(IScreenRecorder recorder)
+        /// <param name="settings">
+        /// The settings.
+        /// </param>
+        /// <param name="eventAggregator">
+        /// The event aggregator.
+        /// </param>
+        public RecorderViewModel(
+            IScreenRecorder recorder, 
+            IScreenGunSettings settings, 
+            IEventAggregator eventAggregator)
         {
             this.recorder = recorder;
+            this.settings = settings;
+            this.eventAggregator = eventAggregator;
+            this.UseMicrophone = this.settings.DefaultMicEnabled;
         }
 
         #endregion
@@ -119,15 +151,20 @@ namespace ScreenGun.Modules.Recorder
             this.IsRecording = true;
 
             Console.WriteLine("Starting");
+            var fileName = string.Format("Recording {0}.mp4", DateTime.Now.ToString("yy-MM-dd hh-mm-ss"));
+            var outputFilePath = Path.Combine(this.settings.StoragePath, fileName);
+            this.fileViewModel = new ScreenGunFileViewModel(outputFilePath, RecordingStage.DoingNothing);
+
             var opts = new ScreenRecorderOptions(this.RecordingRegion)
             {
                 DeleteMaterialWhenDone = true, 
-                FrameRate = 20, 
-                MaterialTempFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MaterialTemp"), 
-                OutputFilePath = "Recording.mp4", 
+                FrameRate = this.settings.FrameRate, 
+                OutputFilePath = outputFilePath, 
                 RecordMicrophone = this.UseMicrophone
             };
-            this.recorder.Start(opts);
+
+            var progress = new Progress<RecorderState>(state => this.fileViewModel.RecordingStage = state.Stage);
+            this.recorder.Start(opts, progress);
         }
 
         /// <summary>
@@ -137,6 +174,8 @@ namespace ScreenGun.Modules.Recorder
         {
             if (this.IsRecording)
             {
+                this.TryClose();
+                this.eventAggregator.PublishOnUIThread(new RecordingCreated(this.fileViewModel));
                 await this.recorder.StopAsync();
                 this.IsRecording = false;
                 this.notifyIcon.Dispose();

@@ -6,26 +6,50 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:icons="clr-namespace:ScreenGun.Icons"
              xmlns:screenGunFile="clr-namespace:ScreenGun.Modules.Main.ScreenGunFile"
+             xmlns:converters="clr-namespace:ScreenGun.Converters"
              mc:Ignorable="d" 
              d:DataContext="{Binding Source={StaticResource DesignViewModel}}"
-             d:DesignHeight="300" d:DesignWidth="600">
+             d:DesignHeight="80" d:DesignWidth="600">
     <UserControl.Resources>
-        <screenGunFile:ScreenGunFileViewModel x:Key="DesignViewModel" FileName="Test.mp4" FilePath="C:\Recordings\Test.mp4" />
+        <screenGunFile:ScreenGunFileViewModel x:Key="DesignViewModel" 
+                                              FileName="Test.mp4" 
+                                              FilePath="C:\Recordings\Test.mp4"
+                                              RecordingStage="Encoding"/>
+
+        <converters:BetterBooleanToVisibilityConverter 
+            TrueVisibility="Visible" 
+            FalseVisibility="Collapsed"
+            x:Key="VisibilityConverter"/>
     </UserControl.Resources>
-    <Grid PreviewMouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown">
+    <Grid MouseLeftButtonDown="UIElement_OnPreviewMouseLeftButtonDown">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="18*" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
 
         <StackPanel Orientation="Vertical" Grid.Column="0" Margin="20 16 0 16">
-            <TextBlock 
-                Text="{Binding Path=FileName}"
-                FontSize="16"
-                Name="FileName"
-                Foreground="{DynamicResource MaterialDesignBody}"
-                FontWeight="Normal"
-                Margin="0 0 0 4" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="120" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Path=FileName}"
+                           Grid.Column="0"
+                           FontSize="16"
+                           Name="FileName"
+                           Foreground="{DynamicResource MaterialDesignBody}"
+                           FontWeight="Normal"
+                           Margin="0 0 0 4" />
+                <TextBlock Text="{Binding Path=RecordingStage}"
+                           Grid.Column="1"
+                           FontSize="16"
+                           Name="RecordingStage"
+                           Visibility="{Binding ShouldShowRecordingStage, Converter={StaticResource VisibilityConverter}}"
+                           Foreground="DarkGray"
+                           FontWeight="Normal"
+                           Margin="0 0 0 4" />
+            </Grid>
+            
 
             <TextBlock 
                 Text="{Binding Path=FilePath}"

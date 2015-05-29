@@ -72,9 +72,9 @@ namespace ScreenGun
             this.container.Singleton<IEventAggregator, EventAggregator>();
             this.container.PerRequest<RecorderViewModel>();
 
-            SettingsViewModel settingsVm = new SettingsViewModel(string.Empty);
+            var settingsVm = new SettingsViewModel("ScreenGun");
             this.container.Instance(settingsVm);
-            this.container.Singleton<IScreenGunSettings, SettingsViewModel>();
+            this.container.Instance<IScreenGunSettings>(settingsVm);
             this.container.PerRequest<IShell, ShellViewModel>();
         }
 
@@ -132,10 +132,10 @@ namespace ScreenGun
         }
 
         /// <summary>
-        /// Creates the recorder.
+        ///     Creates the recorder.
         /// </summary>
         /// <returns>
-        /// The <see cref="IScreenRecorder"/>.
+        ///     The <see cref="IScreenRecorder" />.
         /// </returns>
         private IScreenRecorder CreateRecorder()
         {

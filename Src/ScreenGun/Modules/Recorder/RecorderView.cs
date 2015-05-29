@@ -9,6 +9,7 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 
 using ScreenGun.Misc;
 using ScreenGun.Modules.RegionSelector;
@@ -114,6 +115,11 @@ namespace ScreenGun.Modules.Recorder
             if (propertyChangedEventArgs.PropertyName == "IsRecording")
             {
                 this.Locked = this.ViewModel.IsRecording;
+                if (this.ViewModel.IsRecording)
+                {
+                    var hwnd = new WindowInteropHelper(this).Handle;
+                    NativeWindowHelper.SetWindowExTransparent(hwnd);
+                }
             }
 
             if (propertyChangedEventArgs.PropertyName == "IsFullScreen")

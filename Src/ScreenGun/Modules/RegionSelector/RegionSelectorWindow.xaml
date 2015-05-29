@@ -11,22 +11,19 @@
         WindowStartupLocation="Manual"
         Left="0"
         Top="0"
-        Topmost="False"
+        Topmost="True"
         AllowsTransparency="true"
         Background="#01ffffff">
     <Window.Resources>
-        <Style x:Key="CellStyle" TargetType="Border">
-            <Setter Property="Background" Value="#A000" />
-        </Style>
-        <converters:BooleanToColorConverter TrueColor="{DynamicResource PrimaryHueMidBrush}" FalseColor="White" x:Key="IconColorConverter" />
-        <converters:BetterBooleanToVisibilityConverter 
-            TrueVisibility="Visible" 
-            FalseVisibility="Collapsed"
-            x:Key="VisibilityConverter"/>
-        <converters:BetterBooleanToVisibilityConverter 
-            TrueVisibility="Collapsed" 
-            FalseVisibility="Visible"
-            x:Key="InvertedVisibilityConverter"/>
+        <ResourceDictionary>
+            <Style x:Key="CellStyle" TargetType="Border">
+                <Setter Property="Background" Value="#A000" />
+            </Style>
+            <converters:BooleanToColorConverter TrueColor="{DynamicResource PrimaryHueMidBrush}" FalseColor="White" x:Key="IconColorConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/VisibilityConverters.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
 
     <Grid Name="OverlayGrid" MouseLeftButtonDown="OverlayGridMouseDown" MouseMove="OverlayGridOnMouseMove" MouseUp="OverlayGridOnMouseUp">
@@ -165,7 +162,8 @@
                 CornerRadius="20" 
                 Background="#AF000000" 
                 BorderBrush="#AFFFFFFF" 
-                BorderThickness="2">
+                BorderThickness="2"
+                Visibility="{Binding IsRecording, Converter={StaticResource InvertedVisibilityConverter}}">
                 <StackPanel Orientation="Horizontal" Margin="20 6">
                     
                     <Button Name="StartRecording" 
