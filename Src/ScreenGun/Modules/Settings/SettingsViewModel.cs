@@ -7,7 +7,6 @@
 // Copyright (C) ScreenGun Authors 2015. All rights reserved.
 
 using System;
-using System.Globalization;
 using System.IO;
 
 using ScreenGun.Base;
@@ -30,16 +29,6 @@ namespace ScreenGun.Modules.Settings
         ///     The default mic enabled
         /// </summary>
         private bool defaultMicEnabled;
-
-        /// <summary>
-        ///     The framerate
-        /// </summary>
-        private int frameRate;
-
-        /// <summary>
-        ///     The framerate text
-        /// </summary>
-        private string framerateText;
 
         /// <summary>
         ///     The storage path
@@ -78,7 +67,6 @@ namespace ScreenGun.Modules.Settings
         {
             // Default settings
             this.defaultMicEnabled = false;
-            this.frameRate = 20;
             this.storagePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         }
 
@@ -122,63 +110,6 @@ namespace ScreenGun.Modules.Settings
         }
 
         /// <summary>
-        ///     Gets or sets the framerate.
-        /// </summary>
-        /// <value>
-        ///     The framerate.
-        /// </value>
-        public int FrameRate
-        {
-            get
-            {
-                return this.frameRate;
-            }
-
-            set
-            {
-                if (this.frameRate == value)
-                {
-                    return;
-                }
-
-                this.frameRate = value;
-                this.NotifyOfPropertyChange(() => this.FrameRate);
-                this.SaveSettings();
-            }
-        }
-
-        /// <summary>
-        ///     Gets or sets the framerate text.
-        /// </summary>
-        /// <value>
-        ///     The framerate text.
-        /// </value>
-        public string FramerateText
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(this.framerateText))
-                {
-                    this.FramerateText = this.FrameRate.ToString(CultureInfo.InvariantCulture);
-                }
-
-                return this.framerateText;
-            }
-
-            set
-            {
-                if (this.framerateText == value)
-                {
-                    return;
-                }
-
-                this.framerateText = value;
-                this.NotifyOfPropertyChange(() => this.FramerateText);
-                this.UpdateFramerate();
-            }
-        }
-
-        /// <summary>
         ///     Gets or sets the storage path.
         /// </summary>
         public string StoragePath
@@ -200,14 +131,6 @@ namespace ScreenGun.Modules.Settings
                 this.SaveSettings();
             }
         }
-
-        /// <summary>
-        ///     Gets a value indicating whether [valid FPS].
-        /// </summary>
-        /// <value>
-        ///     <c>true</c> if [valid FPS]; otherwise, <c>false</c>.
-        /// </value>
-        public bool ValidFps { get; private set; }
 
         #endregion
 
@@ -242,33 +165,7 @@ namespace ScreenGun.Modules.Settings
                 this.storagePath = settingsFile.StoragePath;
             }
 
-            if (settingsFile.FrameRate != 0)
-            {
-                this.frameRate = settingsFile.FrameRate;
-            }
-
             this.defaultMicEnabled = settingsFile.DefaultMicEnabled;
-        }
-
-        /// <summary>
-        ///     Updates the framerate.
-        /// </summary>
-        private void UpdateFramerate()
-        {
-            int fps;
-            if (!int.TryParse(this.FramerateText, out fps))
-            {
-                this.ValidFps = false;
-                return;
-            }
-
-            if (fps <= 0 || fps > 30)
-            {
-                this.ValidFps = false;
-            }
-
-            this.ValidFps = true;
-            this.FrameRate = fps;
         }
 
         #endregion

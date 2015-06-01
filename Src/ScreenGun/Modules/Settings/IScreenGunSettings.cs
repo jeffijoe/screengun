@@ -35,14 +35,6 @@ namespace ScreenGun.Modules.Settings
         bool DefaultMicEnabled { get; set; }
 
         /// <summary>
-        ///     Gets or sets the framerate.
-        /// </summary>
-        /// <value>
-        ///     The framerate.
-        /// </value>
-        int FrameRate { get; set; }
-
-        /// <summary>
         ///     Gets or sets the storage path.
         /// </summary>
         /// <value>

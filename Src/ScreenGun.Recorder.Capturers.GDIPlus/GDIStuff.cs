@@ -7,6 +7,7 @@
 // Copyright (C) ScreenGun Authors 2015. All rights reserved.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace ScreenGun.Recorder.Capturers.GDIPlus
@@ -124,6 +125,8 @@ namespace ScreenGun.Recorder.Capturers.GDIPlus
         /// The <see cref="bool"/>.
         /// </returns>
         [DllImport("gdi32.dll", EntryPoint = "BitBlt")]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1306:FieldNamesMustBeginWithLowerCaseLetter", Justification = "Reviewed. Suppression is OK here.")]
         public static extern bool BitBlt(
             IntPtr hdcDest, 
             int xDest, 
@@ -151,8 +154,8 @@ namespace ScreenGun.Recorder.Capturers.GDIPlus
         /// The <see cref="IntPtr"/>.
         /// </returns>
         [DllImport("gdi32.dll", EntryPoint = "CreateCompatibleBitmap")]
-        public static extern IntPtr CreateCompatibleBitmap
-            (IntPtr hdc, int nWidth, int nHeight);
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
+        public static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int nWidth, int nHeight);
 
         /// <summary>
         /// The create compatible dc.

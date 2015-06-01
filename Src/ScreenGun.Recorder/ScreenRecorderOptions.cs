@@ -28,7 +28,6 @@ namespace ScreenGun.Recorder
         /// </param>
         public ScreenRecorderOptions(Rectangle recordingRegion)
         {
-            this.FrameRate = 30;
             this.RecordingRegion = recordingRegion;
             this.MaterialTempFolder = Path.Combine(Path.GetTempPath(), Assembly.GetCallingAssembly().GetName().Name);
             this.OutputFilePath = AppDomain.CurrentDomain.BaseDirectory;
@@ -46,14 +45,6 @@ namespace ScreenGun.Recorder
         ///     <c>true</c> if delete material when done; otherwise, <c>false</c>.
         /// </value>
         public bool DeleteMaterialWhenDone { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the frame rate. Default is 30.
-        /// </summary>
-        /// <value>
-        ///     The frame rate.
-        /// </value>
-        public int FrameRate { get; set; }
 
         /// <summary>
         ///     Gets or sets the material temporary folder. Default is a temp folder from the user's path.

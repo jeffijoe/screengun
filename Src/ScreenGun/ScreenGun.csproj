@@ -35,6 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>record_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Caliburn.Micro, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
       <HintPath>..\packages\Caliburn.Micro.Core.2.0.2\lib\net45\Caliburn.Micro.dll</HintPath>
@@ -124,6 +127,7 @@
     <Compile Include="Misc\Command.cs" />
     <Compile Include="Misc\NativeWindowHelper.cs" />
     <Compile Include="Modules\Main\IShell.cs" />
+    <Compile Include="Modules\Main\ScreenGunFile\RecordingDeletedHandler.cs" />
     <Compile Include="Modules\Main\ScreenGunFile\ScreenGunFileView.xaml.cs">
       <DependentUpon>ScreenGunFileView.xaml</DependentUpon>
     </Compile>
@@ -249,10 +253,9 @@
     <Content Include="ffmpeg.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="record_icon.ico" />
     <Resource Include="Resources\record_icon.ico" />
     <Resource Include="Resources\record_icon.png" />
-    <Resource Include="Resources\screengun_logo.ico" />
-    <Resource Include="Resources\screengun_logo.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ScreenGun.Recorder.Capturers.GDIPlus\ScreenGun.Recorder.Capturers.GDIPlus.csproj">

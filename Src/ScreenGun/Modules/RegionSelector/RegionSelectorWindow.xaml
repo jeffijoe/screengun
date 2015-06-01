@@ -37,7 +37,7 @@
             <RowDefinition x:Name="CenterRow" Height="*" />
             <RowDefinition x:Name="BottomRow" Height="*" />
         </Grid.RowDefinitions>
-    
+
         <!-- Top Left -->
         <Border Style="{StaticResource CellStyle}" Grid.Column="0" Grid.Row="0">
             <Grid 
@@ -45,7 +45,7 @@
                 HorizontalAlignment="Right" 
                 VerticalAlignment="Bottom"
                 Cursor="SizeAll">
-                
+
                 <Rectangle 
                     Fill="White" 
                     Width="5" 
@@ -58,7 +58,7 @@
                     VerticalAlignment="Top"/>
             </Grid>
         </Border>
-        
+
         <!-- Top Center -->
         <Border Style="{StaticResource CellStyle}" Grid.Column="1" Grid.Row="0">
             <Grid>
@@ -154,7 +154,7 @@
             MouseLeftButtonDown="RecordingRegionMouseLeftDown"
             MouseMove="RecordingRegionMouseMove"
             PreviewMouseLeftButtonUp="RecordingRegionMouseLeftUp">
-                
+
             <Border 
                 Cursor="Arrow"
                 VerticalAlignment="Center" 
@@ -165,7 +165,7 @@
                 BorderThickness="2"
                 Visibility="{Binding IsRecording, Converter={StaticResource InvertedVisibilityConverter}}">
                 <StackPanel Orientation="Horizontal" Margin="20 6">
-                    
+
                     <Button Name="StartRecording" 
                             Style="{StaticResource MaterialDesignFlatButton}" 
                             Padding="4"
@@ -186,7 +186,7 @@
                             <icons:IconFullscreenExit
                                 IconBackground="{DynamicResource PrimaryHueMidBrush}"
                                 Visibility="{Binding Path=IsFullScreen, Converter={StaticResource VisibilityConverter}}" />
-                        </StackPanel>                    
+                        </StackPanel>
                     </Button>
                     <Button 
                         Name="ToggleMicrophone" 
@@ -211,7 +211,7 @@
                     </Button>
                 </StackPanel>
             </Border>
-            
+
         </Border>
 
         <!-- Center Right -->

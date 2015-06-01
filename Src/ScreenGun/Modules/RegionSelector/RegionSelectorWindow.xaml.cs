@@ -30,10 +30,10 @@ namespace ScreenGun.Modules.RegionSelector
         /// </summary>
         private readonly Rect virtualScreen = new Rect(
             new Point(
-                SystemParameters.VirtualScreenLeft, 
-                SystemParameters.VirtualScreenTop), 
+                SystemParameters.VirtualScreenLeft,
+                SystemParameters.VirtualScreenTop),
             new Size(
-                SystemParameters.VirtualScreenWidth, 
+                SystemParameters.VirtualScreenWidth,
                 SystemParameters.VirtualScreenHeight));
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace ScreenGun.Modules.RegionSelector
         private Point endPosition;
 
         /// <summary>
-        ///     The is full screen.
+        ///     The flag that dictates if we are in full screen.
         /// </summary>
         private bool isFullScreen;
 
@@ -81,12 +81,16 @@ namespace ScreenGun.Modules.RegionSelector
         public RegionSelectorWindow()
         {
             this.InitializeComponent();
-            this.Closed += (sender, args) => this.RegionChange = null;
+            this.Closed += (sender, args) =>
+            {
+                this.RegionChange = null;
+                this.FullScreenChanged = null;
+            };
             this.Top = this.virtualScreen.Top;
             this.Left = this.virtualScreen.Left;
             this.Width = this.virtualScreen.Width;
             this.Height = this.virtualScreen.Height;
-            this.UpdateUI();
+            this.SetupInitialRegion();
         }
 
         #endregion
@@ -105,7 +109,7 @@ namespace ScreenGun.Modules.RegionSelector
 
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///     Gets or sets a value indicating whether this instance is full screen.
@@ -113,7 +117,7 @@ namespace ScreenGun.Modules.RegionSelector
         /// <value>
         ///     <c>true</c> if this instance is full screen; otherwise, <c>false</c>.
         /// </value>
-        public bool IsFullScreen
+        protected bool IsFullScreen
         {
             get
             {
@@ -146,7 +150,7 @@ namespace ScreenGun.Modules.RegionSelector
         /// <value>
         ///     <c>true</c> if locked; otherwise, <c>false</c>.
         /// </value>
-        public bool Locked { get; set; }
+        protected bool Locked { get; set; }
 
         /// <summary>
         ///     Gets the recording area.
@@ -154,14 +158,14 @@ namespace ScreenGun.Modules.RegionSelector
         /// <value>
         ///     The recording area.
         /// </value>
-        public Rect RecordingArea
+        private Rect RecordingArea
         {
             get
             {
                 return new Rect(
-                    this.relativeRecordingArea.X + this.virtualScreen.X, 
-                    this.relativeRecordingArea.Y + this.virtualScreen.Y, 
-                    this.relativeRecordingArea.Width, 
+                    this.relativeRecordingArea.X + this.virtualScreen.X,
+                    this.relativeRecordingArea.Y + this.virtualScreen.Y,
+                    this.relativeRecordingArea.Width,
                     this.relativeRecordingArea.Height);
             }
         }
@@ -187,9 +191,9 @@ namespace ScreenGun.Modules.RegionSelector
                 var x = bounds.X - this.virtualScreen.X;
                 var y = bounds.Y - this.virtualScreen.Y;
                 this.relativeRecordingArea = new Rect(
-                    x, 
-                    y, 
-                    bounds.Width, 
+                    x,
+                    y,
+                    bounds.Width,
                     bounds.Height);
                 this.OnRegionChanged();
                 break;
@@ -320,37 +324,6 @@ namespace ScreenGun.Modules.RegionSelector
             this.TryMoveRegion(e);
         }
 
-        private void TryMoveRegion(MouseEventArgs e)
-        {
-            if (this.isMoving == false || this.Locked)
-            {
-                return;
-            }
-
-            var position = e.GetPosition(this.OverlayGrid);
-            if (this.lastMousePosition == default(Point))
-            {
-                this.lastMousePosition = position;
-            }
-
-            if (this.IsFullScreen)
-            {
-                var width = Math.Abs(this.startPosition.X - this.endPosition.X);
-                var height = Math.Abs(this.startPosition.Y - this.endPosition.Y);
-
-                this.startPosition = new Point(position.X - (width / 2), position.Y - (height / 2));
-                this.endPosition = new Point(position.X + (width / 2), position.Y + (height / 2));
-
-                this.IsFullScreen = false;
-            }
-
-            var delta = position - this.lastMousePosition;
-            this.lastMousePosition = position;
-            this.startPosition += delta;
-            this.endPosition += delta;
-            this.UpdatePosition();
-        }
-
         /// <summary>
         /// Handles the MouseDown event of ResizeGrips.
         /// </summary>
@@ -402,6 +375,70 @@ namespace ScreenGun.Modules.RegionSelector
         }
 
         /// <summary>
+        ///     Setups the initial region.
+        /// </summary>
+        private void SetupInitialRegion()
+        {
+            var cursorPos = System.Windows.Forms.Cursor.Position;
+            foreach (var screen in Screen.AllScreens)
+            {
+                if (screen.Bounds.Contains(cursorPos) == false)
+                {
+                    continue;
+                }
+
+                var regionWidth = (double)screen.Bounds.Width / 2;
+                var regionHeight = (double)screen.Bounds.Height / 2;
+                double x = ((double)screen.Bounds.Width / 2) - (regionWidth / 2);
+                double y = ((double)screen.Bounds.Height / 2) - (regionHeight / 2);
+                x -= this.virtualScreen.X - screen.Bounds.X;
+                y -= this.virtualScreen.Y - screen.Bounds.Y;
+
+                this.startPosition = new Point(x, y);
+                this.endPosition = new Point(x + regionWidth, y + regionHeight);
+                this.UpdatePosition();
+                break;
+            }
+        }
+
+        /// <summary>
+        /// Tries to move the region.
+        /// </summary>
+        /// <param name="e">
+        /// The <see cref="MouseEventArgs"/> instance containing the event data.
+        /// </param>
+        private void TryMoveRegion(MouseEventArgs e)
+        {
+            if (this.isMoving == false || this.Locked)
+            {
+                return;
+            }
+
+            var position = e.GetPosition(this.OverlayGrid);
+            if (this.lastMousePosition == default(Point))
+            {
+                this.lastMousePosition = position;
+            }
+
+            if (this.IsFullScreen)
+            {
+                var width = Math.Abs(this.startPosition.X - this.endPosition.X);
+                var height = Math.Abs(this.startPosition.Y - this.endPosition.Y);
+
+                this.startPosition = new Point(position.X - (width / 2), position.Y - (height / 2));
+                this.endPosition = new Point(position.X + (width / 2), position.Y + (height / 2));
+
+                this.IsFullScreen = false;
+            }
+
+            var delta = position - this.lastMousePosition;
+            this.lastMousePosition = position;
+            this.startPosition += delta;
+            this.endPosition += delta;
+            this.UpdatePosition();
+        }
+
+        /// <summary>
         ///     Updates the position.
         /// </summary>
         private void UpdatePosition()
@@ -414,9 +451,9 @@ namespace ScreenGun.Modules.RegionSelector
 
             // This makes sure that the recording area is never out of bounds.
             var relativeVirtualScreen = new Rect(
-                this.virtualScreen.X, 
-                this.virtualScreen.Y, 
-                this.virtualScreen.Width, 
+                this.virtualScreen.X,
+                this.virtualScreen.Y,
+                this.virtualScreen.Width,
                 this.virtualScreen.Height);
 
             relativeVirtualScreen.Offset(Math.Abs(this.virtualScreen.X), Math.Abs(this.virtualScreen.Y));

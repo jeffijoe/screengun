@@ -7,6 +7,7 @@
 // Copyright (C) ScreenGun Authors 2015. All rights reserved.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 #pragma warning disable 1591
 // ReSharper disable UnusedMember.Global
@@ -16,8 +17,64 @@ using System;
 // ReSharper disable IntroduceOptionalParameters.Global
 // ReSharper disable MemberCanBeProtected.Global
 // ReSharper disable InconsistentNaming
-namespace ScreenGun.Annotations
+namespace ScreenGun.Properties
 {
+    /// <summary>
+    ///     The implicit use kind flags.
+    /// </summary>
+    [Flags]
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", 
+        Justification = "Reviewed. Suppression is OK here.")]
+    public enum ImplicitUseKindFlags
+    {
+        /// <summary>
+        ///     The default.
+        /// </summary>
+        Default = Access | Assign | InstantiatedWithFixedConstructorSignature, 
+
+        /// <summary>Only entity marked with attribute considered used</summary>
+        Access = 1, 
+
+        /// <summary>Indicates implicit assignment to a member</summary>
+        Assign = 2, 
+
+        /// <summary>
+        ///     Indicates implicit instantiation of a type with fixed constructor signature.
+        ///     That means any unused constructor parameters won't be reported as such.
+        /// </summary>
+        InstantiatedWithFixedConstructorSignature = 4, 
+
+        /// <summary>Indicates implicit instantiation of a type</summary>
+        InstantiatedNoFixedConstructorSignature = 8, 
+    }
+
+    /// <summary>
+    ///     Specify what is considered used implicitly
+    ///     when marked with <see cref="MeansImplicitUseAttribute" />
+    ///     or <see cref="UsedImplicitlyAttribute" />
+    /// </summary>
+    [Flags]
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", 
+        Justification = "Reviewed. Suppression is OK here.")]
+    public enum ImplicitUseTargetFlags
+    {
+        /// <summary>
+        ///     The default.
+        /// </summary>
+        Default = Itself, 
+
+        /// <summary>
+        ///     The itself.
+        /// </summary>
+        Itself = 1, 
+
+        /// <summary>Members of entity marked with attribute are considered used</summary>
+        Members = 2, 
+
+        /// <summary>Entity marked with attribute and all its members considered used</summary>
+        WithMembers = Itself | Members
+    }
+
     /// <summary>
     ///     Indicates that the value of the marked element could be <c>null</c> sometimes,
     ///     so the check for <c>null</c> is necessary before its usage
@@ -49,6 +106,8 @@ namespace ScreenGun.Annotations
     /// }
     /// </code>
     /// </example>
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", 
+        Justification = "Reviewed. Suppression is OK here.")]
     [AttributeUsage(
         AttributeTargets.Method | AttributeTargets.Parameter |
         AttributeTargets.Property | AttributeTargets.Delegate |
@@ -577,58 +636,6 @@ namespace ScreenGun.Annotations
         public ImplicitUseKindFlags UseKindFlags { get; private set; }
 
         #endregion
-    }
-
-    /// <summary>
-    ///     The implicit use kind flags.
-    /// </summary>
-    [Flags]
-    public enum ImplicitUseKindFlags
-    {
-        /// <summary>
-        ///     The default.
-        /// </summary>
-        Default = Access | Assign | InstantiatedWithFixedConstructorSignature, 
-
-        /// <summary>Only entity marked with attribute considered used</summary>
-        Access = 1, 
-
-        /// <summary>Indicates implicit assignment to a member</summary>
-        Assign = 2, 
-
-        /// <summary>
-        ///     Indicates implicit instantiation of a type with fixed constructor signature.
-        ///     That means any unused constructor parameters won't be reported as such.
-        /// </summary>
-        InstantiatedWithFixedConstructorSignature = 4, 
-
-        /// <summary>Indicates implicit instantiation of a type</summary>
-        InstantiatedNoFixedConstructorSignature = 8, 
-    }
-
-    /// <summary>
-    ///     Specify what is considered used implicitly
-    ///     when marked with <see cref="MeansImplicitUseAttribute" />
-    ///     or <see cref="UsedImplicitlyAttribute" />
-    /// </summary>
-    [Flags]
-    public enum ImplicitUseTargetFlags
-    {
-        /// <summary>
-        ///     The default.
-        /// </summary>
-        Default = Itself, 
-
-        /// <summary>
-        ///     The itself.
-        /// </summary>
-        Itself = 1, 
-
-        /// <summary>Members of entity marked with attribute are considered used</summary>
-        Members = 2, 
-
-        /// <summary>Entity marked with attribute and all its members considered used</summary>
-        WithMembers = Itself | Members
     }
 
     /// <summary>

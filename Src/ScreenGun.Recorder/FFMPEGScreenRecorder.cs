@@ -24,6 +24,15 @@ namespace ScreenGun.Recorder
     /// </summary>
     public class FFMPEGScreenRecorder : IScreenRecorder
     {
+        #region Constants
+
+        /// <summary>
+        ///     The frame rate.
+        /// </summary>
+        public const int FrameRate = 20;
+
+        #endregion
+
         #region Fields
 
         /// <summary>
@@ -201,7 +210,7 @@ namespace ScreenGun.Recorder
             sb.AppendFormat(
                 "-f image2 -i \"{0}\" ", 
                 Path.Combine(this.materialFolder, "img%06d.png"), 
-                this.recorderOptions.FrameRate, 
+                FrameRate, 
                 this.recorderOptions.RecordingRegion.Width, 
                 this.recorderOptions.RecordingRegion.Height);
 
@@ -212,7 +221,7 @@ namespace ScreenGun.Recorder
 
             sb.AppendFormat(
                 "-vf \"setpts=1.54*PTS\" -r {0} -s {1}x{2} -c:v libx264 ", 
-                this.recorderOptions.FrameRate, 
+                FrameRate, 
                 this.recorderOptions.RecordingRegion.Width, 
                 this.recorderOptions.RecordingRegion.Height);
 
@@ -262,7 +271,7 @@ namespace ScreenGun.Recorder
             this.frameCounter = 0;
 
             this.timer = new Timer(_ => this.RecordFrame());
-            this.timer.Change(1000 / this.recorderOptions.FrameRate, 1000 / this.recorderOptions.FrameRate);
+            this.timer.Change(1000 / FrameRate, 1000 / FrameRate);
 
             if (this.recorderOptions.RecordMicrophone)
             {

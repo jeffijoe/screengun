@@ -25,11 +25,6 @@ namespace ScreenGun.Modules.Settings
         public bool DefaultMicEnabled { get; set; }
 
         /// <summary>
-        ///     Gets or sets the frame rate.
-        /// </summary>
-        public int FrameRate { get; set; }
-
-        /// <summary>
         ///     Gets or sets the storage path.
         /// </summary>
         public string StoragePath { get; set; }
@@ -67,8 +62,7 @@ namespace ScreenGun.Modules.Settings
         {
             return new SettingsFile
             {
-                DefaultMicEnabled = settings.DefaultMicEnabled, 
-                FrameRate = settings.FrameRate, 
+                DefaultMicEnabled = settings.DefaultMicEnabled,
                 StoragePath = settings.StoragePath
             };
         }

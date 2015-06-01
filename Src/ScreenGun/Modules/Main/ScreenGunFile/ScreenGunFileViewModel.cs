@@ -6,9 +6,12 @@
 // - Bjarke Søgaard <ekrajb123@gmail.com>
 // Copyright (C) ScreenGun Authors 2015. All rights reserved.
 
+using System.Diagnostics;
 using System.IO;
+using System.Windows.Forms;
 
 using ScreenGun.Base;
+using ScreenGun.Properties;
 using ScreenGun.Recorder;
 
 namespace ScreenGun.Modules.Main.ScreenGunFile
@@ -55,6 +58,20 @@ namespace ScreenGun.Modules.Main.ScreenGunFile
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        ///     Gets a value indicating whether this instance can delete.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if this instance can delete; otherwise, <c>false</c>.
+        /// </value>
+        public bool CanDelete
+        {
+            get
+            {
+                return this.RecordingStage == RecordingStage.Done;
+            }
+        }
 
         /// <summary>
         ///     Gets or sets the file name.
@@ -108,25 +125,14 @@ namespace ScreenGun.Modules.Main.ScreenGunFile
         }
 
         /// <summary>
-        /// Gets a value indicating whether this instance can delete.
+        /// Opens the video.
         /// </summary>
-        /// <value>
-        /// <c>true</c> if this instance can delete; otherwise, <c>false</c>.
-        /// </value>
-        public bool CanDelete
+        public void OpenVideo()
         {
-            get
-            {
-                return this.RecordingStage == RecordingStage.Done;
-            }
+            var info = new ProcessStartInfo(this.FilePath) { UseShellExecute = true };
+            Process.Start(info);
         }
 
         #endregion
     }
-
-    /// <summary>
-    ///     Recording deleted delegate.
-    /// </summary>
-    /// <param name="file">The file.</param>
-    public delegate void RecordingDeletedHandler(ScreenGunFileViewModel file);
 }

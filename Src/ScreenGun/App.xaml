@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:screenGun="clr-namespace:ScreenGun">
     <Application.Resources>
+
+        <!-- ReSharper disable Xaml.InvalidResourceType -->
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
@@ -35,7 +37,9 @@
                     <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="{StaticResource Primary500}"/>
                     <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="{StaticResource Primary500Foreground}"/>
                     <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="{StaticResource Primary700}"/>
+                   
                     <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush" Color="{StaticResource Primary700Foreground}"/>
+                    
                 </ResourceDictionary>
 
                 <!-- secondary colour -->
@@ -52,5 +56,6 @@
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
+        <!-- ReSharper restore Xaml.InvalidResourceType -->
     </Application.Resources>
 </Application>

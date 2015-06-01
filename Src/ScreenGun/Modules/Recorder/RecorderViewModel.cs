@@ -158,7 +158,6 @@ namespace ScreenGun.Modules.Recorder
             var opts = new ScreenRecorderOptions(this.RecordingRegion)
             {
                 DeleteMaterialWhenDone = true, 
-                FrameRate = this.settings.FrameRate, 
                 OutputFilePath = outputFilePath, 
                 RecordMicrophone = this.UseMicrophone
             };
