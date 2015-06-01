@@ -172,11 +172,7 @@ namespace ScreenGun.Modules.NotifyIcon
 
             this.actualIcon.BalloonTipClicked += onClicked;
             this.actualIcon.BalloonTipClosed += onClosed;
-            this.actualIcon.Visible = true;
-            this.actualIcon.BalloonTipIcon = toolTipIcon;
-            this.actualIcon.BalloonTipText = text;
-            this.actualIcon.BalloonTipTitle = title;
-            this.actualIcon.ShowBalloonTip(durationMs);
+            this.actualIcon.ShowBalloonTip(durationMs, title, text, toolTipIcon);
         }
 
         #endregion

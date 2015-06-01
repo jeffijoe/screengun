@@ -158,15 +158,15 @@ namespace ScreenGun.Modules.RegionSelector
         /// <value>
         ///     The recording area.
         /// </value>
-        private Rect RecordingArea
+        protected Rectangle RecordingArea
         {
             get
             {
-                return new Rect(
-                    this.relativeRecordingArea.X + this.virtualScreen.X,
-                    this.relativeRecordingArea.Y + this.virtualScreen.Y,
-                    this.relativeRecordingArea.Width,
-                    this.relativeRecordingArea.Height);
+                return new Rectangle(
+                    (int)(this.relativeRecordingArea.X + this.virtualScreen.X),
+                    (int)(this.relativeRecordingArea.Y + this.virtualScreen.Y),
+                    (int)this.relativeRecordingArea.Width,
+                    (int)this.relativeRecordingArea.Height);
             }
         }
 
@@ -211,8 +211,7 @@ namespace ScreenGun.Modules.RegionSelector
             if (handler != null)
             {
                 var area = this.RecordingArea;
-                handler.Invoke(
-                    new RegionChangeArgs(new Rectangle((int)area.X, (int)area.Y, (int)area.Width, (int)area.Height)));
+                handler.Invoke(new RegionChangeArgs(area));
             }
         }
 

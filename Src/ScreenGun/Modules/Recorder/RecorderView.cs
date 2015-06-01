@@ -73,6 +73,7 @@ namespace ScreenGun.Modules.Recorder
             DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             this.ViewModel.PropertyChanged += this.ViewModelOnPropertyChanged;
+            this.ViewModel.RecordingRegion = this.RecordingArea;
         }
 
         /// <summary>

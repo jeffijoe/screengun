@@ -9,6 +9,7 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Caliburn.Micro;
@@ -84,6 +85,7 @@ namespace ScreenGun.Modules.Recorder
             this.settings = settings;
             this.eventAggregator = eventAggregator;
             this.UseMicrophone = this.settings.DefaultMicEnabled;
+            this.SetupNotifyIcon();
         }
 
         #endregion
@@ -150,7 +152,6 @@ namespace ScreenGun.Modules.Recorder
             this.notifyIcon.HideBalloonTip();
             this.IsRecording = true;
 
-            Console.WriteLine("Starting");
             var fileName = string.Format("Recording {0}.mp4", DateTime.Now.ToString("yy-MM-dd hh-mm-ss"));
             var outputFilePath = Path.Combine(this.settings.StoragePath, fileName);
             this.fileViewModel = new ScreenGunFileViewModel(outputFilePath, RecordingStage.DoingNothing);
@@ -214,20 +215,17 @@ namespace ScreenGun.Modules.Recorder
         }
 
         /// <summary>
-        /// Called the first time the page's LayoutUpdated event fires after it is navigated to.
+        ///     Setups the notify icon.
         /// </summary>
-        /// <param name="view">
-        /// The view.
-        /// </param>
-        protected override void OnViewReady(object view)
+        private void SetupNotifyIcon()
         {
-            base.OnViewReady(view);
             var icon =
                 new Icon(
-                    Application.GetResourceStream(new Uri("Resources/record_icon.ico", UriKind.Relative)).Stream);
+                    Application.GetResourceStream(
+                        new Uri("Resources/record_icon.ico", UriKind.Relative)).Stream);
             this.notifyIcon = new NotifyIconViewModel(icon);
             this.notifyIcon.ShowBalloonTip(
-                5000, 
+                7000, 
                 "ScreenGun", 
                 "When recording, click this icon to stop.", 
                 ToolTipIcon.Info);
