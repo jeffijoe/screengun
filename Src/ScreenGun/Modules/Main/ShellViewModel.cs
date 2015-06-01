@@ -25,7 +25,7 @@ namespace ScreenGun.Modules.Main
     /// <summary>
     ///     The shell view model.
     /// </summary>
-    public class ShellViewModel : ViewModel, IShell, IHandle<RecordingCreated>
+    public class ShellViewModel : ViewModel, IHandle<RecordingCreated>
     {
         #region Fields
 

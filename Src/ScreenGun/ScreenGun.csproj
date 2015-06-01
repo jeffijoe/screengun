@@ -126,7 +126,6 @@
     </Compile>
     <Compile Include="Misc\Command.cs" />
     <Compile Include="Misc\NativeWindowHelper.cs" />
-    <Compile Include="Modules\Main\IShell.cs" />
     <Compile Include="Modules\Main\ScreenGunFile\RecordingDeletedHandler.cs" />
     <Compile Include="Modules\Main\ScreenGunFile\ScreenGunFileView.xaml.cs">
       <DependentUpon>ScreenGunFileView.xaml</DependentUpon>

@@ -75,7 +75,7 @@ namespace ScreenGun
             var settingsVm = new SettingsViewModel("ScreenGun");
             this.container.Instance(settingsVm);
             this.container.Instance<IScreenGunSettings>(settingsVm);
-            this.container.PerRequest<IShell, ShellViewModel>();
+            this.container.PerRequest<ShellViewModel>();
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace ScreenGun
         /// The service.
         /// </param>
         /// <returns>
-        /// The <see cref="IEnumerable"/>.
+        /// The <see cref="IEnumerable{T}"/>.
         /// </returns>
         protected override IEnumerable<object> GetAllInstances(Type service)
         {
@@ -105,6 +105,7 @@ namespace ScreenGun
         /// The <see cref="object"/>.
         /// </returns>
         /// <exception cref="InvalidOperationException">
+        /// Could not locate instances.
         /// </exception>
         protected override object GetInstance(Type service, string key)
         {
@@ -128,7 +129,7 @@ namespace ScreenGun
         /// </param>
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            this.DisplayRootViewFor<IShell>();
+            this.DisplayRootViewFor<ShellViewModel>();
         }
 
         /// <summary>

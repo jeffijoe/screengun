@@ -129,8 +129,12 @@ namespace ScreenGun.Modules.Main.ScreenGunFile
         /// </summary>
         public void OpenVideo()
         {
-            var info = new ProcessStartInfo(this.FilePath) { UseShellExecute = true };
-            Process.Start(info);
+            // If we can delete, then we deffo can open it as well.
+            if (this.CanDelete)
+            {
+                var info = new ProcessStartInfo(this.FilePath) { UseShellExecute = true };
+                Process.Start(info);
+            }
         }
 
         #endregion
