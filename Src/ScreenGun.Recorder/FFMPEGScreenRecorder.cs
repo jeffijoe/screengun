@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -59,6 +60,11 @@ namespace ScreenGun.Recorder
         ///     The frames.
         /// </summary>
         private ConcurrentQueue<Frame> frames;
+
+        /// <summary>
+        /// The saved frames.
+        /// </summary>
+        private ConcurrentQueue<Frame> savedFrames;
 
         /// <summary>
         ///     The last frame bitmap.
@@ -115,6 +121,7 @@ namespace ScreenGun.Recorder
             this.ffmpegPath = Path.GetFullPath(ffmpegScreenRecorderOptions.FfmpegPath).Trim('\\');
             this.frameCaptureBackend = ffmpegScreenRecorderOptions.FrameCaptureBackend;
             this.frameSaverTasks = new List<Task>();
+            this.savedFrames = new ConcurrentQueue<Frame>();
         }
 
         #endregion
@@ -181,17 +188,53 @@ namespace ScreenGun.Recorder
             {
                 this.micRecorder.Stop();
             }
-
+            await Task.Delay(200);
             this.ReportProgress(new RecorderState(RecordingStage.Encoding));
             await Task.WhenAll(this.frameSaverTasks.ToArray());
             this.SaveFrames();
-
-            await Task.Run((Action)this.Encode);
+            var inputFilePath = await this.CreateInputFile();
+            await Task.Run(() => this.Encode(inputFilePath));
             this.ReportProgress(new RecorderState(RecordingStage.Done));
             if (this.recorderOptions.DeleteMaterialWhenDone)
             {
                 Directory.Delete(this.materialFolder, true);
             }
+        }
+
+        /// <summary>
+        /// Generates an input file for FFMPEG
+        /// </summary>
+        /// <returns></returns>
+        private async Task<string> CreateInputFile()
+        {
+            var path = Path.Combine(this.materialFolder, "frames.txt");
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+
+            using (var fs = new FileStream(path, FileMode.Append))
+            using (var sw = new StreamWriter(fs))
+            {
+                var arr = this.savedFrames.ToArray();
+                for (var i = 0; i < arr.Length; i++)
+                {
+                    var frame = arr[i];
+                    var next = i + 1;
+                    double duration = 1;
+                    if (next != arr.Length)
+                    {
+                        var nextFrame = arr[next];
+                        var diff = nextFrame.CapturedAt - frame.CapturedAt;
+                        duration = diff.TotalSeconds;
+                    }
+
+                    await sw.WriteLineAsync(string.Format("file '{0}'", Path.Combine(this.materialFolder, frame.FileName)));
+                    await sw.WriteLineAsync(string.Format(CultureInfo.InvariantCulture, "duration {0}", duration));
+                }
+            }
+
+            return path;
         }
 
         #endregion
@@ -201,43 +244,11 @@ namespace ScreenGun.Recorder
         /// <summary>
         ///     Creates the FFMPEG cmd arguments.
         /// </summary>
+        /// <param name="inputFilePath">The input file path.</param>
         /// <returns>
         ///     The <see cref="string" />.
         /// </returns>
-        private string CreateFFMPEGArgs()
-        {
-            var sb = new StringBuilder();
-            sb.AppendFormat(
-                "-f image2 -i \"{0}\" ", 
-                Path.Combine(this.materialFolder, "img%06d.png"), 
-                FrameRate, 
-                this.recorderOptions.RecordingRegion.Width, 
-                this.recorderOptions.RecordingRegion.Height);
-
-            if (this.recorderOptions.RecordMicrophone)
-            {
-                sb.AppendFormat("-i \"{0}\" ", this.micFilePath);
-            }
-
-            sb.AppendFormat(
-                "-vf \"setpts=1.54*PTS\" -r {0} -s {1}x{2} -c:v libx264 ", 
-                FrameRate, 
-                this.recorderOptions.RecordingRegion.Width, 
-                this.recorderOptions.RecordingRegion.Height);
-
-            if (this.recorderOptions.RecordMicrophone)
-            {
-                sb.AppendFormat("-c:a mp3 ");
-            }
-
-            sb.AppendFormat("\"{0}\" -y", this.recorderOptions.OutputFilePath);
-            return sb.ToString();
-        }
-
-        /// <summary>
-        ///     Encodes the video.
-        /// </summary>
-        private void Encode()
+        private string CreateFFMPEGArgs(string inputFilePath)
         {
             /**
              * FFMPEG arg explanation:
@@ -248,16 +259,61 @@ namespace ScreenGun.Recorder
              * -c:v libx264 - video codec, in our case h264.
              * {4} - output file.
              */
-            var ffmpegArgs = this.CreateFFMPEGArgs();
+            var sb = new StringBuilder();
+            sb.AppendFormat(
+                "-f concat -i \"{0}\" ", 
+                inputFilePath);
+
+            if (this.recorderOptions.RecordMicrophone)
+            {
+                sb.AppendFormat("-i \"{0}\" ", this.micFilePath);
+            }
+
+            // Use H.264
+            sb.Append("-c:v libx264 ");
+
+            // If we recorded the mic, we need to add it as an input.
+            if (this.recorderOptions.RecordMicrophone)
+            {
+                sb.AppendFormat("-c:a mp3 ");
+            }
+
+            // Since we're using YUV-4:2:0, H.264 needs the dimensions to be divisible by 2.
+            var width = this.recorderOptions.RecordingRegion.Width;
+            var height = this.recorderOptions.RecordingRegion.Height;
+            if (width % 2 != 0)
+            {
+                Debug.WriteLine("Adjusting width");
+                width--;
+            }
+            if (height % 2 != 0)
+            {
+                Debug.WriteLine("Adjusting height");
+                height++;
+            }
+
+            sb.AppendFormat("-vf scale={0}:{1} ", width, height);
+            sb.Append("-pix_fmt yuv420p -movflags +faststart ");
+            sb.AppendFormat("\"{0}\" -y", this.recorderOptions.OutputFilePath);
+            return sb.ToString();
+        }
+
+        /// <summary>
+        ///     Encodes the video.
+        /// </summary>
+        private void Encode(string inputFilePath)
+        {
+            var ffmpegArgs = this.CreateFFMPEGArgs(inputFilePath);
 
             // Start a CMD in the background, which itself will run FFMPEG.
             var cmdArgs = string.Format("/C \"\"{0}\" {1}\"", this.ffmpegPath, ffmpegArgs);
             var startInfo = new ProcessStartInfo("cmd.exe", cmdArgs)
             {
                 UseShellExecute = true, 
-                WindowStyle = ProcessWindowStyle.Hidden
+                WindowStyle = ProcessWindowStyle.Hidden,
+                CreateNoWindow = true
             };
-
+            Debug.WriteLine(cmdArgs);
             var process = Process.Start(startInfo);
             process.WaitForExit();
         }
@@ -294,9 +350,11 @@ namespace ScreenGun.Recorder
 
             // Capture a frame.
             Bitmap frameBitmap;
+            DateTime capturedAt;
             try
             {
                 frameBitmap = this.frameCaptureBackend.CaptureFrame(this.recorderOptions.RecordingRegion);
+                capturedAt = DateTime.Now;
                 this.lastFrameBitmap = frameBitmap;
             }
             catch (Exception ex)
@@ -305,6 +363,7 @@ namespace ScreenGun.Recorder
                 if (this.lastFrameBitmap != null)
                 {
                     frameBitmap = this.lastFrameBitmap;
+                    capturedAt = DateTime.Now;
                 }
                 else
                 {
@@ -313,8 +372,13 @@ namespace ScreenGun.Recorder
             }
 
             Interlocked.Increment(ref this.frameCounter);
-            this.frames.Enqueue(new Frame(this.frameCounter, frameBitmap));
+            var fileName = string.Format("img{0}.png", this.frameCounter.ToString("D6"));
+            var path = Path.Combine(this.recorderOptions.MaterialTempFolder, this.recordingName, fileName);
 
+            var frame = new Frame(fileName, this.frameCounter, capturedAt, frameBitmap);
+            
+            this.frames.Enqueue(frame);
+            this.savedFrames.Enqueue(frame);
             if (this.frames.Count > 30)
             {
                 var task = Task.Run(
@@ -358,7 +422,7 @@ namespace ScreenGun.Recorder
         }
 
         #endregion
-
+    
         /// <summary>
         ///     The frame.
         /// </summary>
@@ -375,15 +439,22 @@ namespace ScreenGun.Recorder
             /// <param name="frameBitmap">
             /// The frame bitmap.
             /// </param>
-            public Frame(int frameNumber, Bitmap frameBitmap)
+            public Frame(string fileName, int frameNumber, DateTime capturedAt, Bitmap frameBitmap)
             {
+                this.FileName = fileName;
                 this.FrameNumber = frameNumber;
                 this.FrameBitmap = frameBitmap;
+                this.CapturedAt = capturedAt;
             }
 
             #endregion
 
             #region Public Properties
+
+            /// <summary>
+            /// The file name.
+            /// </summary>
+            public string FileName { get; private set; }
 
             /// <summary>
             ///     Gets the frame bitmap.
@@ -394,6 +465,11 @@ namespace ScreenGun.Recorder
             ///     Gets the frame number.
             /// </summary>
             public int FrameNumber { get; private set; }
+
+            /// <summary>
+            /// Timestamp from when the frame was shot.
+            /// </summary>
+            public DateTime CapturedAt { get; private set; }
 
             #endregion
         }
