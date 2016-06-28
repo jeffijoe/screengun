@@ -7,6 +7,7 @@
 // Copyright (C) ScreenGun Authors 2015. All rights reserved.
 
 using NAudio.Wave;
+using System.Diagnostics;
 
 namespace ScreenGun.Recorder
 {
@@ -56,8 +57,16 @@ namespace ScreenGun.Recorder
         /// </summary>
         public void Start()
         {
+            int waveInDevices = WaveIn.DeviceCount;
+            for (int waveInDevice = 0; waveInDevice < waveInDevices; waveInDevice++)
+            {
+                WaveInCapabilities deviceInfo = WaveIn.GetCapabilities(waveInDevice);
+                Debug.WriteLine("Device {0}: {1}, {2} channels", waveInDevice, deviceInfo.ProductName, deviceInfo.Channels);
+            }
+
             this.waveSource = new WaveInEvent
             {
+                DeviceNumber = 1,
                 WaveFormat = new WaveFormat(44100, 2)
             };
 

@@ -293,7 +293,8 @@ namespace ScreenGun.Recorder
             }
 
             sb.AppendFormat("-vf scale={0}:{1} ", width, height);
-            sb.Append("-pix_fmt yuv420p -movflags +faststart ");
+            //sb.Append("-pix_fmt yuv420p -movflags +faststart ");
+            sb.Append("-pix_fmt yuv420p ");
             sb.AppendFormat("\"{0}\" -y", this.recorderOptions.OutputFilePath);
             return sb.ToString();
         }
