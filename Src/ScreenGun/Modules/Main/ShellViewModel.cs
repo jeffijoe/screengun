@@ -151,6 +151,14 @@ namespace ScreenGun.Modules.Main
             this.windowManager.ShowWindow(IoC.Get<SettingsViewModel>());
         }
 
+        /// <summary>
+        /// Shows the About view.
+        /// </summary>
+        public void About()
+        {
+            this.windowManager.ShowWindow(IoC.Get<AboutViewModel>());
+        }
+
         #endregion
 
         #region Methods

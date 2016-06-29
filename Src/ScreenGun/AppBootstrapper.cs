@@ -76,6 +76,7 @@ namespace ScreenGun
             this.container.Instance(settingsVm);
             this.container.Instance<IScreenGunSettings>(settingsVm);
             this.container.PerRequest<ShellViewModel>();
+            this.container.PerRequest<AboutViewModel>();
         }
 
         /// <summary>

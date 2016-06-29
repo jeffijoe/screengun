@@ -42,6 +42,11 @@ namespace ScreenGun.Modules.Settings
         /// </value>
         string StoragePath { get; set; }
 
+        /// <summary>
+        /// The recording device to use.
+        /// </summary>
+        int RecordingDeviceNumber { get; set; }
+
         #endregion
 
         #region Public Methods and Operators

@@ -42,6 +42,11 @@
                     <TextBlock Margin="4 4 0 0" Text="Settings" />
                 </StackPanel>
             </Button>
+            <Button Cursor="Hand" Name="About" cal:Message.Attach="About">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="4 -2 0 0" Text="About" />
+                </StackPanel>
+            </Button>
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
     <DockPanel>

@@ -82,6 +82,11 @@ namespace ScreenGun.Recorder
         /// </value>
         public Rectangle RecordingRegion { get; set; }
 
+        /// <summary>
+        /// What device number should we use to record audio on?
+        /// </summary>
+        public int AudioRecordingDeviceNumber { get; set; }
+
         #endregion
     }
 }

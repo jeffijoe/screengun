@@ -29,6 +29,11 @@ namespace ScreenGun.Modules.Settings
         /// </summary>
         public string StoragePath { get; set; }
 
+        /// <summary>
+        /// Recording device number.
+        /// </summary>
+        public int RecordingDeviceNumber { get; set; }
+
         #endregion
 
         #region Public Methods and Operators
@@ -63,7 +68,8 @@ namespace ScreenGun.Modules.Settings
             return new SettingsFile
             {
                 DefaultMicEnabled = settings.DefaultMicEnabled,
-                StoragePath = settings.StoragePath
+                StoragePath = settings.StoragePath,
+                RecordingDeviceNumber = settings.RecordingDeviceNumber
             };
         }
 

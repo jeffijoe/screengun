@@ -332,7 +332,7 @@ namespace ScreenGun.Recorder
 
             if (this.recorderOptions.RecordMicrophone)
             {
-                this.micRecorder = new MicrophoneRecorder(this.micFilePath);
+                this.micRecorder = new MicrophoneRecorder(this.micFilePath, this.recorderOptions.AudioRecordingDeviceNumber);
                 this.micRecorder.Start();
             }
 

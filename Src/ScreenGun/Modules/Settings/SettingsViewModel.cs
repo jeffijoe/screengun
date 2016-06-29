@@ -10,6 +10,11 @@ using System;
 using System.IO;
 
 using ScreenGun.Base;
+using System.Collections.Generic;
+
+using NAudio.Wave;
+using NAudio.CoreAudioApi;
+using System.Diagnostics;
 
 namespace ScreenGun.Modules.Settings
 {
@@ -34,6 +39,11 @@ namespace ScreenGun.Modules.Settings
         ///     The storage path
         /// </summary>
         private string storagePath;
+
+        /// <summary>
+        /// Recording device number.
+        /// </summary>
+        private int recordingDeviceNumber;
 
         #endregion
 
@@ -82,6 +92,49 @@ namespace ScreenGun.Modules.Settings
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        /// Recording device number.
+        /// </summary>
+        public int RecordingDeviceNumber
+        {
+            get
+            {
+                return this.recordingDeviceNumber;
+            }
+
+            set
+            {
+                if (this.recordingDeviceNumber == value)
+                {
+                    return;
+                }
+
+                this.recordingDeviceNumber = value;
+                this.NotifyOfPropertyChange(() => this.RecordingDeviceNumber);
+                this.SaveSettings();
+            }
+        }
+
+        /// <summary>
+        /// Available recording devices.
+        /// </summary>
+        public IEnumerable<RecordingDevice> AvailableRecordingDevices
+        {
+            get
+            {
+                var result = new List<RecordingDevice>();
+                MMDeviceEnumerator enumerator = new MMDeviceEnumerator();
+                int i = 0;
+                foreach (MMDevice device in enumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active))
+                {
+                    var name = device.FriendlyName;
+                    result.Add(new RecordingDevice(i++, name));
+                }
+
+                return result;
+            }
+        }
 
         /// <summary>
         ///     Gets or sets a value indicating whether the mic is enabled by default.

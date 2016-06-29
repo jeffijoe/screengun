@@ -160,7 +160,8 @@ namespace ScreenGun.Modules.Recorder
             {
                 DeleteMaterialWhenDone = true, 
                 OutputFilePath = outputFilePath, 
-                RecordMicrophone = this.UseMicrophone
+                RecordMicrophone = this.UseMicrophone,
+                AudioRecordingDeviceNumber = this.settings.RecordingDeviceNumber
             };
 
             var progress = new Progress<RecorderState>(state => this.fileViewModel.RecordingStage = state.Stage);

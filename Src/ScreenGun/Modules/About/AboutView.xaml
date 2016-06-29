@@ -1,11 +1,12 @@
 ﻿<controls:MetroWindow 
-    x:Class="ScreenGun.Modules.Settings.SettingsView"
+    x:Class="ScreenGun.Modules.Settings.AboutView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+    xmlns:icons="clr-namespace:ScreenGun.Icons"
     mc:Ignorable="d"
     WindowTitleBrush="White" 
     ShowMinButton="False"
@@ -15,10 +16,9 @@
     WindowStartupLocation="CenterScreen"
     BorderThickness="1"
     GlowBrush="{DynamicResource AccentColorBrush}" 
-    Title="Settings"
     ResizeMode="NoResize"
     FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-    Height="243.333" Width="600">
+    Height="248.667" Width="278">
     <Window.Resources>
         <ResourceDictionary>
             <Style x:Key="LabelStyle" TargetType="Label">
@@ -50,47 +50,12 @@
 
 
     <StackPanel Margin="8">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="190" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60" />
-                <RowDefinition Height="60" />
-                <RowDefinition Height="60" />
-            </Grid.RowDefinitions>
-            <Label Grid.Row="0" Content="Recording output path" Margin="4,6,4,0" Style="{StaticResource LabelStyle}" />
-            <TextBox 
-                    Name="TxtStoragePath" 
-                    FontSize="16"
-                    Text="{Binding Path=StoragePath, UpdateSourceTrigger=PropertyChanged}" 
-                    Grid.Row="0"
-                    Grid.Column="1" wpf:TextField.Hint="Folder Path"
-                    LostFocus="TxtStoragePath_OnLostFocus"
-                    KeyDown="TxtStoragePath_OnKeyDown" />
-            <Button Name="BtnBrowse" 
-                    Content="Browse" 
-                    Grid.Row="0"
-                    Grid.Column="2" 
-                    Padding="12 4" 
-                    Click="BtnBrowse_OnClick" 
-                    Margin="8,2,4,2"
-                    Style="{StaticResource MaterialDesignFlatButton}"/>
-
-            <Label Grid.Row="1" Grid.Column="0" Content="Default Microphone Enabled" VerticalAlignment="Center" Style="{StaticResource LabelStyle}" />
-            <ToggleButton Grid.Row="1" Grid.Column="1" IsChecked="{Binding Path=DefaultMicEnabled}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8,0"/>
-
-            <Label Grid.Row="2" Grid.Column="0" Content="Microphone" VerticalAlignment="Center" Style="{StaticResource LabelStyle}" />
-            <ComboBox 
-                Grid.Row="2" 
-                Grid.Column="1"
-                ItemsSource="{Binding AvailableRecordingDevices}"
-                DisplayMemberPath="DisplayName"
-                SelectedValuePath="DeviceNumber"
-                SelectedValue="{Binding RecordingDeviceNumber}"
-            />
-        </Grid>
+        <StackPanel Margin="0 20 0 0">
+            <icons:IconRecord InnerColor="Red" OuterColor="DarkSlateGray" Size="46" />
+            <TextBlock TextAlignment="Center" Margin="0 30 0 0" FontSize="20" Text="ScreenGun"/>
+            <TextBlock TextAlignment="Center" Margin="0 0 0 10" FontSize="12" Foreground="#788" Text="{Binding Version}"/>
+            <TextBlock TextAlignment="Center" Margin="0 0 0 0" FontSize="12">Copyright © Jeff Hansen 2016</TextBlock>
+            <TextBlock TextAlignment="Center" Margin="0 5 0 40" FontSize="12" Foreground="#788">jeffijoe.com</TextBlock>
+        </StackPanel>
     </StackPanel>
 </controls:MetroWindow>

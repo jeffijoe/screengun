@@ -63,6 +63,10 @@
       <HintPath>..\packages\MaterialDesignThemes.0.0.0.66\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NAudio, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -126,6 +130,10 @@
     </Compile>
     <Compile Include="Misc\Command.cs" />
     <Compile Include="Misc\NativeWindowHelper.cs" />
+    <Compile Include="Modules\About\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\About\AboutViewModel.cs" />
     <Compile Include="Modules\Main\ScreenGunFile\RecordingDeletedHandler.cs" />
     <Compile Include="Modules\Main\ScreenGunFile\ScreenGunFileView.xaml.cs">
       <DependentUpon>ScreenGunFileView.xaml</DependentUpon>
@@ -175,6 +183,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Modules\About\AboutView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Modules\Main\ScreenGunFile\ScreenGunFileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -212,6 +224,7 @@
     <Compile Include="Modules\Recorder\RecorderView.cs" />
     <Compile Include="Modules\Recorder\RecorderViewModel.cs" />
     <Compile Include="Modules\Settings\IScreenGunSettings.cs" />
+    <Compile Include="Modules\Settings\RecordingDevice.cs" />
     <Compile Include="Modules\Settings\SettingsFile.cs" />
     <Compile Include="Modules\Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>

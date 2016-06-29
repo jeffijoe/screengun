@@ -43,10 +43,16 @@ namespace ScreenGun.Recorder
         /// <param name="outputFilePath">
         /// The material folder.
         /// </param>
-        public MicrophoneRecorder(string outputFilePath)
+        public MicrophoneRecorder(string outputFilePath, int deviceNumber)
         {
+            this.DeviceNumber = deviceNumber;
             this.outputFilePath = outputFilePath;
         }
+
+        /// <summary>
+        /// The device number.
+        /// </summary>
+        public int DeviceNumber { get; private set; }
 
         #endregion
 
@@ -57,16 +63,9 @@ namespace ScreenGun.Recorder
         /// </summary>
         public void Start()
         {
-            int waveInDevices = WaveIn.DeviceCount;
-            for (int waveInDevice = 0; waveInDevice < waveInDevices; waveInDevice++)
-            {
-                WaveInCapabilities deviceInfo = WaveIn.GetCapabilities(waveInDevice);
-                Debug.WriteLine("Device {0}: {1}, {2} channels", waveInDevice, deviceInfo.ProductName, deviceInfo.Channels);
-            }
-
             this.waveSource = new WaveInEvent
             {
-                DeviceNumber = 1,
+                DeviceNumber = this.DeviceNumber,
                 WaveFormat = new WaveFormat(44100, 2)
             };
 
