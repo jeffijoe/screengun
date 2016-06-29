@@ -14,6 +14,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -106,6 +107,11 @@ namespace ScreenGun.Recorder
         /// </summary>
         private Timer timer;
 
+        /// <summary>
+        /// Tracks when the recording was started.
+        /// </summary>
+        private DateTime recordingStartedAt;
+
         #endregion
 
         #region Constructors and Destructors
@@ -166,6 +172,7 @@ namespace ScreenGun.Recorder
 
             Directory.CreateDirectory(this.materialFolder);
             this.micFilePath = Path.Combine(this.materialFolder, "Microphone.wav");
+            this.recordingStartedAt = DateTime.Now;
             Task.Run((Action)this.Record);
         }
 
@@ -188,6 +195,7 @@ namespace ScreenGun.Recorder
             {
                 this.micRecorder.Stop();
             }
+
             await Task.Delay(200);
             this.ReportProgress(new RecorderState(RecordingStage.Encoding));
             await Task.WhenAll(this.frameSaverTasks.ToArray());
@@ -293,8 +301,12 @@ namespace ScreenGun.Recorder
             }
 
             sb.AppendFormat("-vf scale={0}:{1} ", width, height);
-            //sb.Append("-pix_fmt yuv420p -movflags +faststart ");
             sb.Append("-pix_fmt yuv420p ");
+
+            var startFrame = this.savedFrames.First();
+            var endFrame = this.savedFrames.Last();
+            var duration = endFrame.CapturedAt - startFrame.CapturedAt;
+            sb.AppendFormat("-t {0} ", duration);
             sb.AppendFormat("\"{0}\" -y", this.recorderOptions.OutputFilePath);
             return sb.ToString();
         }
