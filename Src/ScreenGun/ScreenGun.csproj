@@ -104,6 +104,7 @@
     <Compile Include="Converters\BetterBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanToColorConverter.cs" />
     <Compile Include="Events\RecordingCreated.cs" />
+    <Compile Include="Events\RecordingViewClosed.cs" />
     <Compile Include="Icons\IconRecord.xaml.cs">
       <DependentUpon>IconRecord.xaml</DependentUpon>
     </Compile>
@@ -287,6 +288,15 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Fody.1.28.3\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.28.3\build\Fody.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>if not $(ConfigurationName)==Release goto end
+
+if not exist "$(SolutionDir)build\" (mkdir "$(SolutionDir)build")
+copy /Y "$(TargetPath)" "$(SolutionDir)build\$(TargetFileName)"
+copy /Y "$(TargetDir)\ffmpeg.exe" "$(SolutionDir)build\ffmpeg.exe"
+
+:end</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

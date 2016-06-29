@@ -9,7 +9,7 @@
     ShowIconOnTitleBar="true"
     TitleCaps="False"
     BorderThickness="1"
-    Width="500"
+    Width="628.012"
     MinWidth="450"
     ShowMaxRestoreButton="false"
     GlowBrush="{DynamicResource AccentColorBrush}"
@@ -61,7 +61,7 @@
         <Grid Background="White">
             <TextBlock Visibility="{Binding Path=HasAnyRecordings, Converter={StaticResource InvertedVisibilityConverter}}"
                        FontSize="24"
-                       Margin="40 80 40 40"
+                       Margin="40 150 40 40"
                        TextAlignment="Center"
                        Foreground="DarkSlateGray"
                        TextWrapping="Wrap">

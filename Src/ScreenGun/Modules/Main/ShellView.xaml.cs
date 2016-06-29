@@ -23,6 +23,13 @@ namespace ScreenGun.Modules.Main
         public ShellView()
         {
             this.InitializeComponent();
+            this.Loaded += (sender, e) =>
+            {
+                this.ViewModel.ToggleWindow = (show) =>
+                {
+                    this.WindowState = show ? System.Windows.WindowState.Normal : System.Windows.WindowState.Minimized;
+                };
+            };
         }
 
         #endregion

@@ -19,13 +19,14 @@ using ScreenGun.Events;
 using ScreenGun.Modules.Main.ScreenGunFile;
 using ScreenGun.Modules.Recorder;
 using ScreenGun.Modules.Settings;
+using System;
 
 namespace ScreenGun.Modules.Main
 {
     /// <summary>
     ///     The shell view model.
     /// </summary>
-    public class ShellViewModel : ViewModel, IHandle<RecordingCreated>
+    public class ShellViewModel : ViewModel, IHandle<RecordingCreated>, IHandle<RecordingViewClosed>
     {
         #region Fields
 
@@ -118,6 +119,11 @@ namespace ScreenGun.Modules.Main
             }
         }
 
+        /// <summary>
+        /// Set by the view so we can minimize the main view when showing the recorder.
+        /// </summary>
+        public Action<bool> ToggleWindow { get; internal set; }
+
         #endregion
 
         #region Public Methods and Operators
@@ -140,6 +146,7 @@ namespace ScreenGun.Modules.Main
         /// </summary>
         public void NewRecording()
         {
+            this.ToggleWindow(false);
             this.windowManager.ShowWindow(IoC.Get<RecorderViewModel>());
         }
 
@@ -204,6 +211,15 @@ namespace ScreenGun.Modules.Main
 
             this.NotifyOfPropertyChange(() => this.Status);
             this.NotifyOfPropertyChange(() => this.HasAnyRecordings);
+        }
+
+        /// <summary>
+        /// When the recorder closes, show the main view.
+        /// </summary>
+        /// <param name="message"></param>
+        public void Handle(RecordingViewClosed message)
+        {
+            this.ToggleWindow(true);
         }
 
         #endregion

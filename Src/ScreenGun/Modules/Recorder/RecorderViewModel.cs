@@ -131,6 +131,7 @@ namespace ScreenGun.Modules.Recorder
         public void Cancel()
         {
             this.TryClose();
+            this.eventAggregator.PublishOnUIThread(new RecordingViewClosed());
         }
 
         /// <summary>

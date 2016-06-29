@@ -219,6 +219,7 @@ namespace ScreenGun.Modules.Settings
             }
 
             this.defaultMicEnabled = settingsFile.DefaultMicEnabled;
+            this.recordingDeviceNumber = settingsFile.RecordingDeviceNumber;
         }
 
         #endregion
