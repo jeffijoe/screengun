@@ -4,9 +4,23 @@
 
 # ScreenGun
 
-The free screen recorder for Windows, based on FFMPEG. [Click here to download!](https://github.com/jeffijoe/screengun/releases/download/0.1.1/ScreenGun.zip)
+The free screen recorder for Windows, based on FFMPEG.
 
 ![Recorder View](http://i.imgur.com/re5glAH.jpg)
+
+# Quickstart
+
+
+* [Download it](https://github.com/jeffijoe/screengun/releases/download/0.1.1/ScreenGun.zip)
+* Extract somewhere and run `ScreenGun.exe`
+* Press "New Recording"
+* Select the area you wish to record, amd press the **Record**:
+
+  ![Record button](http://i.imgur.com/OY0iT1e.png)
+
+* To stop recording, click on the ScreenGun icon in the system tray:
+
+  ![Icon](http://i.imgur.com/UGRARNG.png)
 
 # What is it?
 
