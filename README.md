@@ -1,4 +1,8 @@
-# ![Logo](http://i.imgur.com/fwSB5ij.png) ScreenGun
+<p align="center">
+    <img src="http://i.imgur.com/fwSB5ij.png" />
+</p>
+
+# ScreenGun
 
 The free screen recorder for Windows, based on FFMPEG.
 
