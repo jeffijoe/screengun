@@ -338,9 +338,9 @@ namespace ScreenGun.Recorder
         {
             this.IsRecording = true;
             this.frameCounter = 0;
-
-            this.timer = new Timer(_ => this.RecordFrame());
-            this.timer.Change(1000 / FrameRate, 1000 / FrameRate);
+            this.RecordFrame();
+            //this.timer = new Timer(_ => this.RecordFrame());
+            //this.timer.Change(1000 / FrameRate, 1000 / FrameRate);
 
             if (this.recorderOptions.RecordMicrophone)
             {
@@ -429,8 +429,17 @@ namespace ScreenGun.Recorder
 
                 var fileName = string.Format("img{0}.png", frame.FrameNumber.ToString("D6"));
                 var path = Path.Combine(this.recorderOptions.MaterialTempFolder, this.recordingName, fileName);
-                frame.FrameBitmap.Save(path, ImageFormat.Png);
-                frame.FrameBitmap.Dispose();
+                try
+                {
+                    frame.FrameBitmap.Save(path, ImageFormat.Png);
+                    frame.FrameBitmap.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    Debugger.Break();
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
             }
         }
 

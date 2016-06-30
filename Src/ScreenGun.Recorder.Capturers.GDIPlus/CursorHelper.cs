@@ -78,47 +78,53 @@ namespace ScreenGun.Recorder.Capturers.GDIPlus
                 {
                     Bitmap resultBitmap = new Bitmap(maskBitmap.Width, maskBitmap.Width);
 
-                    Graphics desktopGraphics = Graphics.FromHwnd(Win32Stuff.GetDesktopWindow());
-                    IntPtr desktopHdc = desktopGraphics.GetHdc();
-
-                    IntPtr maskHdc = GDIStuff.CreateCompatibleDC(desktopHdc);
-                    IntPtr oldPtr = GDIStuff.SelectObject(maskHdc, maskBitmap.GetHbitmap());
-
-                    using (Graphics resultGraphics = Graphics.FromImage(resultBitmap))
+                    using (Graphics desktopGraphics = Graphics.FromHwnd(Win32Stuff.GetDesktopWindow()))
                     {
-                        IntPtr resultHdc = resultGraphics.GetHdc();
+                        IntPtr desktopHdc = desktopGraphics.GetHdc();
 
-                        // These two operation will result in a black cursor over a white background.
-                        // Later in the code, a call to MakeTransparent() will get rid of the white background.
-                        GDIStuff.BitBlt(
-                            resultHdc, 
-                            0, 
-                            0, 
-                            32, 
-                            32, 
-                            maskHdc, 
-                            0, 
-                            32, 
-                            (int)GDIStuff.TernaryRasterOperations.SRCCOPY);
-                        GDIStuff.BitBlt(
-                            resultHdc, 
-                            0, 
-                            0, 
-                            32, 
-                            32, 
-                            maskHdc, 
-                            0, 
-                            0, 
-                            (int)GDIStuff.TernaryRasterOperations.SRCINVERT);
+                        IntPtr maskHdc = GDIStuff.CreateCompatibleDC(desktopHdc);
+                        IntPtr oldPtr = GDIStuff.SelectObject(maskHdc, maskBitmap.GetHbitmap());
 
-                        resultGraphics.ReleaseHdc(resultHdc);
+                        using (Graphics resultGraphics = Graphics.FromImage(resultBitmap))
+                        {
+                            IntPtr resultHdc = resultGraphics.GetHdc();
+
+                            // These two operation will result in a black cursor over a white background.
+                            // Later in the code, a call to MakeTransparent() will get rid of the white background.
+                            GDIStuff.BitBlt(
+                                resultHdc,
+                                0,
+                                0,
+                                32,
+                                32,
+                                maskHdc,
+                                0,
+                                32,
+                                (int)GDIStuff.TernaryRasterOperations.SRCCOPY);
+                            GDIStuff.BitBlt(
+                                resultHdc,
+                                0,
+                                0,
+                                32,
+                                32,
+                                maskHdc,
+                                0,
+                                0,
+                                (int)GDIStuff.TernaryRasterOperations.SRCINVERT);
+
+                            resultGraphics.ReleaseHdc(resultHdc);
+                            GDIStuff.DeleteDC(resultHdc);
+                            GDIStuff.DeleteObject(resultHdc);
+                        }
+
+                        IntPtr newPtr = GDIStuff.SelectObject(maskHdc, oldPtr);
+                        GDIStuff.DeleteObject(oldPtr);
+                        GDIStuff.DeleteObject(newPtr);
+                        GDIStuff.DeleteDC(maskHdc);
+                        desktopGraphics.ReleaseHdc(desktopHdc);
+                        GDIStuff.DeleteDC(desktopHdc);
                     }
-
-                    IntPtr newPtr = GDIStuff.SelectObject(maskHdc, oldPtr);
-                    GDIStuff.DeleteObject(newPtr);
-                    GDIStuff.DeleteDC(maskHdc);
-                    desktopGraphics.ReleaseHdc(desktopHdc);
-
+                    
                     // Remove the white background from the BitBlt calls,
                     // resulting in a black cursor over a transparent background.
                     resultBitmap.MakeTransparent(Color.White);

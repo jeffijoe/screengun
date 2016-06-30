@@ -62,8 +62,10 @@ namespace ScreenGun.Recorder.Capturers.GDIPlus
                 {
                     gfxScreenshot.DrawImage(cursorBmp, position);
                 }
-            }
 
+                cursorBmp.Dispose();
+            }
+            frameBitmap.Dispose();
             return frameBitmap;
         }
 
