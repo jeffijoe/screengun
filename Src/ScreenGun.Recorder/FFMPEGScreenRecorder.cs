@@ -163,7 +163,7 @@ namespace ScreenGun.Recorder
             this.progress = progressReporter;
             this.frameSaverTasks.Clear();
             this.frames = new ConcurrentQueue<Frame>();
-            this.recordingName = string.Format("Recording {0}", DateTime.Now.ToString("yy-MM-dd hh-mm-ss"));
+            this.recordingName = string.Format("Recording {0}", DateTime.Now.ToString("yy-MM-dd HH-mm-ss"));
             this.materialFolder = Path.Combine(this.recorderOptions.MaterialTempFolder, this.recordingName);
             if (Directory.Exists(this.materialFolder))
             {

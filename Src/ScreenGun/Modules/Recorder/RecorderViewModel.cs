@@ -153,7 +153,7 @@ namespace ScreenGun.Modules.Recorder
             this.notifyIcon.HideBalloonTip();
             this.IsRecording = true;
 
-            var fileName = string.Format("Recording {0}.mp4", DateTime.Now.ToString("yy-MM-dd hh-mm-ss"));
+            var fileName = string.Format("Recording {0}.mp4", DateTime.Now.ToString("yy-MM-dd HH-mm-ss"));
             var outputFilePath = Path.Combine(this.settings.StoragePath, fileName);
             this.fileViewModel = new ScreenGunFileViewModel(outputFilePath, RecordingStage.DoingNothing);
 
@@ -178,7 +178,9 @@ namespace ScreenGun.Modules.Recorder
             {
                 this.TryClose();
                 this.eventAggregator.PublishOnUIThread(new RecordingCreated(this.fileViewModel));
-                await this.recorder.StopAsync();
+                var stopTask = this.recorder.StopAsync();
+                this.eventAggregator.BeginPublishOnUIThread(new RecordingViewClosed());
+                await stopTask;
                 this.IsRecording = false;
                 this.notifyIcon.Dispose();
             }
