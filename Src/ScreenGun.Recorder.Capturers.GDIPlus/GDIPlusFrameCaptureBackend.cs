@@ -65,7 +65,7 @@ namespace ScreenGun.Recorder.Capturers.GDIPlus
 
                 cursorBmp.Dispose();
             }
-            frameBitmap.Dispose();
+
             return frameBitmap;
         }
 

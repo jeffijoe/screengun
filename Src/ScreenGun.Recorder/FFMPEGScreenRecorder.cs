@@ -339,8 +339,8 @@ namespace ScreenGun.Recorder
             this.IsRecording = true;
             this.frameCounter = 0;
             this.RecordFrame();
-            //this.timer = new Timer(_ => this.RecordFrame());
-            //this.timer.Change(1000 / FrameRate, 1000 / FrameRate);
+            this.timer = new Timer(_ => this.RecordFrame());
+            this.timer.Change(1000 / FrameRate, 1000 / FrameRate);
 
             if (this.recorderOptions.RecordMicrophone)
             {
