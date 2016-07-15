@@ -11,7 +11,7 @@ The free screen recorder for Windows, based on FFMPEG.
 # Quickstart
 
 
-* [Download it](https://github.com/jeffijoe/screengun/releases/download/0.1.1/ScreenGun.zip)
+* [Download it](https://github.com/jeffijoe/screengun/releases/download/0.1.2/ScreenGun.zip)
 * Extract somewhere and run `ScreenGun.exe`
 * Press "New Recording"
 * Select the area you wish to record, amd press the **Record**:
